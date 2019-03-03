@@ -28,11 +28,11 @@ class Pet(models.Model):
         (TYPE_DOG, 'Dog'),
     )
 
-    STATUS_LOST = 'lost'
-    STATUS_FOUND = 'found'
-    STATUS_CHOICES = (
-        (STATUS_LOST, 'Lost'),
-        (STATUS_FOUND, 'Found'),
+    SITUATION_LOST = 'lost'
+    SITUATION_FOUND = 'found'
+    SITUATION_CHOICES = (
+        (SITUATION_LOST, 'Lost'),
+        (SITUATION_FOUND, 'Found'),
     )
 
     SEX_MALE = 'male'
@@ -50,9 +50,11 @@ class Pet(models.Model):
     kind = models.CharField(max_length=128, choices=TYPE_CHOICES, default=TYPE_DOG)
     slug = models.SlugField(db_index=True, unique=True)
     breed = models.ForeignKey('pet.Breed', on_delete=models.CASCADE, null=True)
-    status = models.CharField(max_length=128, choices=STATUS_CHOICES, default=STATUS_LOST)
+    situation = models.CharField(max_length=128, choices=SITUATION_CHOICES, default=SITUATION_LOST)
     lost_date = models.DateField(db_index=True, null=True, blank=True)
     found_date = models.DateField(db_index=True, null=True, blank=True)
+    rescued = models.BooleanField(default=False)
+    rescued_date = models.DateField(null=True, blank=True)
     picture = models.ForeignKey('pet.Picture', null=True, blank=True, on_delete=models.SET_NULL)
     pictures = models.ManyToManyField('pet.Picture', related_name='pets', blank=True)
     description = models.TextField(null=True, blank=True)
@@ -73,14 +75,19 @@ class Pet(models.Model):
         if self.lost_date and not self.name:
             raise ValidationError('Please fill the name of your pet')
 
+        if self.rescued and not self.rescued_date:
+            self.rescued_date = timezone.now()
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        return super().save(*args, **kwargs)
+
 
 class Picture(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=512, null=True, blank=True)
     primary = models.BooleanField(default=False)
-    image = models.ImageField(
-        upload_to='pet/picture/image',
-    )
+    image = models.ImageField(upload_to='pet/picture/image')
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True, db_index=True)
