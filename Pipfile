@@ -4,14 +4,14 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+isort = "*"
+flake8 = "*"
+django-debug-toolbar = "*"
+django-extensions = "*"
 
 [packages]
 django = "*"
-isort = "*"
-flake8 = "*"
 dj-database-url = "*"
-django-debug-toolbar = "*"
-django-extensions = "*"
 psycopg2 = "*"
 
 [requires]
