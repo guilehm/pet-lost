@@ -6,6 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+django = "*"
+isort = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.7"
