@@ -10,6 +10,9 @@ django = "*"
 isort = "*"
 flake8 = "*"
 dj-database-url = "*"
+django-debug-toolbar = "*"
+django-extensions = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"
