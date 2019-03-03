@@ -13,6 +13,7 @@ django-extensions = "*"
 django = "*"
 dj-database-url = "*"
 psycopg2 = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"
