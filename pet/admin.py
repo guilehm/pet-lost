@@ -3,6 +3,12 @@ from django.contrib import admin
 from pet.models import Breed, Pet, Picture
 
 
+class PetPictureInline(admin.StackedInline):
+    model = Pet.pictures.through
+    raw_id_fields = ('picture',)
+    extra = 0
+
+
 @admin.register(Breed)
 class BreedAdmin(admin.ModelAdmin):
     list_display = ('name', 'kind')
@@ -16,8 +22,7 @@ class PetAdmin(admin.ModelAdmin):
     list_display = (
         'name', 'situation', 'rescued', 'kind', 'breed', 'lost_date', 'found_date'
     )
-    search_fields = ('name', 'description')
-    prepopulated_fields = {'slug': ('name', 'kind', 'situation')}
+    exclude = ('pictures',)
     list_filter = (
         'situation',
         'rescued',
@@ -28,6 +33,10 @@ class PetAdmin(admin.ModelAdmin):
         'found_date',
         'breed',
     )
+    search_fields = ('name', 'description')
+    raw_id_fields = ('picture',)
+    prepopulated_fields = {'slug': ('name', 'kind', 'situation')}
+    inlines = (PetPictureInline,)
 
 
 @admin.register(Picture)

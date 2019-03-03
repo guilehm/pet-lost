@@ -86,14 +86,16 @@ class Pet(models.Model):
 class Picture(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=512, null=True, blank=True)
-    primary = models.BooleanField(default=False)
     image = models.ImageField(upload_to='pet/picture/image')
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True, db_index=True)
 
     def __str__(self):
-        return f'#{self.id} ({self.title})'
+        return '#{id}{title}'.format(
+            id=self.id,
+            title=f' ({self.title})' if self.title else '',
+        )
 
     class Meta:
         ordering = ('date_changed', )
