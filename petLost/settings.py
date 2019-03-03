@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '94y1dbpkud3um&hyr*$w=m9nt$x$%2)k80q-rn7!5d+s93f*9g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -72,6 +72,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'petLost.wsgi.application'
 
+SECURE_SSL_REDIRECT = True
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases

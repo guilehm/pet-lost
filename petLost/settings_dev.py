@@ -1,5 +1,8 @@
 from petLost.settings import *
 
+DEBUG = True
+SECURE_SSL_REDIRECT = False
+
 ALLOWED_HOSTS += [
     '127.0.0.1',
     '.localhost',
@@ -15,3 +18,6 @@ MIDDLEWARE += [
 ]
 
 INTERNAL_IPS = ['127.0.0.1']
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
