@@ -9,6 +9,7 @@ verify_ssl = true
 django = "*"
 isort = "*"
 flake8 = "*"
+dj-database-url = "*"
 
 [requires]
 python_version = "3.7"
