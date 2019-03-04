@@ -1,6 +1,6 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
-
+from django.shortcuts import get_object_or_404
 from pet.models import Pet
 
 
@@ -34,7 +34,7 @@ def lost_list(request):
     except EmptyPage:
         lost = paginator.page(paginator.num_pages)
 
-    return render(request, 'web/lost_found.html', {
+    return render(request, 'web/pet_list.html', {
         'pets': lost,
         'lost': True,
     })
@@ -55,7 +55,17 @@ def found_list(request):
     except EmptyPage:
         found = paginator.page(paginator.num_pages)
 
-    return render(request, 'web/lost_found.html', {
+    return render(request, 'web/pet_list.html', {
         'pets': found,
         'found': True,
+    })
+
+
+def pet_detail(request, slug):
+    pet = get_object_or_404(
+        Pet.objects.prefetch_related('pictures'),
+        slug=slug,
+    )
+    return render(request, 'web/pet_detail.html', {
+        'pet': pet,
     })
