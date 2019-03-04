@@ -14,6 +14,9 @@ django = "*"
 dj-database-url = "*"
 psycopg2 = "*"
 pillow = "*"
+static3 = "*"
+django-storages = "*"
+dj-static = "*"
 
 [requires]
 python_version = "3.7"
