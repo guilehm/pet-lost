@@ -1,0 +1,58 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load web_tags %}
+{% block content %}
+<section class="section blog">
+    <div class="container">
+
+        <div class="row justify-content-center mb-5 element-animate">
+            <div class="col-md-8 text-center">
+                {% if lost %}
+                    <h2 class=" heading mb-4">Desaparecidos</h2>
+                    <p class="mb-5 lead">Pets que estão sendo procurados por sua família.</p>
+                {% elif found %}
+                    <h2 class=" heading mb-4">Encontrados</h2>
+                    <p class="mb-5 lead">Pets que foram encontrados por alguém e estão procurando suas famílias.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% pet_list %}
+
+        {% if pets.has_other_pages %}
+            <nav class="element-animate" aria-label="pagination">
+                <ul class="pagination justify-content-end">
+
+                    {% if pets.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ pets.previous_page_number }}" tabindex="-1">&laquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" tabindex="-1" aria-disabled="true">&laquo;</a>
+                        </li>
+                    {% endif %}
+
+                    {% for i in pets.paginator.page_range %}
+                        {% if pets.number == i %}
+                            <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if pets.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ pets.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" tabindex="-1" aria-disabled="true">&raquo;</a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}

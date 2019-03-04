@@ -15,20 +15,22 @@
     <link rel="stylesheet" href="{% static 'web/css/style.css' %}">
 </head>
 <body>
-
 <header role="banner">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand absolute" href="{% url 'web:index' %}">Pet Lost</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05"
-                    aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars05"
+                    aria-controls="navbars05" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarsExample05">
+            <div class="collapse navbar-collapse" id="navbars05">
                 <ul class="navbar-nav mx-auto pl-lg-5 pl-0">
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'web:index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'web:lost' %}">Perdidos</a>
                     </li>
                 </ul>
             </div>
@@ -36,7 +38,9 @@
     </nav>
 </header>
 <!-- END header -->
+{% block banners %}
 {% banners %}
+{% endblock %}
 
 {% block content %}
 {% endblock %}

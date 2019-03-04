@@ -8,17 +8,18 @@ isort = "*"
 flake8 = "*"
 django-debug-toolbar = "*"
 django-extensions = "*"
+model-mommy = "*"
 
 [packages]
 django = "*"
 dj-database-url = "*"
-psycopg2 = "*"
 pillow = "*"
 static3 = "*"
 django-storages = "*"
 dj-static = "*"
 gunicorn = "*"
 boto3 = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"
