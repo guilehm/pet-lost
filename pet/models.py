@@ -66,9 +66,6 @@ class Pet(models.Model):
         return f'{self.kind} #{str(self.id)[:8]} ({self.name})'
 
     def clean(self):
-        if self.name and not self.lost_date:
-            self.lost_date = timezone.now()
-
         if not any([self.lost_date, self.found_date]):
             raise ValidationError('Lost Date or Found Date must be filled')
 
@@ -78,7 +75,7 @@ class Pet(models.Model):
         if not self.situation:
             if self.found_date:
                 self.situation = self.SITUATION_FOUND
-            if self.lost_date:
+            elif self.lost_date:
                 self.situation = self.SITUATION_LOST
 
         if self.rescued and not self.rescued_date:
