@@ -7,6 +7,7 @@ register = template.Library()
 translation_dict = {
     'Male': 'Macho',
     'Female': 'Fêmea',
+    'Not Identified': 'Não Identificado',
 }
 
 
