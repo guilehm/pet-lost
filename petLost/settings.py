@@ -134,4 +134,7 @@ STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
-ALLOWED_HOSTS = ['gui-pets.herokuapp.com']
+ALLOWED_HOSTS = [
+    'gui-pets.herokuapp.com',
+    'petlost.live',
+]
