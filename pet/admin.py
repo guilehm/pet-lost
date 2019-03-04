@@ -20,7 +20,7 @@ class BreedAdmin(admin.ModelAdmin):
 @admin.register(Pet)
 class PetAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'situation', 'rescued', 'kind', 'breed', 'lost_date', 'found_date'
+        'name', 'situation', 'sex', 'rescued', 'kind', 'breed', 'lost_date', 'found_date'
     )
     exclude = ('pictures',)
     list_filter = (
