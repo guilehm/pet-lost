@@ -1,4 +1,5 @@
 {% load static %}
+{% load web_tags %}
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -35,23 +36,7 @@
     </nav>
 </header>
 <!-- END header -->
-
-<section class="home-slider owl-carousel">
-    <div class="slider-item" style="background-image: url('http://localhost:8000/media/pet/picture/image/adorable-1997168_1920.jpg');">
-        <div class="container">
-            <div class="row slider-text align-items-center justify-content-center">
-                <div class="col-md-8 text-center col-sm-12 element-animate">
-                    <h1>Ajude um Pet</h1>
-                    <p class="mb-5">a encontrar sua família</p>
-                    <p>
-                        <a href="#" class="btn btn-white btn-outline-white">Desaparecidos</a>
-                        <a href="#" class="btn btn-link btn-white">Encontrados</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+{% banners %}
 
 {% block content %}
 {% endblock %}
