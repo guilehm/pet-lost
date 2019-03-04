@@ -1,0 +1,114 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <title>Pet Lost - Ajude um pet a encontrar sua família</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'web/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'web/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'web/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'web/fonts/ionicons/css/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'web/fonts/fontawesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'web/css/style.css' %}">
+</head>
+<body>
+
+<header role="banner">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand absolute" href="{% url 'web:index' %}">Pet Lost</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05"
+                    aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample05">
+                <ul class="navbar-nav mx-auto pl-lg-5 pl-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'web:index' %}">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- END header -->
+
+<section class="home-slider owl-carousel">
+    <div class="slider-item" style="background-image: url('http://localhost:8000/media/pet/picture/image/adorable-1997168_1920.jpg');">
+        <div class="container">
+            <div class="row slider-text align-items-center justify-content-center">
+                <div class="col-md-8 text-center col-sm-12 element-animate">
+                    <h1>Ajude um Pet</h1>
+                    <p class="mb-5">a encontrar sua família</p>
+                    <p>
+                        <a href="#" class="btn btn-white btn-outline-white">Desaparecidos</a>
+                        <a href="#" class="btn btn-link btn-white">Encontrados</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block content %}
+{% endblock %}
+
+<footer class="site-footer" role="contentinfo">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-4 mb-5">
+                <h3>Sobre a Pet Lost</h3>
+                <p class="mb-5">Queremos ajudar os animais a encontrarem suas famílias.</p>
+                <ul class="list-unstyled footer-link d-flex footer-social">
+                    <li><a href="#" class="p-2"><span class="fa fa-facebook"></span></a></li>
+                </ul>
+
+            </div>
+            <div class="col-md-5 mb-5">
+                <h3>Dados para Contato</h3>
+                <ul class="list-unstyled footer-link">
+                    <li class="d-block"><span class="d-block">Email:</span>
+                        <span class="text-white">guile.hm@hotmail.com</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-5">
+                <h3>Quick Links</h3>
+                <ul class="list-unstyled footer-link">
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-md-center text-left">
+                    desenvolvido por
+                    <a href="https://github.com/Guilehm/" target="_blank">guilherme luis</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- END footer -->
+
+<!-- loader -->
+<div id="loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"stroke="#f4b214"/>
+    </svg>
+</div>
+
+<script src="{% static 'web/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'web/js/popper.min.js' %}"></script>
+<script src="{% static 'web/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'web/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'web/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'web/js/main.js' %}"></script>
+</body>
+</html>
