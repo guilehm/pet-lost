@@ -1,6 +1,6 @@
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from pet.models import Pet
 
 
@@ -14,8 +14,8 @@ def index(request):
         rescued=False,
     ).order_by('?').select_related('picture')[:4]
     return render(request, 'web/index.html', {
-        'lost': lost,
-        'found': found,
+        'pets_lost': lost,
+        'pets_found': found,
     })
 
 

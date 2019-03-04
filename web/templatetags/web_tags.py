@@ -1,5 +1,6 @@
 from django import template
 
+from pet.models import Pet
 from web.models import Banner
 
 register = template.Library()
@@ -23,8 +24,13 @@ def banners():
 
 
 @register.inclusion_tag('web/tags/pet_list.html', takes_context=True)
-def pet_list(context):
-    pets = context['pets']
+def pet_list(context, situation=None):
+    if situation == Pet.SITUATION_LOST:
+        pets = context['pets_lost']
+    elif situation == Pet.SITUATION_FOUND:
+        pets = context['pets_found']
+    else:
+        pets = context['pets']
     lost = context.get('lost')
     found = context.get('found')
     return {
