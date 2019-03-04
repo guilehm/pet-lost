@@ -1,0 +1,88 @@
+{% extends 'web/base.html' %}
+{% load web_tags %}
+{% block content %}
+<section class="section blog">
+    <div class="container">
+
+        <div class="row justify-content-center mb-5 element-animate">
+            <div class="col-md-8 text-center">
+                {% if lost %}
+                    <h2 class=" heading mb-4">Desaparecidos</h2>
+                    <p class="mb-5 lead">Pets que estão sendo procurados por sua família.</p>
+                {% elif found %}
+                    <h2 class=" heading mb-4">Encontrados</h2>
+                    <p class="mb-5 lead">Pets que foram encontrados por alguém e estão procurando suas famílias.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            {% for pet in pets %}
+                <div class="col-md-6">
+                    <div class="media mb-4 d-md-flex d-block element-animate">
+                        <a class="mr-5"><img src="{{ pet.picture.image.url }}" alt="{{ pet.slug }}" class="img-fluid"></a>
+                        <div class="media-body">
+                            <span class="post-meta">{{ pet.date_changed.date }}</span>
+                            <h3 class="mt-2 text-black"><a href="#">{{ pet.name|default:'Não Identificado' }}</a></h3>
+                            <p>
+                                {% if lost %}
+                                    Desaparecido em: <strong>{{ pet.lost_date|date:'d/m/Y' }}</strong><br>
+                                {% elif found %}
+                                    Encontrado em: <strong>{{ pet.found_date|date:'d/m/Y' }}</strong><br>
+                                {% endif %}
+                                Local: <strong>#</strong><br>
+                                Sexo: <strong>{{ pet.get_sex_display|translation }}</strong><br>
+                                Status: <strong>{% if pet.rescued %}Resgatado{% else %}Não resgatado{% endif %}</strong>
+                                {% if pet.description %}
+                                    <br>
+                                    {% if pet.description|length > 80 %}
+                                        Descrição: {{ pet.description|slice:':80' }}...
+                                    {% else %}
+                                        Descrição: {{ pet.description }}
+                                    {% endif %}
+                                {% endif %}
+                            </p>
+                            <p><a href="" class="btn btn-primary btn-sm">detalhes</a></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if pets.has_other_pages %}
+            <nav class="eelement-animate" aria-label="pagination">
+                <ul class="pagination justify-content-end">
+
+                    {% if pets.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ pets.previous_page_number }}" tabindex="-1">&laquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" tabindex="-1" aria-disabled="true">&laquo;</a>
+                        </li>
+                    {% endif %}
+
+                    {% for i in pets.paginator.page_range %}
+                        {% if pets.number == i %}
+                            <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if pets.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ pets.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" tabindex="-1" aria-disabled="true">&raquo;</a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}
