@@ -30,7 +30,10 @@
                         <a class="nav-link active" href="{% url 'web:index' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'web:lost' %}">Perdidos</a>
+                        <a class="nav-link active" href="{% url 'web:pet-lost' %}">Perdidos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'web:pet-found' %}">Encontrados</a>
                     </li>
                 </ul>
             </div>
@@ -51,10 +54,6 @@
             <div class="col-md-4 mb-5">
                 <h3>Sobre a Pet Lost</h3>
                 <p class="mb-5">Queremos ajudar os animais a encontrarem suas famílias.</p>
-                <ul class="list-unstyled footer-link d-flex footer-social">
-                    <li><a href="#" class="p-2"><span class="fa fa-facebook"></span></a></li>
-                </ul>
-
             </div>
             <div class="col-md-5 mb-5">
                 <h3>Dados para Contato</h3>
@@ -67,8 +66,8 @@
             <div class="col-md-3 mb-5">
                 <h3>Quick Links</h3>
                 <ul class="list-unstyled footer-link">
-                    <li><a href="#">Sobre</a></li>
-                    <li><a href="#">Contato</a></li>
+                    <li><a href="{% url 'web:pet-lost' %}">Perdidos</a></li>
+                    <li><a href="{% url 'web:pet-found' %}">Encontrados</a></li>
                 </ul>
             </div>
             <div class="col-md-3">
