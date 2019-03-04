@@ -17,6 +17,7 @@ pillow = "*"
 static3 = "*"
 django-storages = "*"
 dj-static = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
