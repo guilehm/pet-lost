@@ -27,8 +27,6 @@ SECRET_KEY = '94y1dbpkud3um&hyr*$w=m9nt$x$%2)k80q-rn7!5d+s93f*9g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -72,8 +70,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'petLost.wsgi.application'
-
-SECURE_SSL_REDIRECT = True
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -122,5 +118,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+
 STATIC_ROOT = 'staticfiles'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+ALLOWED_HOSTS = ['gui-pets.herokuapp.com']
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
