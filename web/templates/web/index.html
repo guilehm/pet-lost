@@ -1,5 +1,5 @@
 {% extends 'web/base.html' %}
-
+{% load web_tags %}
 {% block content %}
 <section class="section blog">
     <div class="container">
@@ -22,7 +22,7 @@
                             <p>
                                 Desaparecido em: <strong>{{ pet.lost_date|date:'d/m/Y' }}</strong><br>
                                 Local: <strong>#</strong><br>
-                                Sexo: <strong>{{ pet.sex}}</strong><br>
+                                Sexo: <strong>{{ pet.get_sex_display|translation }}</strong><br>
                                 Status: <strong>{% if pet.rescued %}Resgatado{% else %}Não resgatado{% endif %}</strong>
                             </p>
                             <p>Descrição: {{ pet.description }}</p>
@@ -55,7 +55,7 @@
                             <p>
                                 Encontrado em: <strong>{{ pet.found_date|date:'d/m/Y' }}</strong><br>
                                 Local: <strong>#</strong><br>
-                                Sexo: <strong>{{ pet.sex}}</strong><br>
+                                Sexo: <strong>{{ pet.get_sex_display|translation }}</strong><br>
                                 Status: <strong>{% if pet.rescued %}Resgatado{% else %}Não resgatado{% endif %}</strong>
                             </p>
                             <p>Descrição: {{ pet.description }}</p>
