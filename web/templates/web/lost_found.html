@@ -17,45 +17,10 @@
             </div>
         </div>
 
-        <div class="row">
-            {% for pet in pets %}
-                <div class="col-md-6">
-                    <div class="media mb-4 d-md-flex d-block element-animate">
-                        {% if pet.picture %}
-                            <a class="mr-5"><img src="{{ pet.picture.image.url }}" alt="{{ pet.slug }}" class="img-fluid"></a>
-                        {% else %}
-                            <a class="mr-5"><img src="{% static 'web/img/placeholder.png' %}" alt="{{ pet.slug }}" class="img-fluid"></a>
-                        {% endif %}
-                        <div class="media-body">
-                            <span class="post-meta">{{ pet.date_changed.date }}</span>
-                            <h3 class="mt-2 text-black"><a href="#">{{ pet.name|default:'Não Identificado' }}</a></h3>
-                            <p>
-                                {% if lost %}
-                                    Desaparecido em: <strong>{{ pet.lost_date|date:'d/m/Y' }}</strong><br>
-                                {% elif found %}
-                                    Encontrado em: <strong>{{ pet.found_date|date:'d/m/Y' }}</strong><br>
-                                {% endif %}
-                                Local: <strong>#</strong><br>
-                                Sexo: <strong>{{ pet.get_sex_display|translation }}</strong><br>
-                                Status: <strong>{% if pet.rescued %}Resgatado{% else %}Não resgatado{% endif %}</strong>
-                                {% if pet.description %}
-                                    <br>
-                                    {% if pet.description|length > 80 %}
-                                        Descrição: {{ pet.description|slice:':80' }}...
-                                    {% else %}
-                                        Descrição: {{ pet.description }}
-                                    {% endif %}
-                                {% endif %}
-                            </p>
-                            <p><a href="" class="btn btn-primary btn-sm">detalhes</a></p>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+        {% pet_list %}
 
         {% if pets.has_other_pages %}
-            <nav class="eelement-animate" aria-label="pagination">
+            <nav class="element-animate" aria-label="pagination">
                 <ul class="pagination justify-content-end">
 
                     {% if pets.has_previous %}

@@ -20,3 +20,15 @@ def translation(value):
 def banners():
     active_banners = Banner.objects.filter(active=True)
     return {'banners': active_banners}
+
+
+@register.inclusion_tag('web/tags/pet_list.html', takes_context=True)
+def pet_list(context):
+    pets = context['pets']
+    lost = context.get('lost')
+    found = context.get('found')
+    return {
+        'pets': pets,
+        'lost': lost,
+        'found': found,
+    }
