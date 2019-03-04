@@ -1,0 +1,106 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="section element-animate">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-4"></div>
+            <div class="col-md-8 section-heading">
+                <h2>{{ pet.name|default:'Não Identificado' }}</h2>
+                {% if not pet.rescued %}
+                    {% if pet.situation == 'lost' %}
+                        <p class="small-sub-heading">Ainda estou desaparecid{% if pet.sex == 'female' %}a{% else  %}o{% endif %}</p>
+                    {% else %}
+                        <p class="small-sub-heading">Ainda estou procurando minha família</p>
+                    {% endif %}
+                {% else %}
+                    <p class="small-sub-heading">já encontrei minha família :)</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                {% if pet.picture %}
+                    <img src="{{ pet.picture.image.url }}" alt="{{ pet.slug }}" class="img-fluid">
+                {% else %}
+                    <img src="{% static 'web/img/placeholder.png' %}" alt="{{ pet.slug }}" class="img-fluid">
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <strong>Um pouco sobre mim:</strong> <br>
+                    {% if pet.situation == 'lost' %}
+                        Eu desapareci no dia {{ pet.lost_date|date:'d/m/Y' }}.<br>
+                    {% elif pet.situation == 'found' %}
+                        Fui encontrad{% if pet.sex == 'female' %}a{% else  %}o{% endif %} no dia {{ pet.found_date|date:'d/m/Y' }}.<br>
+                    {% endif %}
+
+                    Me viram por último em # na região de #.<br>
+                    {% if not pet.sex == 'not_identified' %}
+                        {% if pet.sex == 'male' %}
+                            Sou um macho.
+                        {% elif pet.sex == 'female' %}
+                            Sou uma fêmea.
+                        {% endif %}
+                    {% endif %}
+                    {% if not pet.rescued %}
+                        <br>
+                        Ainda não encontrei minha família, conto com sua ajuda para encontrá-los. <br>
+                    {% else %}
+                        Fui recuperado por minha família em {{ pet.rescued_date|date:'d/m/Y' }} graças à ajuda de pessoas como você.
+                    {% endif %}
+                </p>
+                {% if not pet.rescued %}
+                <p>
+                    <button class="btn btn-success btn-sm">me encontrou?</button>
+                </p>
+                <p>
+                    <button class="btn btn-info btn-sm">alguma informação sobre mim?</button>
+                </p>
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                <p><strong>O que minha família disse sobre mim:</strong> <br> {{ pet.description|default:'' }}</p>
+                <p><a class="font-weight-bold">Compartilhe <span class="ion-ios-arrow-right"></span></a></p>
+                <ul class="list-unstyled d-flex">
+                    <li style="font-size: 40px;">
+                        <a href="" class="p-2"><span class="fa fa-facebook-square"></span></a>
+                    </li>
+                    <li style="font-size: 40px;">
+                        <a href="" class="p-2"><span class="fa fa-twitter-square"></span></a>
+                    </li>
+                    <li style="font-size: 40px;">
+                        <a href="" class="p-2"><span class="fa fa-instagram"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% if pet.pictures.exists %}
+<section class="section border-t bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5 element-animate">
+            <div class="col-md-8 text-center">
+                <h2 class=" heading mb-4">Fotos</h2>
+            </div>
+        </div>
+
+        <div class="row no-gutters">
+            {% for picture in pet.pictures.all %}
+                <div class="col-md-4 element-animate">
+                    <a class="link-thumbnail">
+                        <h3>{{ picture.title|default:'' }}</h3>
+                        <img src="{{ picture.image.url }}" alt="{{ picture.title|default:'' }}" class="img-fluid">
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+{% endif %}
+{% endblock %}

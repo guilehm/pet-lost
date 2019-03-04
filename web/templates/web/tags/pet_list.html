@@ -11,7 +11,7 @@
                 {% endif %}
                 <div class="media-body">
                     <span class="post-meta">{{ pet.date_changed.date }}</span>
-                    <h3 class="mt-2 text-black"><a href="#">{{ pet.name|default:'Não Identificado' }}</a></h3>
+                    <h3 class="mt-2 text-black"><a href="{% url 'web:pet-detail' pet.slug %}">{{ pet.name|default:'Não Identificado' }}</a></h3>
                     <p>
                         {% if lost %}
                             Desaparecido em: <strong>{{ pet.lost_date|date:'d/m/Y' }}</strong><br>
@@ -30,7 +30,7 @@
                             {% endif %}
                         {% endif %}
                     </p>
-                    <p><a href="" class="btn btn-primary btn-sm">detalhes</a></p>
+                    <p><a href="{% url 'web:pet-detail' pet.slug %}" class="btn btn-primary btn-sm">detalhes</a></p>
                 </div>
             </div>
         </div>
