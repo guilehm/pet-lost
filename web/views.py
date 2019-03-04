@@ -6,11 +6,11 @@ def index(request):
     lost = Pet.objects.filter(
         situation=Pet.SITUATION_LOST,
         rescued=False,
-    ).select_related('picture')
+    ).order_by('?').select_related('picture')[:4]
     found = Pet.objects.filter(
         situation=Pet.SITUATION_FOUND,
         rescued=False,
-    ).select_related('picture')
+    ).order_by('?').select_related('picture')[:4]
     return render(request, 'web/index.html', {
         'lost': lost,
         'found': found,
