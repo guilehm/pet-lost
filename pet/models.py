@@ -75,6 +75,12 @@ class Pet(models.Model):
         if self.lost_date and not self.name:
             raise ValidationError('Please fill the name of your pet')
 
+        if not self.situation:
+            if self.found_date:
+                self.situation = self.SITUATION_FOUND
+            if self.lost_date:
+                self.situation = self.SITUATION_LOST
+
         if self.rescued and not self.rescued_date:
             self.rescued_date = timezone.now()
 
