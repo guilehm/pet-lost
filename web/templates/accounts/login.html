@@ -43,11 +43,10 @@
                                         {{ error }}
                                     {% endfor %}
                                     <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">Entrar</button>
-                                    <a href="#" class="">Ou registre-se aqui</a>
-                                    <p class="mt-5 mb-3 text-muted">&copy; 2019</p>
+                                    <a href="{% url 'web:account-signup' %}" class="">Ou registre-se aqui</a>
                                 </form>
                             {% else %}
-                                <h1 class="display-4 mb-2">Olá, {{ request.user.first_name }} seja bem-vindo</h1>
+                                <h1 class="display-4 mb-2">Olá, {{ request.user.first_name }}, seja bem-vindo</h1>
                             {% endif %}
                         </div>
                     </div>

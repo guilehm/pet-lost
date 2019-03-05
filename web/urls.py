@@ -11,4 +11,5 @@ urlpatterns = [
     path('pets/<str:slug>/', views.pet_detail, name='pet-detail'),
     path('accounts/login/', views.login_view, name='account-login'),
     path('accounts/logout/', views.logout_view, name='account-logout'),
+    path('accounts/signup/', views.signup_view, name='account-signup'),
 ]
