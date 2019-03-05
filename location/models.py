@@ -37,3 +37,7 @@ class City(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+    @property
+    def data(self):
+        return f'{self.name} /{self.state}'
