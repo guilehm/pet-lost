@@ -33,17 +33,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # My Apps
+    'location',
+    'users',
+    'pet',
+    'web',
     # Social login
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
-    # My Apps
-    'location',
-    'users',
-    'pet',
-    'web',
 ]
 
 MIDDLEWARE = [
@@ -137,7 +137,7 @@ SOCIALACCOUNT_PROVIDERS = {
     'facebook':
         {
             'METHOD': 'oauth2',
-            'SCOPE': ['email', 'public_profile', 'user_friends'],
+            'SCOPE': ['email', 'public_profile'],
             'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
             'FIELDS': [
                 'id',
@@ -153,9 +153,9 @@ SOCIALACCOUNT_PROVIDERS = {
                 'updated_time',
             ],
             'EXCHANGE_TOKEN': True,
-            'LOCALE_FUNC': lambda request: 'kr_KR',
+            'LOCALE_FUNC': lambda request: 'pt_BR',
             'VERIFIED_EMAIL': False,
-            'VERSION': 'v2.4'
+            'VERSION': 'v2.4',
         }
 }
 SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')  # App ID
@@ -169,9 +169,9 @@ ACCOUNT_USERNAME_REQURIED = False
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-BR'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 

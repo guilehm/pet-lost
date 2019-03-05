@@ -1,0 +1,48 @@
+{% extends 'web/base.html' %}
+{% block banners %}
+{% load account %}
+{% load i18n %}
+{% load static %}
+
+    <section class="home-slider owl-carousel">
+        <div class="slider-item" style="background-image: url({% static 'web/img/login-banner-picture.jpg' %});">
+            <div class="container">
+                <div class="row slider-text align-items-center justify-content-center">
+                    <div class="col-md-8 text-center col-sm-12 element-animate">
+                        <div class="container text-center">
+{#                            {% block head_title %}{% trans "Confirm E-mail Address" %}{% endblock %}#}
+
+                            <h1>{% trans "Confirm E-mail Address" %}</h1>
+
+                            {% if confirmation %}
+
+                                {% user_display confirmation.email_address.user as user_display %}
+
+                                <p>{% blocktrans with confirmation.email_address.email as email %}Por favor confirme que
+                                    <a href="mailto:{{ email }}">{{ email }}</a> é o endereço de email do usuário
+                                    {{ user_display }}.{% endblocktrans %}</p>
+
+                                <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                                    {% csrf_token %}
+                                    <button class="btn btn-sm btn-success" type="submit">{% trans 'Confirm' %}</button>
+                                </form>
+
+                            {% else %}
+
+                                {% url 'account_email' as email_url %}
+
+                                <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please
+                                    <a href="{{ email_url }}">issue a new e-mail confirmation request</a>
+                                    .{% endblocktrans %}</p>
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
