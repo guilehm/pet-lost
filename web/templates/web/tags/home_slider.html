@@ -6,6 +6,18 @@
                     <div class="col-md-8 text-center col-sm-12 element-animate">
                         <h1>{{ banner.title|default:'' }}</h1>
                         <p class="mb-5">{{ banner.subtitle|default:'' }}</p>
+                        {% block messages %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                        <strong>{{ message }}</strong>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endblock %}
                         <p>
                             {% if banner.button_one %}
                                 <a href="{{ banner.button_one_link|default:'' }}" class="btn btn-white btn-outline-white">{{ banner.button_one|default:'' }}</a>

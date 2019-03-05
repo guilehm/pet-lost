@@ -18,9 +18,9 @@ def translation(value):
 
 
 @register.inclusion_tag('web/tags/home_slider.html')
-def banners():
+def banners(request):
     active_banners = Banner.objects.filter(active=True)
-    return {'banners': active_banners}
+    return {'messages': request._messages, 'banners': active_banners}
 
 
 @register.inclusion_tag('web/tags/pet_list.html', takes_context=True)
