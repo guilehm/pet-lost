@@ -51,11 +51,12 @@ class UserAdmin(DjangoUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2'),
+            'fields': ('password1', 'password2'),
         }),
     )
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
-    search_fields = ('username', 'email', 'first_name', 'last_name')
-    ordering = ('username',)
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'share_email', 'share_phone')
+    list_display = ('email', 'first_name', 'last_name')
+    search_fields = ('email', 'first_name', 'last_name')
+    ordering = ('-id',)
+    list_filter = ('is_superuser', 'is_active', 'share_email', 'share_phone')
     raw_id_fields = ('city',)
+    readonly_fields = ('date_joined',)
