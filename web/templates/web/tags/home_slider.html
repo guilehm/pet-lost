@@ -8,10 +8,10 @@
                         <p class="mb-5">{{ banner.subtitle|default:'' }}</p>
                         <p>
                             {% if banner.button_one %}
-                                <a href="{{ banner.button_one_link|default:'' }}" class="btn btn-white btn-outline-white">Desaparecidos</a>
+                                <a href="{{ banner.button_one_link|default:'' }}" class="btn btn-white btn-outline-white">{{ banner.button_one|default:'' }}</a>
                             {% endif %}
                             {% if banner.button_two %}
-                                <a href="{{ banner.button_two_link|default:'' }}" class="btn btn-link btn-white">Encontrados</a>
+                                <a href="{{ banner.butpeton_two_link|default:'' }}" class="btn btn-link btn-white">{{ banner.button_two|default:'' }}</a>
                             {% endif %}
                         </p>
                     </div>

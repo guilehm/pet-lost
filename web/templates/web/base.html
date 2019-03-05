@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{% static 'web/fonts/ionicons/css/ionicons.min.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'web/css/style.css' %}">
+    {% block headers %}
+    {% endblock %}
 </head>
 <body>
 <header role="banner">
@@ -30,7 +32,7 @@
                         <a class="nav-link active" href="{% url 'web:index' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'web:pet-lost' %}">Perdidos</a>
+                        <a class="nav-link active" href="{% url 'web:pet-lost' %}">Desaparecidos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'web:pet-found' %}">Encontrados</a>
@@ -66,7 +68,7 @@
             <div class="col-md-3 mb-5">
                 <h3>Quick Links</h3>
                 <ul class="list-unstyled footer-link">
-                    <li><a href="{% url 'web:pet-lost' %}">Perdidos</a></li>
+                    <li><a href="{% url 'web:pet-lost' %}">Desaparecidos</a></li>
                     <li><a href="{% url 'web:pet-found' %}">Encontrados</a></li>
                 </ul>
             </div>
@@ -98,5 +100,7 @@
 <script src="{% static 'web/js/owl.carousel.min.js' %}"></script>
 <script src="{% static 'web/js/jquery.waypoints.min.js' %}"></script>
 <script src="{% static 'web/js/main.js' %}"></script>
+{% block js %}
+{% endblock %}
 </body>
 </html>
