@@ -20,7 +20,8 @@
                         {% endif %}
                         Local: <strong>#</strong><br>
                         Sexo: <strong>{{ pet.get_sex_display|translation }}</strong><br>
-                        Status: <strong>{% if pet.rescued %}Resgatado{% else %}Não resgatado{% endif %}</strong>
+                        Status: <strong>{% if pet.rescued %}Resgatado{% else %}Não resgatado{% endif %}</strong><br>
+                        Local: <strong>{{ pet.location_city.data }}</strong>
                         {% if pet.description %}
                             <br>
                             {% if pet.description|length > 80 %}

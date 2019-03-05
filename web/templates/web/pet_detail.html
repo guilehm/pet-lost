@@ -36,7 +36,7 @@
                         Fui encontrad{% if pet.sex == 'female' %}a{% else  %}o{% endif %} no dia {{ pet.found_date|date:'d/m/Y' }}.<br>
                     {% endif %}
 
-                    Me viram por último em # na região de #.<br>
+                    Me viram por último em {{ pet.location_city.data }}, {{ pet.location_detail }}.<br>
                     {% if not pet.sex == 'not_identified' %}
                         {% if pet.sex == 'male' %}
                             Sou um macho.
@@ -61,7 +61,9 @@
                 {% endif %}
             </div>
             <div class="col-md-4">
-                <p><strong>O que minha família disse sobre mim:</strong> <br> {{ pet.description|default:'' }}</p>
+                {% if pet.description %}
+                    <p><strong>O que minha família disse sobre mim:</strong> <br> {{ pet.description|default:'' }}</p>
+                {% endif %}
                 <p><a class="font-weight-bold">Compartilhe <span class="ion-ios-arrow-right"></span></a></p>
                 <ul class="list-unstyled d-flex">
                     <li style="font-size: 40px;">
