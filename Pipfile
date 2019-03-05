@@ -20,6 +20,7 @@ dj-static = "*"
 gunicorn = "*"
 boto3 = "*"
 psycopg2-binary = "*"
+django-allauth = "*"
 
 [requires]
 python_version = "3.7"

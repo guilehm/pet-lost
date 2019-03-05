@@ -38,6 +38,15 @@
                         <a class="nav-link active" href="{% url 'web:pet-found' %}">Encontrados</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav ml-auto pl-lg-5 pl-0">
+                    <li class="nav-item">
+                        {% if not request.user.is_authenticated %}
+                            <a class="nav-link active" href="{% url 'web:account-login' %}">Login</a>
+                        {% else %}
+                            <a class="nav-link active" href="{% url 'web:account-logout' %}">Logout</a>
+                        {% endif %}
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -50,6 +59,7 @@
 {% block content %}
 {% endblock %}
 
+{% block footer %}
 <footer class="site-footer" role="contentinfo">
     <div class="container">
         <div class="row mb-5">
@@ -85,6 +95,7 @@
     </div>
 </footer>
 <!-- END footer -->
+{% endblock %}
 
 <!-- loader -->
 <div id="loader" class="show fullscreen">

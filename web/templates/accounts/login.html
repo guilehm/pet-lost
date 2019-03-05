@@ -1,0 +1,60 @@
+{% extends 'web/base.html' %}
+{% load socialaccount %}
+{% providers_media_js %}
+{% load i18n %}
+{% load static %}
+{% block banners %}
+    {% language 'pt-BR' %}
+    <section class="home-slider owl-carousel">
+        <div class="slider-item" style="background-image: url({% static 'web/img/login-banner-picture.jpg' %});">
+            <div class="container">
+                <div class="row slider-text align-items-center justify-content-center">
+                    <div class="col-md-8 text-center col-sm-12 element-animate">
+                        <div class="container text-center">
+                            {% if not request.user.is_authenticated %}
+                                <form class="form-signin" method="post">
+                                    {% csrf_token %}
+                                    <h1 class="display-4 mb-2">Login</h1>
+                                    {% for error in login_form.non_field_errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                    <input type="text"
+                                           class="form-control text-center mb-2"
+                                           name="{{ login_form.email.name }}"
+                                           placeholder="digite seu email"
+                                           id="{{ login_form.email.id_for_label }}"
+                                           {% if login_form.email.value != None %}value="{{ login_form.email.value|stringformat:'s' }}"{% endif %}
+                                           maxlength="{{ login_form.email.field.max_length }}"
+                                           {% if login_form.email.field.required %}required{% endif %}>
+
+                                    {% for error in login_form.email.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                    <input type="password"
+                                           class="form-control text-center mb-3"
+                                           name="{{ login_form.password.name }}"
+                                           placeholder="digite sua senha"
+                                           id="{{ login_form.password.id_for_label }}"
+                                           {% if login_form.password.value != None %}value="{{ login_form.password.value|stringformat:'s' }}"{% endif %}
+                                           maxlength="{{ login_form.password.field.max_length }}"
+                                           {% if login_form.password.field.required %}required{% endif %}>
+
+                                    {% for error in login_form.password.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                    <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">Entrar</button>
+                                    <a href="{% url 'web:account-signup' %}" class="">Ou registre-se aqui</a>
+                                </form>
+                            {% else %}
+                                <h1 class="display-4 mb-2">Olá, {{ request.user.first_name }}, seja bem-vindo</h1>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endlanguage %}
+{% endblock %}
+{% block content %}
+{% endblock %}

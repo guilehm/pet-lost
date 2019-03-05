@@ -73,6 +73,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     url_twitter = models.URLField('Twitter URL', null=True, blank=True)
     url_instagram = models.URLField('Instagram URL', null=True, blank=True)
 
+    username = models.CharField(max_length=128, null=True, blank=True)
+
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
