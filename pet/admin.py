@@ -34,7 +34,7 @@ class PetAdmin(admin.ModelAdmin):
         'breed',
     )
     search_fields = ('name', 'description')
-    raw_id_fields = ('picture',)
+    raw_id_fields = ('picture', 'breed', 'location_city')
     prepopulated_fields = {'slug': ('name', 'kind', 'situation')}
     inlines = (PetPictureInline,)
 
