@@ -2146,5 +2146,17 @@
       "date_added": "2019-03-05T04:18:01.873Z",
       "date_changed": "2019-03-05T04:18:01.873Z"
    }
+},
+{
+   "model": "pet.breed",
+   "pk": 180,
+   "fields": {
+      "name": "Vira-Lata (Raça Não Definida)",
+      "kind": "dog",
+      "slug": "vira-lata",
+      "description": null,
+      "date_added": "2019-03-05T04:18:01.873Z",
+      "date_changed": "2019-03-05T04:18:01.873Z"
+   }
 }
 ]
