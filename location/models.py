@@ -35,8 +35,5 @@ class City(models.Model):
     name = models.CharField(max_length=60)
     state = models.CharField(max_length=2, choices=STATE_CHOICES)
 
-    date_added = models.DateTimeField(auto_now_add=True, null=True)
-    date_changed = models.DateTimeField(auto_now=True, null=True)
-
     def __str__(self):
         return f'{self.name}'
