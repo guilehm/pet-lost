@@ -9,6 +9,7 @@ urlpatterns = [
     path('pets/lost/', views.lost_list, name='pet-lost'),
     path('pets/found/', views.found_list, name='pet-found'),
     path('pets/<str:slug>/', views.pet_detail, name='pet-detail'),
+    path('accounts/profile/', views.login_view, name='account-profile'),
     path('accounts/login/', views.login_view, name='account-login'),
     path('accounts/logout/', views.logout_view, name='account-logout'),
     path('accounts/signup/', views.signup_view, name='account-signup'),
