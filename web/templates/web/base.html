@@ -29,9 +29,6 @@
             <div class="collapse navbar-collapse" id="navbars05">
                 <ul class="navbar-nav mx-auto pl-lg-5 pl-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'web:index' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link active" href="{% url 'web:pet-lost' %}">Desaparecidos</a>
                     </li>
                     <li class="nav-item">
@@ -46,12 +43,11 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="{% url 'web:account-signup' %}">Registrar</a>
                         </li>
-                        {% else %}
+                    {% else %}
                         <li class="nav-item">
                             <a class="nav-link active" href="{% url 'web:account-logout' %}">Logout</a>
                         </li>
-                        {% endif %}
-                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
