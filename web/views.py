@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from pet.models import Pet
 from users.models import User
-from web.forms import AuthenticationForm
+from web.forms import AuthenticationForm, UserCreationForm
 
 
 def index(request):
@@ -105,3 +105,22 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('web:index')
+
+
+def signup_view(request):
+    form = UserCreationForm()
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.first_name = request.POST['first_name']
+            user.email = request.POST['email']
+            user.save()
+            login(
+                request,
+                user,
+                backend='django.contrib.auth.backends.ModelBackend',
+            )
+    return render(request, 'accounts/signup.html', {
+        'form': form
+    })
