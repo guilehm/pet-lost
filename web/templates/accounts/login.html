@@ -1,9 +1,9 @@
 {% extends 'web/base.html' %}
-{% load socialaccount %}
-{% providers_media_js %}
 {% load i18n %}
 {% load static %}
 {% block banners %}
+    {% load socialaccount %}
+    {% providers_media_js %}
     {% language 'pt-BR' %}
     <section class="home-slider owl-carousel">
         <div class="slider-item" style="background-image: url({% static 'web/img/login-banner-picture.jpg' %});">
@@ -43,6 +43,11 @@
                                         {{ error }}
                                     {% endfor %}
                                     <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">Entrar</button>
+                                    <a href="{% provider_login_url "facebook" method="js_sdk" %}" class="btn btn-block btn-social btn-facebook mb-3"
+                                       style="background-color:#3b5998;text-align:center">
+                                        <span class="fa fa-facebook"></span>
+                                        Entrar com Facebook
+                                    </a>
                                     <a href="{% url 'web:account-signup' %}" class="">Ou registre-se aqui</a>
                                 </form>
                             {% else %}
