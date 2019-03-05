@@ -58,6 +58,8 @@ class Pet(models.Model):
     picture = models.ForeignKey('pet.Picture', null=True, blank=True, on_delete=models.SET_NULL)
     pictures = models.ManyToManyField('pet.Picture', related_name='pets', blank=True)
     description = models.TextField(null=True, blank=True)
+    location_city = models.ForeignKey('location.City', db_index=True, on_delete=models.CASCADE)
+    location_detail = models.CharField(max_length=512)
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True)
