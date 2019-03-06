@@ -41,3 +41,6 @@ class City(models.Model):
     @property
     def data(self):
         return f'{self.name} /{self.state}'
+
+    class Meta:
+        verbose_name_plural = 'cities'

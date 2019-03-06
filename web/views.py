@@ -1,10 +1,12 @@
+from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, redirect, render
-
+from django.contrib import messages
 from pet.models import Pet
 from users.models import User
-from web.forms import AuthenticationForm, UserCreationForm
+from web.forms import AuthenticationForm, UserCreationForm, PersonalDataForm, SocialDataForm, AddressDataForm, ContactDataForm
 
 
 def index(request):
@@ -123,4 +125,87 @@ def signup_view(request):
             )
     return render(request, 'accounts/signup.html', {
         'form': form
+    })
+
+
+@login_required
+def profile(request):
+    user = request.user
+    try:
+        social_account = SocialAccount.objects.get(user=user)
+    except SocialAccount.DoesNotExist:
+        social_account = None
+    return render(request, 'accounts/profile.html', {
+        'user': user,
+        'social_account': social_account,
+    })
+
+
+@login_required
+def profile_change(request):
+    user = request.user
+    try:
+        social_account = SocialAccount.objects.get(user=user)
+    except SocialAccount.DoesNotExist:
+        social_account = None
+
+    personal_data_form = request.GET.get('personal_data')
+    address_data_form = request.GET.get('address_data')
+    contact_data_form = request.GET.get('contact_data')
+    social_media_data_form = request.GET.get('social_media_data')
+
+    if personal_data_form:
+        personal_data_form = PersonalDataForm()
+        if request.method == 'POST':
+            personal_data_form = PersonalDataForm(data=request.POST, instance=user)
+            if not personal_data_form.is_valid():
+                messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro! Por favor revise todos os dados.')
+            else:
+                personal_data_form.save()
+                messages.add_message(request, messages.SUCCESS, 'Dados pessoais alterados com sucesso.')
+                return redirect('web:account-profile')
+
+    if address_data_form:
+        address_data_form = AddressDataForm()
+        if request.method == 'POST':
+            address_data_form = AddressDataForm(data=request.POST, instance=user)
+
+            if not address_data_form.is_valid():
+                messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro!')
+            else:
+                address_data_form.save()
+                messages.add_message(request, messages.SUCCESS, 'Dados de endereço alterados com sucesso.')
+                return redirect('web:account-profile')
+
+    if contact_data_form:
+        contact_data_form = ContactDataForm()
+        if request.method == 'POST':
+            contact_data_form = ContactDataForm(data=request.POST, instance=user)
+
+            if not contact_data_form.is_valid():
+                messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro!')
+            else:
+                contact_data_form.save()
+                messages.add_message(request, messages.SUCCESS, 'Dados de contato alterados com sucesso.')
+                return redirect('web:account-profile')
+
+    if social_media_data_form:
+        social_media_data_form = SocialDataForm()
+        if request.method == 'POST':
+            social_media_data_form = SocialDataForm(data=request.POST, instance=user)
+
+            if not social_media_data_form.is_valid():
+                messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro!')
+            else:
+                social_media_data_form.save()
+                messages.add_message(request, messages.SUCCESS, 'Dados de redes sociais alterados com sucesso.')
+                return redirect('web:account-profile')
+
+    return render(request, 'accounts/profile.html', {
+        'user': user,
+        'social_account': social_account,
+        'personal_data_form': personal_data_form,
+        'address_data_form': address_data_form,
+        'contact_data_form': contact_data_form,
+        'social_media_data_form': social_media_data_form,
     })
