@@ -8,7 +8,7 @@
     {% if not pet.name %}
         <meta property="og:title" content="PetLost - Ajude um pet a encontrar sua família"/>
     {% else %}
-        <meta property="og:title" content="PetLost - Ajude {{ pet.name }} encontrar sua família"/>
+        <meta property="og:title" content="{{ pet.share_description }}"/>
     {% endif %}
     {% if pet.picture %}
         <meta property="og:image" content="{{ pet.picture.image.url }}" />
@@ -66,6 +66,11 @@
                 <ul class="list-unstyled d-flex">
                     <li>
                         <div class="fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }};src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartilhar</a></div>
+                    </li>
+                    <li>
+                        <a class="twitter-share-button"
+                           href="https://twitter.com/intent/tweet?{{ pet.share_description_encoded }}" target="_blank">
+                            Tweet</a>
                     </li>
                 </ul>
             </div>

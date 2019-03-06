@@ -1,12 +1,15 @@
 from allauth.socialaccount.models import SocialAccount
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib import messages
+
 from pet.models import Pet
 from users.models import User
-from web.forms import AuthenticationForm, UserCreationForm, PersonalDataForm, SocialDataForm, AddressDataForm, ContactDataForm
+from web.forms import (
+    AddressDataForm, AuthenticationForm, ContactDataForm, PersonalDataForm, SocialDataForm, UserCreationForm,
+)
 
 
 def index(request):

@@ -1,3 +1,4 @@
+import urllib
 import uuid
 
 from django.core.exceptions import ValidationError
@@ -86,6 +87,18 @@ class Pet(models.Model):
     def save(self, *args, **kwargs):
         self.clean()
         return super().save(*args, **kwargs)
+
+    @property
+    def share_description(self):
+        return 'PetLost - Ajude {name} encontrar sua família. El{sex} conta com a sua ajuda!'.format(
+            name=self.name or 'este cãozinho a',
+            sex='a' if self.sex == self.SEX_FEMALE else 'e',
+        )
+
+    @property
+    def share_description_encoded(self):
+        description = self.share_description
+        return urllib.parse.urlencode({'text': description})
 
     @property
     def lost_description(self):
