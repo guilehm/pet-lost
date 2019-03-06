@@ -1,4 +1,6 @@
+from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -123,4 +125,17 @@ def signup_view(request):
             )
     return render(request, 'accounts/signup.html', {
         'form': form
+    })
+
+
+@login_required
+def profile(request):
+    user = request.user
+    try:
+        social_account = SocialAccount.objects.get(user=user)
+    except SocialAccount.DoesNotExist:
+        social_account = None
+    return render(request, 'accounts/profile.html', {
+        'user': user,
+        'social_account': social_account,
     })

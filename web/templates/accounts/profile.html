@@ -1,0 +1,191 @@
+{% extends 'web/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block banners %}
+    {% load socialaccount %}
+    {% providers_media_js %}
+    {% language 'pt-BR' %}
+    <section class="home-slider owl-carousel">
+        <div class="slider-item" style="background-image: url({% static 'web/img/login-banner-picture.jpg' %});">
+            <div class="container">
+                <div class="row slider-text align-items-center justify-content-center">
+                    <div class="col-md-8 text-center col-sm-12 element-animate">
+                        <div class="container text-center">
+                            <h1 class="display-4 mb-2">Olá, {{ request.user.first_name }}, seja bem-vindo</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endlanguage %}
+{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-5 order-2">
+                <h2 class="heading mb-4">Dados Pessoais</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" id="name" class="form-control" value="{{ user.first_name }}" disabled>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="phone">Sobrenome</label>
+                            <input type="text" id="phone" class="form-control " value="{{ user.last_name }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="org_name">Organização</label>
+                            <input type="text" id="org_name" class="form-control " value="{{ user.org_name|default:'' }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="description">Descrição</label>
+                            <textarea name="description" id="description" class="form-control " cols="30" rows="4" disabled>
+                                {{ user.description|default:'' }}
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <input type="submit" value="Salvar" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6 mb-5 order-2">
+                <h2 class="heading mb-4">Endereço</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="address">Endereço</label>
+                            <input type="text" id="address" class="form-control" value="{{ user.address|default:'' }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="number">Número</label>
+                            <input type="text" id="number" class="form-control" value="{{ user.number|default:'' }}" disabled>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="complement">Complemento</label>
+                            <input type="text" id="complement" class="form-control " value="{{ user.complement|default:'' }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="district">Bairro</label>
+                            <input type="text" id="district" class="form-control " value="{{ user.district|default:'' }}" disabled>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="postal_code">Cep</label>
+                            <input type="text" id="postal_code" class="form-control" value="{{ user.postal_code|default:'' }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 form-group">
+                            <label for="city">Cidade</label>
+                            <input type="text" id="city" class="form-control" value="{{ user.city|default:'' }}" disabled>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label for="state">Estado</label>
+                            <input type="text" id="state" class="form-control" value="{{ user.city.state|default:'' }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="submit" value="Salvar" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-5 order-2">
+                <h2 class="heading mb-4">Contato</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="phone_number">Telefone Fixo</label>
+                            <input type="text" id="phone_number" class="form-control" value="{{ user.phone_number|default:'' }}" placeholder="Número com DDD" disabled>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="mobile_phone_number">Celular</label>
+                            <input type="text" id="mobile_phone_number" class="form-control " value="{{ user.mobile_phone_number|default:'' }}" placeholder="Número com DDD" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="share_phone">Compartilhar meus números?</label>
+                            <input type="checkbox" id="share_phone" class="form-control " value="{{ user.share_phone }}" style="height: 20px;">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="share_email">Compartilhar meu email?</label>
+                            <input type="checkbox" id="share_email" class="form-control " value="{{ user.share_email }}" style="height: 20px;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control " value="{{ user.email }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <input type="submit" value="Salvar" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6 mb-5 order-2">
+                <h2 class="heading mb-4">Redes Sociais</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="url_facebook_profile">Perfil Facebook</label>
+                            <input type="url" id="url_facebook_profile" class="form-control" value="{{ user.url_facebook_profile|default:'' }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="url_facebook_page">Página Facebook</label>
+                            <input type="url" id="url_facebook_page" class="form-control" value="{{ user.url_facebook_page|default:'' }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="url_twitter">Twitter</label>
+                            <input type="url" id="url_twitter" class="form-control" value="{{ user.url_twitter|default:'' }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="url_instagram">Instagram</label>
+                            <input type="url" id="url_instagram" class="form-control" value="{{ user.url_instagram|default:'' }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="submit" value="Salvar" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

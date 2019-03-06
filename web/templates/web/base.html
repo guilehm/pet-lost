@@ -44,8 +44,16 @@
                             <a class="nav-link active" href="{% url 'web:account-signup' %}">Registrar</a>
                         </li>
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{% url 'web:account-logout' %}">Logout</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="services.html" id="dropdown04" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">Minha Conta</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown04">
+                                {% if request.user.socialaccount_set.exists %}
+                                    <img src="{{ request.user.socialaccount_set.all.0.get_avatar_url }}" class="img-fluid d-sm-none d-md-block " alt="">
+                                {% endif %}
+                                <a class="dropdown-item" href="{% url 'web:account-profile' %}">Perfil</a>
+                                <a class="dropdown-item" href="{% url 'web:account-logout' %}">Logout</a>
+                            </div>
                         </li>
                     {% endif %}
                 </ul>
