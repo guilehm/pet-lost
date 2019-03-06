@@ -50,7 +50,7 @@ class Pet(models.Model):
     kind = models.CharField(max_length=128, choices=TYPE_CHOICES, default=TYPE_DOG)
     slug = models.SlugField(db_index=True, unique=True)
     breed = models.ForeignKey('pet.Breed', on_delete=models.CASCADE, null=True)
-    situation = models.CharField(max_length=128, choices=SITUATION_CHOICES, default=SITUATION_LOST)
+    situation = models.CharField(max_length=128, choices=SITUATION_CHOICES)
     lost_date = models.DateField(db_index=True, null=True, blank=True)
     found_date = models.DateField(db_index=True, null=True, blank=True)
     rescued = models.BooleanField(default=False)

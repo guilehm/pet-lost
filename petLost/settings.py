@@ -204,3 +204,6 @@ ALLOWED_HOSTS = [
     'www.petlost.live',
     'petlost.live',
 ]
+
+# FIXME: Choose email backend
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
