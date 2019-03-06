@@ -78,3 +78,64 @@ class UserCreationForm(BaseUserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class PersonalDataForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].required = True
+
+    class Meta:
+        model = User
+        fields = (
+            'first_name',
+            'last_name',
+            'org_name',
+            'description',
+        )
+
+
+class AddressDataForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['address'].required = True
+        self.fields['number'].required = True
+        self.fields['district'].required = True
+        # self.fields['city'].required = True
+
+    class Meta:
+        model = User
+        fields = (
+            'address',
+            'number',
+            'complement',
+            'district',
+            'postal_code',
+            # 'city',  # TODO: Implement a solution
+        )
+
+
+class ContactDataForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = (
+            'phone_number',
+            'mobile_phone_number',
+            'share_phone',
+            'share_email',
+        )
+
+
+class SocialDataForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = (
+            'url_facebook_profile',
+            'url_facebook_page',
+            'url_twitter',
+            'url_instagram',
+        )
