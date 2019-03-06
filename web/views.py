@@ -139,3 +139,17 @@ def profile(request):
         'user': user,
         'social_account': social_account,
     })
+
+
+@login_required
+def profile_change(request):
+    user = request.user
+    try:
+        social_account = SocialAccount.objects.get(user=user)
+    except SocialAccount.DoesNotExist:
+        social_account = None
+
+    return render(request, 'accounts/profile.html', {
+        'user': user,
+        'social_account': social_account,
+    })

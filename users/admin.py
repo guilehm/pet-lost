@@ -14,6 +14,7 @@ class UserAdmin(DjangoUserAdmin):
                 'username',
                 'first_name',
                 'last_name',
+                'description',
                 'phone_number',
                 'mobile_phone_number',
                 'org_name',

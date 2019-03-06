@@ -130,11 +130,11 @@
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label for="share_phone">Compartilhar meus números?</label>
-                            <input type="checkbox" id="share_phone" class="form-control " value="{{ user.share_phone }}" style="height: 20px;">
+                            <input type="checkbox" id="share_phone" class="form-control " value="{{ user.share_phone }}" style="height: 20px;" {% if user.share_phone %}checked{% endif %}>
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="share_email">Compartilhar meu email?</label>
-                            <input type="checkbox" id="share_email" class="form-control " value="{{ user.share_email }}" style="height: 20px;">
+                            <input type="checkbox" id="share_email" class="form-control " value="{{ user.share_email }}" style="height: 20px;" {% if user.share_email %}checked{% endif %}>
                         </div>
                     </div>
                     <div class="row">
