@@ -7,23 +7,9 @@
 {% block banners %}
     {% load socialaccount %}
     {% providers_media_js %}
-    {% language 'pt-BR' %}
-    <section class="home-slider owl-carousel">
-        <div class="slider-item" style="background-image: url({% static 'web/img/login-banner-picture.jpg' %});">
-            <div class="container">
-                <div class="row slider-text align-items-center justify-content-center">
-                    <div class="col-md-8 text-center col-sm-12 element-animate">
-                        <div class="container text-center">
-                            <h1 class="display-4 mb-2">Olá, {{ request.user.first_name }}, seja bem-vindo</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    {% endlanguage %}
 {% endblock %}
 {% block content %}
+<div class="div d-none d-xl-block" style="height: 80px; background-color: black;"></div>
 <section class="section">
     <div class="container">
         {% if messages %}
@@ -37,6 +23,7 @@
             {% endfor %}
         {% endif %}
         <div class="row">
+            {% if change_form and personal_data_form or not change_form %}
             <div class="col-md-6 mb-5 order-2">
                 <h2 class="heading mb-4">Dados Pessoais</h2>
                 <form method="post">
@@ -79,6 +66,8 @@
                     </div>
                 </form>
             </div>
+            {% endif %}
+            {% if change_form and address_data_form or not change_form %}
             <div class="col-md-6 mb-5 order-2">
                 <h2 class="heading mb-4">Endereço</h2>
                 <form method="post">
@@ -139,8 +128,10 @@
                     </div>
                 </form>
             </div>
+            {% endif %}
         </div>
         <div class="row">
+            {% if change_form and contact_data_form or not change_form %}
             <div class="col-md-6 mb-5 order-2">
                 <h2 class="heading mb-4">Contato</h2>
                 <form method="post">
@@ -182,6 +173,8 @@
                     </div>
                 </form>
             </div>
+            {% endif %}
+            {% if change_form and social_media_data_form or not change_form %}
             <div class="col-md-6 mb-5 order-2">
                 <h2 class="heading mb-4">Redes Sociais</h2>
                 <form method="post">
@@ -221,6 +214,7 @@
                     </div>
                 </form>
             </div>
+            {% endif %}
         </div>
     </div>
 </section>
