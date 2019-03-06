@@ -204,6 +204,10 @@ def profile_change(request):
                 messages.add_message(request, messages.SUCCESS, 'Dados de redes sociais alterados com sucesso.')
                 return redirect('web:account-profile')
 
+    change_form = any([
+        personal_data_form, address_data_form, contact_data_form, social_media_data_form
+    ])
+
     return render(request, 'accounts/profile.html', {
         'user': user,
         'social_account': social_account,
@@ -211,4 +215,5 @@ def profile_change(request):
         'address_data_form': address_data_form,
         'contact_data_form': contact_data_form,
         'social_media_data_form': social_media_data_form,
+        'change_form': change_form,
     })
