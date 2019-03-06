@@ -87,6 +87,35 @@ class Pet(models.Model):
         self.clean()
         return super().save(*args, **kwargs)
 
+    @property
+    def lost_description(self):
+        lost_description = ''
+        if self.situation == self.SITUATION_LOST:
+            text = f'Eu desapareci no dia {self.lost_date.strftime("%d/%m/%Y")}.\n'
+            lost_description += text
+        elif self.situation == self.SITUATION_FOUND:
+            text = 'Fui encontrad{sex} no dia {date}.\n'.format(
+                sex='a' if self.sex == self.SEX_FEMALE else 'o',
+                date=self.found_date.strftime("%d/%m/%Y")
+            )
+            lost_description += text
+        text = f'Me viram por último em {self.location_city.data}, {self.location_detail}\n'
+        lost_description += text
+        if self.sex == self.SEX_NOT_IDENTIFIED:
+            text = 'Ainda não identificaram meu sexo.'
+        elif self.sex == self.SEX_MALE:
+            text = 'Sou um macho.'
+        elif self.sex == self.SEX_FEMALE:
+            text = 'Sou uma fêmea.'
+        lost_description += f'{text}\n'
+        if not self.rescued:
+            text = 'Ainda não encontrei minha família, conto com sua ajuda para encontrá-los.'
+        else:
+            text = f'Fui recuperado por minha família em ' \
+                f'{self.rescued_date.strftime("%d/%m/%Y")} graças à ajuda de pessoas como você.'
+        lost_description += text
+        return lost_description
+
 
 class Picture(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
