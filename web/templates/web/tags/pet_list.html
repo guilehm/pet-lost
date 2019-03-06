@@ -1,5 +1,10 @@
 {% load static %}
 {% load web_tags %}
+{% block facebook_sdk %}
+    <div id="fb-root"></div>
+    <script async defer
+            src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.2&appId=1986939548034882&autoLogAppEvents=1"></script>
+{% endblock %}
 <div class="row">
     {% for pet in pets %}
         <div class="col-md-6">
@@ -18,7 +23,7 @@
                         {% elif found %}
                             Encontrado em: <strong>{{ pet.found_date|date:'d/m/Y' }}</strong><br>
                         {% endif %}
-                        Local: <strong>#</strong><br>
+                        Local: <strong>{{ pet.location_city.data }}</strong><br>
                         Sexo: <strong>{{ pet.get_sex_display|translation }}</strong><br>
                         Status: <strong>{% if pet.rescued %}Resgatado{% else %}Não resgatado{% endif %}</strong><br>
                         Local: <strong>{{ pet.location_city.data }}</strong>
@@ -31,6 +36,8 @@
                             {% endif %}
                         {% endif %}
                     </p>
+
+                    <div class="fb-share-button mb-1" data-href="{% url 'web:pet-detail' pet.slug %}" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={% url 'web:pet-detail' pet.slug %};src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartilhar</a></div>
                     <p><a href="{% url 'web:pet-detail' pet.slug %}" class="btn btn-primary btn-sm">detalhes</a></p>
                 </div>
             </div>

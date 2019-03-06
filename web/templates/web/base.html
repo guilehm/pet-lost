@@ -3,9 +3,13 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-    <title>Pet Lost - Ajude um pet a encontrar sua família</title>
+    {% block title %}
+    <title>PetLost - Ajude um pet a encontrar sua família</title>
+    {% endblock %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block meta %}
+    {% endblock %}
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'web/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'web/css/animate.css' %}">
@@ -75,7 +79,7 @@
     <div class="container">
         <div class="row mb-5">
             <div class="col-md-4 mb-5">
-                <h3>Sobre a Pet Lost</h3>
+                <h3>Sobre a PetLost</h3>
                 <p class="mb-5">Queremos ajudar os animais a encontrarem suas famílias.</p>
             </div>
             <div class="col-md-5 mb-5">

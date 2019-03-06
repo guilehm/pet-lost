@@ -1,6 +1,6 @@
 {% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Olá,
 
-Você está recebendo este email porque {{ user_display }} informou este e-mail para vincular à sua conta na {{ site_name }} na Pet Lost.
+Você está recebendo este email porque {{ user_display }} informou este e-mail para vincular à sua conta na {{ site_name }} na PetLost.
 
 Para confirmar, clique neste link {{ activate_url }}
 {% endblocktrans %}{% endautoescape %}
