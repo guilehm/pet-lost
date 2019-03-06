@@ -1,6 +1,9 @@
 {% extends 'web/base.html' %}
 {% load i18n %}
 {% load static %}
+{% block headers %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
 {% block banners %}
     {% load socialaccount %}
     {% providers_media_js %}
@@ -109,12 +112,21 @@
                     <div class="row">
                         <div class="col-md-9 form-group">
                             <label for="city">Cidade</label>
-                            <input type="text" id="city" name="city" class="form-control" value="{{ user.city|default:'' }}" disabled required>
+                            {% if not address_data_form %}
+                                <input type="text" id="city" name="city" class="form-control" value="{{ user.city.name|default:'' }}" disabled>
+                            {% else %}
+                                {{ address_data_form.city }}
+                            {% endif %}
                         </div>
+                        {% if not address_data_form %}
                         <div class="col-md-3 form-group">
                             <label for="state">Estado</label>
                                 <input type="text" id="state" name="state" class="form-control" value="{{ user.city.state|default:'' }}" disabled>
                         </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
@@ -212,4 +224,14 @@
         </div>
     </div>
 </section>
+{% endblock %}
+{% block js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#id_city').select2({
+              theme: "classic"
+            });
+        });
+    </script>
 {% endblock %}
