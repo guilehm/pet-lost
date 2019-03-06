@@ -103,7 +103,8 @@ class AddressDataForm(forms.ModelForm):
         self.fields['address'].required = True
         self.fields['number'].required = True
         self.fields['district'].required = True
-        # self.fields['city'].required = True
+        self.fields['city'].required = True
+        self.fields['city'].widget.attrs['class'] = 'form-control'
 
     class Meta:
         model = User
@@ -113,7 +114,7 @@ class AddressDataForm(forms.ModelForm):
             'complement',
             'district',
             'postal_code',
-            # 'city',  # TODO: Implement a solution
+            'city',
         )
 
 
