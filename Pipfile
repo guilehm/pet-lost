@@ -21,6 +21,7 @@ gunicorn = "*"
 boto3 = "*"
 psycopg2-binary = "*"
 django-allauth = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.7"
