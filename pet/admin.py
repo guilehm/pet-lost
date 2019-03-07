@@ -1,4 +1,5 @@
 from django.contrib import admin
+from announcement.models import Announcement
 
 from pet.models import Breed, Pet, Picture
 
@@ -6,6 +7,13 @@ from pet.models import Breed, Pet, Picture
 class PetPictureInline(admin.StackedInline):
     model = Pet.pictures.through
     raw_id_fields = ('picture',)
+    extra = 0
+
+
+class PetAnnouncementInline(admin.StackedInline):
+    model = Announcement
+    classes = ('collapse',)
+    raw_id_fields = ('user',)
     extra = 0
 
 
@@ -31,7 +39,7 @@ class PetAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
     raw_id_fields = ('picture', 'breed')
     prepopulated_fields = {'slug': ('name', 'kind', 'breed')}
-    inlines = (PetPictureInline,)
+    inlines = (PetPictureInline, PetAnnouncementInline)
 
 
 @admin.register(Picture)
