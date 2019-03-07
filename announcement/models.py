@@ -34,7 +34,6 @@ class Announcement(models.Model):
     last_seen_city = models.ForeignKey(
         'location.City', related_name='pets', db_index=True, on_delete=models.CASCADE
     )
-    last_seen_detail = models.CharField(max_length=512)
 
     lost_date = models.DateField(db_index=True, null=True, blank=True)
     found_date = models.DateField(db_index=True, null=True, blank=True)
@@ -49,6 +48,13 @@ class Announcement(models.Model):
         )
 
     def clean(self):
+        if not hasattr(self, 'pet'):
+            raise ValidationError('Please, choose a pet')
+
+        if self.active:
+            if self.pet.announcements.filter(active=True).exists():
+                raise ValidationError('A pet may not have more than one active announcement')
+
         if not any([self.lost_date, self.found_date]):
             raise ValidationError('Lost Date or Found Date must be filled')
 
