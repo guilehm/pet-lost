@@ -20,22 +20,17 @@ class BreedAdmin(admin.ModelAdmin):
 @admin.register(Pet)
 class PetAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'situation', 'sex', 'rescued', 'kind', 'breed', 'lost_date', 'found_date'
+        'name', 'sex', 'kind', 'breed',
     )
     exclude = ('pictures',)
     list_filter = (
-        'situation',
-        'rescued',
         'sex',
         'kind',
-        'rescued_date',
-        'lost_date',
-        'found_date',
         'breed',
     )
     search_fields = ('name', 'description')
     raw_id_fields = ('picture', 'breed')
-    prepopulated_fields = {'slug': ('name', 'kind', 'situation')}
+    prepopulated_fields = {'slug': ('name', 'kind', 'breed')}
     inlines = (PetPictureInline,)
 
 
