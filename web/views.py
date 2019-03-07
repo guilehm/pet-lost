@@ -6,10 +6,12 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
 from pet.models import Pet
+from petLost.settings import GOOGLE_RECAPTCHA_SITE_KEY
 from users.models import User
 from web.forms import (
     AddressDataForm, AuthenticationForm, ContactDataForm, PersonalDataForm, SocialDataForm, UserCreationForm,
 )
+from web.utils import check_recaptcha
 
 
 def index(request):
@@ -112,11 +114,12 @@ def logout_view(request):
     return redirect('web:index')
 
 
+@check_recaptcha
 def signup_view(request):
     form = UserCreationForm()
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and request.recaptcha_is_valid:
             user = form.save(commit=False)
             user.first_name = request.POST['first_name']
             user.email = request.POST['email']
@@ -127,7 +130,8 @@ def signup_view(request):
                 backend='django.contrib.auth.backends.ModelBackend',
             )
     return render(request, 'accounts/signup.html', {
-        'form': form
+        'form': form,
+        'site_key': GOOGLE_RECAPTCHA_SITE_KEY,
     })
 
 
