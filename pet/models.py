@@ -1,5 +1,5 @@
 import uuid
-
+from django.utils.text import slugify
 from django.db import models
 from django.utils.functional import cached_property
 
@@ -83,6 +83,21 @@ class Pet(models.Model):
     @cached_property
     def announcement(self):
         return self.announcements.filter(active=True).last()
+
+    @property
+    def public_id(self):
+        text = "{pet_name}-{kind}-{breed}-{id}".format(
+            pet_name=self.name,
+            kind=self.kind,
+            breed=self.breed.name,
+            id=str(self.id)[:5],
+        )
+        return slugify(text)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self.public_id
+        super().save(*args, **kwargs)
 
 
 class Picture(models.Model):
