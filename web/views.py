@@ -9,14 +9,15 @@ from pet.models import Pet
 from petLost.settings import GOOGLE_RECAPTCHA_SITE_KEY
 from users.models import User
 from web.forms import (
-    AddressDataForm, AuthenticationForm, ContactDataForm, PersonalDataForm, SocialDataForm, UserCreationForm,
+    AddressDataForm, AnnouncementForm, AuthenticationForm, ContactDataForm, PersonalDataForm, SocialDataForm,
+    UserCreationForm,
 )
 from web.utils import check_recaptcha
 
 
 def index(request):
-    lost = Pet.objects.lost().order_by('?').select_related('picture')[:4]
-    found = Pet.objects.found().order_by('?').select_related('picture')[:4]
+    lost = set(Pet.objects.lost().order_by('?').select_related('picture')[:4])
+    found = set(Pet.objects.found().order_by('?').select_related('picture')[:4])
     return render(request, 'web/index.html', {
         'pets_lost': lost,
         'pets_found': found,
