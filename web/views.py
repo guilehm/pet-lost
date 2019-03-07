@@ -210,3 +210,22 @@ def profile_change(request):
         'social_media_data_form': social_media_data_form,
         'change_form': change_form,
     })
+
+
+def announcement_add(request):
+    form = AnnouncementForm()
+    if request.method == 'POST':
+        form = AnnouncementForm(request.POST)
+        if form.is_valid():
+            print('é válido')
+            announce = form.save(commit=False)
+            announce.user = request.user
+            announce.save()
+            messages.add_message(request, messages.SUCCESS, 'Anúncio criado com sucesso.')
+        else:
+            messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro!')
+            print('não é válido')
+            print(form.errors)
+    return render(request, 'web/announcement_add.html', {
+        'form': form,
+    })
