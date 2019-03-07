@@ -13,7 +13,6 @@ class PetPictureInline(admin.StackedInline):
 class PetAnnouncementInline(admin.StackedInline):
     model = Announcement
     classes = ('collapse',)
-    raw_id_fields = ('user',)
     extra = 0
 
 
@@ -38,7 +37,7 @@ class PetAdmin(admin.ModelAdmin):
         'breed',
     )
     search_fields = ('name', 'description')
-    raw_id_fields = ('picture', 'breed')
+    raw_id_fields = ('picture', 'breed', 'user')
     inlines = (PetPictureInline, PetAnnouncementInline)
 
 
