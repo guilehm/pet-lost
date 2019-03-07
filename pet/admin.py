@@ -31,6 +31,7 @@ class PetAdmin(admin.ModelAdmin):
         'name', 'sex', 'kind', 'breed',
     )
     exclude = ('pictures',)
+    readonly_fields = ('slug',)
     list_filter = (
         'sex',
         'kind',
@@ -38,7 +39,6 @@ class PetAdmin(admin.ModelAdmin):
     )
     search_fields = ('name', 'description')
     raw_id_fields = ('picture', 'breed')
-    prepopulated_fields = {'slug': ('name', 'kind', 'breed')}
     inlines = (PetPictureInline, PetAnnouncementInline)
 
 
