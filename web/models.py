@@ -1,5 +1,7 @@
 from django.db import models
 
+from web.utils import UploadToFactory
+
 
 class Banner(models.Model):
     title = models.CharField(max_length=1000, null=True, blank=True)
@@ -9,7 +11,7 @@ class Banner(models.Model):
     picture = models.ImageField(
         null=True,
         blank=True,
-        upload_to='web/banner/picture',
+        upload_to=UploadToFactory('web/banner/picture'),
     )
     button_one = models.CharField(max_length=32, null=True, blank=True)
     button_two = models.CharField(max_length=32, null=True, blank=True)
