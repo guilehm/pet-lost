@@ -15,24 +15,23 @@
                     <a class="mr-5"><img src="{% static 'web/img/placeholder.png' %}" alt="{{ pet.slug }}" class="img-fluid"></a>
                 {% endif %}
                 <div class="media-body">
-                    <span class="post-meta">{{ pet.date_changed.date }}</span>
+                    <span class="post-meta">{{ pet.announcement.date_changed.date }}</span>
                     <h3 class="mt-2 text-black"><a href="{% url 'web:pet-detail' pet.slug %}">{{ pet.name|default:'Não Identificado' }}</a></h3>
                     <p>
-                        {% if lost %}
-                            Desaparecido em: <strong>{{ pet.lost_date|date:'d/m/Y' }}</strong><br>
-                        {% elif found %}
-                            Encontrado em: <strong>{{ pet.found_date|date:'d/m/Y' }}</strong><br>
+                        {% if pet.announcement.situation == 'lost' %}
+                            Desaparecido em: <strong>{{ pet.announcement.lost_date|date:'d/m/Y' }}</strong><br>
+                        {% elif pet.announcement.situation == 'found' %}
+                            Encontrado em: <strong>{{ pet.announcement.found_date|date:'d/m/Y' }}</strong><br>
                         {% endif %}
-                        Local: <strong>{{ pet.location_city.data }}</strong><br>
+                        Local: <strong>{{ pet.announcement.last_seen_city.data }}</strong><br>
                         Sexo: <strong>{{ pet.get_sex_display|translation }}</strong><br>
-                        Status: <strong>{% if pet.rescued %}Resgatado{% else %}Não resgatado{% endif %}</strong><br>
-                        Local: <strong>{{ pet.location_city.data }}</strong>
-                        {% if pet.description %}
+                        Status: <strong>{% if pet.announcement.rescued %}Resgatado{% else %}Não resgatado{% endif %}</strong><br>
+                        {% if pet.announcement.description %}
                             <br>
-                            {% if pet.description|length > 80 %}
-                                Descrição: {{ pet.description|slice:':80' }}...
+                            {% if pet.announcement.description|length > 80 %}
+                                Mensagem: {{ pet.announcement.description|slice:':80' }}...
                             {% else %}
-                                Descrição: {{ pet.description }}
+                                Mensagem: {{ pet.announcement.description }}
                             {% endif %}
                         {% endif %}
                     </p>
@@ -40,7 +39,7 @@
                     <div class="fb-share-button mb-1" data-href="{% url 'web:pet-detail' pet.slug %}" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={% url 'web:pet-detail' pet.slug %};src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartilhar</a></div>
                     <br>
                     <a class="twitter-share-button"
-                               href="https://twitter.com/intent/tweet?{{ pet.share_description_encoded }}&url={% url 'web:pet-detail' pet.slug %}" target="_blank">
+                               href="https://twitter.com/intent/tweet?{{ pet.announcement.share_description_encoded }}&url={% url 'web:pet-detail' pet.slug %}" target="_blank">
                                 Tweet</a>
                     <p><a href="{% url 'web:pet-detail' pet.slug %}" class="btn btn-primary btn-sm">detalhes</a></p>
                 </div>

@@ -15,14 +15,8 @@ from web.utils import check_recaptcha
 
 
 def index(request):
-    lost = Pet.objects.filter(
-        situation=Pet.SITUATION_LOST,
-        rescued=False,
-    ).order_by('?').select_related('picture')[:4]
-    found = Pet.objects.filter(
-        situation=Pet.SITUATION_FOUND,
-        rescued=False,
-    ).order_by('?').select_related('picture')[:4]
+    lost = Pet.objects.lost().order_by('?').select_related('picture')[:4]
+    found = Pet.objects.found().order_by('?').select_related('picture')[:4]
     return render(request, 'web/index.html', {
         'pets_lost': lost,
         'pets_found': found,
@@ -30,10 +24,7 @@ def index(request):
 
 
 def lost_list(request):
-    lost_qs = Pet.objects.filter(
-        situation=Pet.SITUATION_LOST,
-        rescued=False,
-    ).select_related('picture')
+    lost_qs = Pet.objects.lost().select_related('picture')
 
     page = request.GET.get('page')
     paginator = Paginator(lost_qs, 8)
@@ -51,10 +42,7 @@ def lost_list(request):
 
 
 def found_list(request):
-    found_qs = Pet.objects.filter(
-        situation=Pet.SITUATION_FOUND,
-        rescued=False,
-    ).select_related('picture')
+    found_qs = Pet.objects.found().select_related('picture')
 
     page = request.GET.get('page')
     paginator = Paginator(found_qs, 8)

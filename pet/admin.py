@@ -1,11 +1,19 @@
 from django.contrib import admin
 
+from announcement.models import Announcement
 from pet.models import Breed, Pet, Picture
 
 
 class PetPictureInline(admin.StackedInline):
     model = Pet.pictures.through
     raw_id_fields = ('picture',)
+    extra = 0
+
+
+class PetAnnouncementInline(admin.StackedInline):
+    model = Announcement
+    classes = ('collapse',)
+    raw_id_fields = ('user',)
     extra = 0
 
 
@@ -20,23 +28,18 @@ class BreedAdmin(admin.ModelAdmin):
 @admin.register(Pet)
 class PetAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'situation', 'sex', 'rescued', 'kind', 'breed', 'lost_date', 'found_date'
+        'name', 'sex', 'kind', 'breed',
     )
     exclude = ('pictures',)
     list_filter = (
-        'situation',
-        'rescued',
         'sex',
         'kind',
-        'rescued_date',
-        'lost_date',
-        'found_date',
         'breed',
     )
     search_fields = ('name', 'description')
-    raw_id_fields = ('picture', 'breed', 'location_city')
-    prepopulated_fields = {'slug': ('name', 'kind', 'situation')}
-    inlines = (PetPictureInline,)
+    raw_id_fields = ('picture', 'breed')
+    prepopulated_fields = {'slug': ('name', 'kind', 'breed')}
+    inlines = (PetPictureInline, PetAnnouncementInline)
 
 
 @admin.register(Picture)

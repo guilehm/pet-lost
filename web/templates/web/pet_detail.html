@@ -4,11 +4,11 @@
 {% block meta %}
     <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
     <meta property="og:type" content="website"/>
-    <meta property="og:description" content="{{ pet.lost_description }}"/>
+    <meta property="og:description" content="{{ pet.announcement.lost_description }}"/>
     {% if not pet.name %}
         <meta property="og:title" content="PetLost - Ajude um pet a encontrar sua família"/>
     {% else %}
-        <meta property="og:title" content="{{ pet.share_description }}"/>
+        <meta property="og:title" content="{{ pet.announcement.share_description }}"/>
     {% endif %}
     {% if pet.picture %}
         <meta property="og:image" content="{{ pet.picture.image.url }}" />
@@ -22,14 +22,17 @@
     <script async defer
             src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.2&appId=1986939548034882&autoLogAppEvents=1"></script>
 {% endblock %}
+{% block banners %}
+{% endblock %}
+<div class="div d-none d-xl-block" style="height: 80px; background-color: black;"></div>
 <section class="section element-animate">
     <div class="container">
         <div class="row justify-content-center mb-5">
             <div class="col-md-4"></div>
             <div class="col-md-8 section-heading">
                 <h2>{{ pet.name|default:'Não Identificado' }}</h2>
-                {% if not pet.rescued %}
-                    {% if pet.situation == 'lost' %}
+                {% if not pet.announcement.rescued %}
+                    {% if pet.announcement.situation == 'lost' %}
                         <p class="small-sub-heading">Ainda estou desaparecid{% if pet.sex == 'female' %}a{% else  %}o{% endif %}</p>
                     {% else %}
                         <p class="small-sub-heading">Ainda estou procurando minha família</p>
@@ -49,8 +52,8 @@
             </div>
             <div class="col-md-4">
                 <strong>Um pouco sobre mim:</strong> <br>
-                <p>{{ pet.lost_description|linebreaks }}</p>
-                {% if not pet.rescued %}
+                <p>{{ pet.announcement.lost_description|linebreaks }}</p>
+                {% if not pet.announcement.rescued %}
                 <p>
                     <button class="btn btn-success btn-sm">me encontrou?</button>
                 </p>
@@ -63,6 +66,10 @@
                 {% if pet.description %}
                     <p><strong>O que minha família disse sobre mim:</strong> <br> {{ pet.description|default:'' }}</p>
                 {% endif %}
+                {% if pet.announcement.description %}
+                    <p><strong>Descrição do anúncio:</strong> <br> {{ pet.announcement.description|default:'' }}</p>
+                {% endif %}
+                {% if not pet.announcement.rescued %}
                 <p><a class="font-weight-bold">Compartilhe</a></p>
                 <ul class="list-unstyled">
                     <li>
@@ -70,10 +77,11 @@
                     </li>
                     <li>
                         <a class="twitter-share-button"
-                           href="https://twitter.com/intent/tweet?{{ pet.share_description_encoded }}" target="_blank">
+                           href="https://twitter.com/intent/tweet?{{ pet.announcement.share_description_encoded }}" target="_blank">
                             Tweet</a>
                     </li>
                 </ul>
+                {% endif %}
             </div>
         </div>
     </div>
