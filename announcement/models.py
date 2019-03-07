@@ -1,3 +1,5 @@
+import urllib
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
@@ -59,6 +61,18 @@ class Announcement(models.Model):
     def save(self, *args, **kwargs):
         self.clean()
         return super().save(*args, **kwargs)
+
+    @property
+    def share_description(self):
+        return 'PetLost - Ajude {name} encontrar sua família. El{sex} conta com a sua ajuda!'.format(
+            name=self.pet.name or 'este cãozinho a',
+            sex='a' if self.pet.sex == self.pet.SEX_FEMALE else 'e',
+        )
+
+    @property
+    def share_description_encoded(self):
+        description = self.share_description
+        return urllib.parse.urlencode({'text': description})
 
     @property
     def lost_description(self):
