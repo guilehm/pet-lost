@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from announcement.models import Announcement
+from web.utils import UploadToFactory
 
 
 class PetQuerySet(models.QuerySet):
@@ -86,8 +87,9 @@ class Pet(models.Model):
 
 class Picture(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    original_file_name = models.CharField(max_length=1024)
     title = models.CharField(max_length=512, null=True, blank=True)
-    image = models.ImageField(upload_to='pet/picture/image')
+    image = models.ImageField(upload_to=UploadToFactory('pet/picture/image'))
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True, db_index=True)

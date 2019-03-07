@@ -6,6 +6,8 @@ from django.core.mail import send_mail
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from web.utils import UploadToFactory
+
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -53,7 +55,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     mobile_phone_number = models.CharField(max_length=20, null=True, blank=True)
     org_name = models.CharField(_('organization name'), max_length=128, null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='users/user/profile-picture', null=True, blank=True)
+    profile_picture = models.ImageField(
+        upload_to=UploadToFactory('users/user/profile-picture'),
+        null=True,
+        blank=True,
+    )
     description = models.TextField(null=True, blank=True)
 
     postal_code = models.CharField(max_length=32, null=True, blank=True)
