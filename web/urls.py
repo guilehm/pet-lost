@@ -15,4 +15,5 @@ urlpatterns = [
     path('accounts/logout/', views.logout_view, name='account-logout'),
     path('accounts/signup/', views.signup_view, name='account-signup'),
     path('accounts/social/login/cancelled/', views.login_view),
+    path('announcements/add/', views.announcement_add, name='announcement-add'),
 ]

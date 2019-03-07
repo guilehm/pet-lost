@@ -9,12 +9,28 @@ translation_dict = {
     'Male': 'Macho',
     'Female': 'Fêmea',
     'Not Identified': 'Não Identificado',
+    'Pet': 'Pet',
+    'Active': 'Ativo',
+    'Lost': 'Desaparecido',
+    'Found': 'Encontrado',
+    'Situation': 'Situação',
+    'Description': 'Descrição',
+    'Rescued': 'Resgatado',
+    'Rescued date': 'Resgatado em',
+    'Last seen district': 'Bairro',
+    'Last seen city': 'Cidade',
+    'Last seen detail': 'Detalhes',
+    'Lost date': 'Desaparecido em',
+    'Found date': 'Encontrado em',
+    'Please, choose a pet': 'Por favor, escolha um pet.',
+    'A pet may not have more than one active announcement': 'Um pet pode ter apenas um anúncio ativo.',
+    'Lost Date or Found Date must be filled': 'Preencha a data em que o pet desapareceu ou foi encontrado.',
 }
 
 
 @register.filter(name='translation')
 def translation(value):
-    return translation_dict.get(str(value), '')
+    return translation_dict.get(str(value), '') or value
 
 
 @register.inclusion_tag('web/tags/home_slider.html')

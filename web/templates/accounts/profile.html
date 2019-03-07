@@ -149,11 +149,11 @@
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label for="share_phone">Compartilhar meus números?</label>
-                            <input type="checkbox" id="share_phone" name="share_phone" class="form-control " value="{{ user.share_phone }}" style="height: 20px;" {% if user.share_phone %}checked{% endif %} {% if not contact_data_form %}onclick="return false;"{% endif %}>
+                            <input type="checkbox" id="share_phone" name="share_phone" class="form-control " {% if not contact_data_form %}value="{{ user.share_phone }}"{% endif %} style="height: 20px;" {% if user.share_phone %}checked{% endif %} {% if not contact_data_form %}onclick="return false;"{% endif %}>
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="share_email">Compartilhar meu email?</label>
-                            <input type="checkbox" id="share_email" name="share_email" class="form-control " value="{{ user.share_email }}" style="height: 20px;" {% if user.share_email %}checked{% endif %} {% if not contact_data_form %}onclick="return false;"{% endif %}>
+                            <input type="checkbox" id="share_email" name="share_email" class="form-control " {% if not contact_data_form %}value="{{ user.share_email }}"{% endif %} style="height: 20px;" {% if user.share_email %}checked{% endif %} {% if not contact_data_form %}onclick="return false;"{% endif %}>
                         </div>
                     </div>
                     <div class="row">

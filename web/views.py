@@ -9,14 +9,15 @@ from pet.models import Pet
 from petLost.settings import GOOGLE_RECAPTCHA_SITE_KEY
 from users.models import User
 from web.forms import (
-    AddressDataForm, AuthenticationForm, ContactDataForm, PersonalDataForm, SocialDataForm, UserCreationForm,
+    AddressDataForm, AnnouncementForm, AuthenticationForm, ContactDataForm, PersonalDataForm, SocialDataForm,
+    UserCreationForm,
 )
 from web.utils import check_recaptcha
 
 
 def index(request):
-    lost = Pet.objects.lost().order_by('?').select_related('picture')[:4]
-    found = Pet.objects.found().order_by('?').select_related('picture')[:4]
+    lost = set(Pet.objects.lost().order_by('?').select_related('picture')[:4])
+    found = set(Pet.objects.found().order_by('?').select_related('picture')[:4])
     return render(request, 'web/index.html', {
         'pets_lost': lost,
         'pets_found': found,
@@ -208,4 +209,23 @@ def profile_change(request):
         'contact_data_form': contact_data_form,
         'social_media_data_form': social_media_data_form,
         'change_form': change_form,
+    })
+
+
+def announcement_add(request):
+    form = AnnouncementForm()
+    if request.method == 'POST':
+        form = AnnouncementForm(request.POST)
+        if form.is_valid():
+            print('é válido')
+            announce = form.save(commit=False)
+            announce.user = request.user
+            announce.save()
+            messages.add_message(request, messages.SUCCESS, 'Anúncio criado com sucesso.')
+        else:
+            messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro!')
+            print('não é válido')
+            print(form.errors)
+    return render(request, 'web/announcement_add.html', {
+        'form': form,
     })
