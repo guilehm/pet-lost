@@ -91,10 +91,19 @@ DATABASES = {
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': (
+                '%(levelname)s %(asctime)s %(name)s %(funcName)s:%(lineno)d '
+                '%(process)d %(thread)d %(message)s'
+            )
+        },
+    },
     'handlers': {
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
         },
     },
     'loggers': {
@@ -209,5 +218,11 @@ ALLOWED_HOSTS = [
 GOOGLE_RECAPTCHA_SITE_KEY = os.getenv('GOOGLE_RECAPTCHA_SITE_KEY')
 GOOGLE_RECAPTCHA_SECRET_KEY = os.getenv('GOOGLE_RECAPTCHA_SECRET_KEY')
 
-# FIXME: Choose email backend
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'contato@mg.petlost.live'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+MAILGUN_API_URL = os.environ.get('MAILGUN_API_URL')
+MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY')
+DEFAULT_FROM_EMAIL = 'contato@mg.petlost.live'
