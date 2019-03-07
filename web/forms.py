@@ -3,6 +3,7 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 from django.utils.translation import gettext_lazy as _
 
+from announcement.models import Announcement
 from users.models import User
 
 
@@ -139,4 +140,35 @@ class SocialDataForm(forms.ModelForm):
             'url_facebook_page',
             'url_twitter',
             'url_instagram',
+        )
+
+
+class AnnouncementForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['pet'].help_text = 'Selecione o Pet ao que este anúncio se refere'
+        self.fields['active'].help_text = 'Ative este anúncio para divulgá-lo no site'
+        self.fields['situation'].help_text = 'Se o pet for seu e está desaparecido, selecione "desaparecido". ' \
+                                             'Caso tenha encontrado um pet perdido na rua, selecione "encontrado"'
+        self.fields['description'].help_text = 'Dê informações detalhadas sobre o ocorrido que ' \
+                                               'ajudem outras pessoas à identificar seu pet.'
+        self.fields['last_seen_district'].help_text = 'Digite o nome do bairro em que ele foi visto por último'
+        self.fields['last_seen_city'].help_text = 'Selecione a cidade em que ele foi visto por último'
+        self.fields['lost_date'].help_text = 'Preencha apenas se a situação for "desaparecido"'
+        self.fields['found_date'].help_text = 'Preencha apenas se a situação for "encontrado"'
+
+    class Meta:
+        model = Announcement
+        fields = (
+            'pet',
+            'active',
+            'situation',
+            'description',
+            # 'rescued',
+            # 'rescued_date',
+            'last_seen_district',
+            'last_seen_city',
+            'lost_date',
+            'found_date',
         )
