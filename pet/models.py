@@ -69,20 +69,27 @@ class Pet(models.Model):
     sex = models.CharField(max_length=32, choices=SEX_CHOICES)
     kind = models.CharField(max_length=128, choices=TYPE_CHOICES, default=TYPE_DOG)
     slug = models.SlugField(db_index=True, unique=True)
-    breed = models.ForeignKey('pet.Breed', on_delete=models.CASCADE, null=True)
+    breed = models.ForeignKey('pet.Breed', related_name='pets', on_delete=models.CASCADE, null=True)
     situation = models.CharField(max_length=128, choices=SITUATION_CHOICES)
     lost_date = models.DateField(db_index=True, null=True, blank=True)
     found_date = models.DateField(db_index=True, null=True, blank=True)
     rescued = models.BooleanField(default=False)
     rescued_date = models.DateField(null=True, blank=True)
-    picture = models.ForeignKey('pet.Picture', null=True, blank=True, on_delete=models.SET_NULL)
+    picture = models.ForeignKey(
+        'pet.Picture', null=True, blank=True, on_delete=models.SET_NULL
+    )
     pictures = models.ManyToManyField('pet.Picture', related_name='pets', blank=True)
     description = models.TextField(null=True, blank=True)
-    location_city = models.ForeignKey('location.City', db_index=True, on_delete=models.CASCADE)
-    location_detail = models.CharField(max_length=512)
+    last_seen_district = models.CharField(max_length=512)
+    last_seen_city = models.ForeignKey(
+        'location.City', related_name='pets', db_index=True, on_delete=models.CASCADE
+    )
+    last_seen_detail = models.CharField(max_length=512)
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True)
+
+    objects = PetQuerySet.as_manager()
 
     def __str__(self):
         return f'{self.kind} #{str(self.id)[:8]} ({self.name})'
@@ -131,7 +138,7 @@ class Pet(models.Model):
                 date=self.found_date.strftime("%d/%m/%Y")
             )
             lost_description += text
-        text = f'Me viram por último em {self.location_city.data}, {self.location_detail}\n'
+        text = f'Me viram por último em {self.last_seen_city.data}, {self.last_seen_detail}\n'
         lost_description += text
         if self.sex == self.SEX_NOT_IDENTIFIED:
             text = 'Ainda não identificaram meu sexo.'
