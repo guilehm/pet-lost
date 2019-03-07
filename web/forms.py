@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 from django.utils.translation import gettext_lazy as _
 
 from announcement.models import Announcement
+from pet.models import Pet
 from users.models import User
 
 
@@ -171,4 +172,16 @@ class AnnouncementForm(forms.ModelForm):
             'last_seen_city',
             'lost_date',
             'found_date',
+        )
+
+
+class PetAddForm(forms.ModelForm):
+
+    class Meta:
+        model = Pet
+        fields = (
+            'name',
+            'sex',
+            'breed',
+            'description',
         )
