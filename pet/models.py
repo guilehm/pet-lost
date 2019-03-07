@@ -6,6 +6,25 @@ from django.db import models
 from django.utils import timezone
 
 
+class PetQuerySet(models.QuerySet):
+    def lost(self):
+        return self.filter(
+            situation=Pet.SITUATION_LOST,
+            rescued=False,
+            announcements__active=True,
+        )
+
+    def found(self):
+        return self.filter(
+            situation=Pet.SITUATION_FOUND,
+            rescued=False,
+            announcements__active=True,
+        )
+
+    def rescued(self):
+        return self.filter(rescued=True)
+
+
 class Breed(models.Model):
     TYPE_DOG = 'dog'
     TYPE_CHOICES = (
