@@ -1,6 +1,6 @@
 from django.contrib import admin
-from announcement.models import Announcement
 
+from announcement.models import Announcement
 from pet.models import Breed, Pet, Picture
 
 

@@ -22,6 +22,9 @@
     <script async defer
             src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.2&appId=1986939548034882&autoLogAppEvents=1"></script>
 {% endblock %}
+{% block banners %}
+{% endblock %}
+<div class="div d-none d-xl-block" style="height: 80px; background-color: black;"></div>
 <section class="section element-animate">
     <div class="container">
         <div class="row justify-content-center mb-5">
@@ -66,6 +69,7 @@
                 {% if pet.announcement.description %}
                     <p><strong>Descrição do anúncio:</strong> <br> {{ pet.announcement.description|default:'' }}</p>
                 {% endif %}
+                {% if not pet.announcement.rescued %}
                 <p><a class="font-weight-bold">Compartilhe</a></p>
                 <ul class="list-unstyled">
                     <li>
@@ -77,6 +81,7 @@
                             Tweet</a>
                     </li>
                 </ul>
+                {% endif %}
             </div>
         </div>
     </div>

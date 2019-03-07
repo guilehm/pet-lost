@@ -42,6 +42,12 @@ class Announcement(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return '#{id}{pet}'.format(
+            id=self.id,
+            pet=f' ({self.pet.name})' if self.pet.name else 'Unknown',
+        )
+
     def clean(self):
         if not any([self.lost_date, self.found_date]):
             raise ValidationError('Lost Date or Found Date must be filled')

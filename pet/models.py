@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.utils.functional import cached_property
 
 from announcement.models import Announcement
 
@@ -78,7 +79,7 @@ class Pet(models.Model):
     def __str__(self):
         return f'{self.kind} #{str(self.id)[:8]} ({self.name})'
 
-    @property
+    @cached_property
     def announcement(self):
         return self.announcements.filter(active=True).last()
 
