@@ -86,7 +86,6 @@ class Pet(models.Model):
 
 
 class Picture(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     original_file_name = models.CharField(max_length=1024, null=True, blank=True)
     title = models.CharField(max_length=512, null=True, blank=True)
     image = models.ImageField(upload_to=UploadToFactory('pet/picture/image'))
