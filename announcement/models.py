@@ -25,7 +25,7 @@ class Announcement(models.Model):
         on_delete=models.CASCADE,
     )
     situation = models.CharField(max_length=128, choices=SITUATION_CHOICES)
-    message = models.TextField()
+    description = models.TextField()
 
     rescued = models.BooleanField(default=False)
     rescued_date = models.DateField(null=True, blank=True)

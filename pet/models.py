@@ -8,14 +8,14 @@ from announcement.models import Announcement
 class PetQuerySet(models.QuerySet):
     def lost(self):
         return self.filter(
-            rescued=False,
+            announcements__rescued=False,
             announcements__active=True,
             announcements__situation=Announcement.SITUATION_LOST,
         ).distinct()
 
     def found(self):
         return self.filter(
-            rescued=False,
+            announcements__rescued=False,
             announcements__active=True,
             announcements__situation=Announcement.SITUATION_FOUND,
         ).distinct()
@@ -77,6 +77,10 @@ class Pet(models.Model):
 
     def __str__(self):
         return f'{self.kind} #{str(self.id)[:8]} ({self.name})'
+
+    @property
+    def announcement(self):
+        return self.announcements.filter(active=True).last()
 
 
 class Picture(models.Model):
