@@ -1,0 +1,40 @@
+{% extends 'web/base.html' %}
+{% block banners %}
+{% endblock %}
+{% load static %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+    <section class="home-slider owl-carousel">
+        <div class="slider-item" style="background-image: url({% static 'web/img/login-banner-picture.jpg' %});">
+            <div class="container">
+                <div class="row slider-text align-items-center justify-content-center">
+                    <div class="col-md-8 text-center col-sm-12 element-animate">
+                        <div class="container text-center">
+                            <h1>{% trans "Sign Up" %}</h1>
+
+                            <p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are
+                                about to use your {{ provider_name }} account to login to
+                                {{ site_name }}. As a final step, please complete the following
+                                form:{% endblocktrans %}</p>
+
+                            <form class="signup form-signin" id="signup_form" method="post"
+                                  action="{% url 'socialaccount_signup' %}">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                {% if redirect_field_value %}
+                                    <input type="hidden" name="{{ redirect_field_name }}"
+                                           value="{{ redirect_field_value }}"/>
+                                {% endif %}
+                                <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">{% trans "Sign Up" %} &raquo;</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+<div class="div d-none d-xl-block" style="height: 80px; background-color: black;"></div>
