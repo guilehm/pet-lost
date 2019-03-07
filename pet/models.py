@@ -1,7 +1,8 @@
 import uuid
-from django.utils.text import slugify
+
 from django.db import models
 from django.utils.functional import cached_property
+from django.utils.text import slugify
 
 from announcement.models import Announcement
 from web.utils import UploadToFactory
@@ -59,6 +60,11 @@ class Pet(models.Model):
     )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(
+        'users.User',
+        related_name='pets',
+        on_delete=models.CASCADE,
+    )
     name = models.CharField(max_length=128, null=True, blank=True)
     sex = models.CharField(max_length=32, choices=SEX_CHOICES)
     kind = models.CharField(max_length=128, choices=KIND_CHOICES, default=KIND_DOG)

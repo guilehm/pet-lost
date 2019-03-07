@@ -19,11 +19,6 @@ class Announcement(models.Model):
         related_name='announcements',
         on_delete=models.CASCADE,
     )
-    user = models.ForeignKey(
-        'users.User',
-        related_name='announcements',
-        on_delete=models.CASCADE,
-    )
     situation = models.CharField(max_length=128, choices=SITUATION_CHOICES)
     description = models.TextField()
 
