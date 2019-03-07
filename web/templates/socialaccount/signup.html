@@ -15,10 +15,8 @@
                         <div class="container text-center">
                             <h1>{% trans "Sign Up" %}</h1>
 
-                            <p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are
-                                about to use your {{ provider_name }} account to login to
-                                {{ site_name }}. As a final step, please complete the following
-                                form:{% endblocktrans %}</p>
+                            <p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}Você está prestes a usar sua conta do {{ provider_name }} para fazer login na
+                                {{ site_name }}. Como última etapa, por favor complete o formulário abaixo{% endblocktrans %}</p>
 
                             <form class="signup form-signin" id="signup_form" method="post"
                                   action="{% url 'socialaccount_signup' %}">
