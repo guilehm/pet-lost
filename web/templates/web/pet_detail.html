@@ -73,10 +73,7 @@
                     <p>{{ pet.announcement.lost_description|linebreaks }}</p>
                     {% if not pet.announcement.rescued %}
                     <p>
-                        <button class="btn btn-success btn-sm">me encontrou?</button>
-                    </p>
-                    <p>
-                        <button class="btn btn-info btn-sm">alguma informação sobre mim?</button>
+                        <button class="btn btn-success btn-sm">alguma informação sobre mim?</button>
                     </p>
                     {% endif %}
                 </div>
@@ -124,9 +121,13 @@
                         <img src="{{ picture.image.url }}" alt="{{ picture.title|default:'' }}" class="img-fluid">
                     </a>
                     <p class="text-center">
-                    <a class="text-black" href="{% url 'web:pet-pictures-remove' pet.slug picture.id %}">
-                        remover
-                    </a></p>
+                        <a class="text-black px-3" href="{% url 'web:pet-pictures-remove' pet.slug picture.id %}">
+                            <span class="fa fa-trash"></span>
+                        </a>
+                        <a class="text-black px-3" href="{% url 'web:pet-pictures-profile-change' pet.slug picture.id %}">
+                            <span class="fa fa-paw"></span>
+                        </a>
+                    </p>
                 </div>
             {% endfor %}
         </div>
