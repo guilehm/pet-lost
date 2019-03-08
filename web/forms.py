@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 from django.utils.translation import gettext_lazy as _
 
 from announcement.models import Announcement
-from pet.models import Pet
+from pet.models import Pet, Picture
 from users.models import User
 
 
@@ -185,3 +185,10 @@ class PetAddForm(forms.ModelForm):
             'breed',
             'description',
         )
+
+
+class PictureChangeForm(forms.ModelForm):
+
+    class Meta:
+        model = Picture
+        fields = ('image',)
