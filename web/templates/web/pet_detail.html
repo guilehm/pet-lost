@@ -17,6 +17,11 @@
         <meta property="og:image" content="{% static 'web/img/placeholder.png' %}" />
     {% endif %}
 {% endblock %}
+{% block headers %}
+    <link rel="stylesheet" href="{% static 'web/css/basic.css' %}">
+    <link rel="stylesheet" href="{% static 'web/css/dropzone.css' %}">
+    <script src="{% static 'web/js/dropzone.js' %}"></script>
+{% endblock %}
 {% block facebook_sdk %}
     <div id="fb-root"></div>
     <script async defer
@@ -118,6 +123,10 @@
                         <h3>{{ picture.title|default:'' }}</h3>
                         <img src="{{ picture.image.url }}" alt="{{ picture.title|default:'' }}" class="img-fluid">
                     </a>
+                    <p class="text-center">
+                    <a class="text-black" href="{% url 'web:pet-pictures-remove' pet.slug picture.id %}">
+                        remover
+                    </a></p>
                 </div>
             {% endfor %}
         </div>
@@ -125,29 +134,26 @@
     </div>
 </section>
 {% endif %}
-{% if owner %}
+{% if owner and pet.pictures.count < 10%}
 <section class="section border-t bg-light">
     <div class="container">
         <div class="row justify-content-center mb-5 element-animate">
-            <div class="col-md-8 text-center">
+            <div class="col-md-12 text-center">
                 <h2 class=" heading mb-4">
                     Adicione fotos
                     {% if pet.name %}
-                        d{% if pet.sex == 'female' %}a{% else  %}o{% endif %} {{ pet.name }}
+                        d{% if pet.sex == 'female' %}a{% else %}o{% endif %} {{ pet.name }}
                     {% endif %}
                 </h2>
+                <style>
+                    .dropzone {
+                        border: dashed 1px black;
+                    }
+                </style>
+                <form action="{% url 'web:pet-pictures-upload' pet.slug %}" class="dropzone" id="dzone" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                </form>
             </div>
-        </div>
-
-        <div class="row no-gutters">
-            {% for picture in pet.pictures.all %}
-                <div class="col-md-4 element-animate">
-                    <a class="link-thumbnail">
-                        <h3>{{ picture.title|default:'' }}</h3>
-                        <img src="{{ picture.image.url }}" alt="{{ picture.title|default:'' }}" class="img-fluid">
-                    </a>
-                </div>
-            {% endfor %}
         </div>
 
     </div>
@@ -170,5 +176,20 @@
         };
 
         return t;
-    }(document, "script", "twitter-wjs"));</script>
+    }(document, "script", "twitter-wjs"));
+    </script>
+
+    <script>
+        Dropzone.options.dzone = {
+            paramName: "image",
+            maxFilesize: 2,
+            maxFiles: 10,
+            autoProcessQueue: true,
+            acceptedFiles: "image/jpeg,image/png,image/jpg",
+            dictDefaultMessage: "Arraste as imagens aqui ou clique para selecionar.",
+            dictInvalidFileType: "Tipo de arquivo não permitido.",
+            dictFileTooBig: "Tamanho do arquivo excede o limite de 2 mb.",
+        };
+    </script>
+
 {% endblock %}
