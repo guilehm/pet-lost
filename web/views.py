@@ -277,6 +277,26 @@ def pet_pictures_remove(request, slug, picture_id):
     except Picture.DoesNotExist:
         messages.add_message(request, messages.ERROR, 'Ops, imagem não encontrada!')
     else:
-        messages.add_message(request, messages.SUCCESS, 'Imagem removida com sucesso!.')
+        messages.add_message(request, messages.SUCCESS, 'Imagem removida com sucesso!')
         pet.pictures.remove(picture)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+def pet_pictures_profile_change(request, slug, picture_id):
+    pet = get_object_or_404(Pet.objects.filter(
+        user=request.user,
+        slug=slug,
+    ))
+    try:
+        picture = Picture.objects.get(id=picture_id)
+    except Picture.DoesNotExist:
+        messages.add_message(request, messages.ERROR, 'Ops, imagem não encontrada!')
+    else:
+        messages.add_message(request, messages.SUCCESS, 'Imagem de perfil alterada com sucesso! :D')
+        old_picture = pet.picture
+        pet.pictures.remove(picture)
+        if old_picture:
+            pet.pictures.add(old_picture)
+        pet.picture = picture
+        pet.save()
     return redirect(request.META.get('HTTP_REFERER'))
