@@ -67,7 +67,52 @@
                 </form>
             </div>
             {% endif %}
-            {% if change_form and address_data_form or not change_form %}
+            {% if change_form and contact_data_form or not change_form %}
+            <div class="col-md-6 mb-5 order-2">
+                <h2 class="heading mb-4">Contato</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="phone_number">Telefone Fixo</label>
+                            <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ user.phone_number|default:'' }}" placeholder="Número com DDD" {% if not contact_data_form %}disabled{% endif %}>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="mobile_phone_number">Celular</label>
+                            <input type="text" id="mobile_phone_number" name="mobile_phone_number" class="form-control " value="{{ user.mobile_phone_number|default:'' }}" placeholder="Número com DDD" {% if not contact_data_form %}disabled{% endif %}>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="share_phone">Compartilhar meus números?</label>
+                            <input type="checkbox" id="share_phone" name="share_phone" class="form-control " {% if not contact_data_form %}value="{{ user.share_phone }}"{% endif %} style="height: 20px;" {% if user.share_phone %}checked{% endif %} {% if not contact_data_form %}onclick="return false;"{% endif %}>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="share_email">Compartilhar meu email?</label>
+                            <input type="checkbox" id="share_email" name="share_email" class="form-control " {% if not contact_data_form %}value="{{ user.share_email }}"{% endif %} style="height: 20px;" {% if user.share_email %}checked{% endif %} {% if not contact_data_form %}onclick="return false;"{% endif %}>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control " value="{{ user.email }}" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            {% if not contact_data_form %}
+                                <a href="{% url 'web:account-profile-change' %}?contact_data=true" class="btn btn-primary">Editar</a>
+                            {% else %}
+                                <input type="submit" value="Salvar" class="btn btn-primary">
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        <div class="row">
+        {% if change_form and address_data_form or not change_form %}
             <div class="col-md-6 mb-5 order-2">
                 <h2 class="heading mb-4">Endereço</h2>
                 <form method="post">
@@ -121,51 +166,6 @@
                         <div class="col-md-12 form-group">
                             {% if not address_data_form %}
                                 <a href="{% url 'web:account-profile-change' %}?address_data=true" class="btn btn-primary">Editar</a>
-                            {% else %}
-                                <input type="submit" value="Salvar" class="btn btn-primary">
-                            {% endif %}
-                        </div>
-                    </div>
-                </form>
-            </div>
-            {% endif %}
-        </div>
-        <div class="row">
-            {% if change_form and contact_data_form or not change_form %}
-            <div class="col-md-6 mb-5 order-2">
-                <h2 class="heading mb-4">Contato</h2>
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label for="phone_number">Telefone Fixo</label>
-                            <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ user.phone_number|default:'' }}" placeholder="Número com DDD" {% if not contact_data_form %}disabled{% endif %}>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label for="mobile_phone_number">Celular</label>
-                            <input type="text" id="mobile_phone_number" name="mobile_phone_number" class="form-control " value="{{ user.mobile_phone_number|default:'' }}" placeholder="Número com DDD" {% if not contact_data_form %}disabled{% endif %}>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label for="share_phone">Compartilhar meus números?</label>
-                            <input type="checkbox" id="share_phone" name="share_phone" class="form-control " {% if not contact_data_form %}value="{{ user.share_phone }}"{% endif %} style="height: 20px;" {% if user.share_phone %}checked{% endif %} {% if not contact_data_form %}onclick="return false;"{% endif %}>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label for="share_email">Compartilhar meu email?</label>
-                            <input type="checkbox" id="share_email" name="share_email" class="form-control " {% if not contact_data_form %}value="{{ user.share_email }}"{% endif %} style="height: 20px;" {% if user.share_email %}checked{% endif %} {% if not contact_data_form %}onclick="return false;"{% endif %}>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" class="form-control " value="{{ user.email }}" disabled>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            {% if not contact_data_form %}
-                                <a href="{% url 'web:account-profile-change' %}?contact_data=true" class="btn btn-primary">Editar</a>
                             {% else %}
                                 <input type="submit" value="Salvar" class="btn btn-primary">
                             {% endif %}
