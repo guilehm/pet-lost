@@ -19,11 +19,6 @@ class Announcement(models.Model):
         related_name='announcements',
         on_delete=models.CASCADE,
     )
-    user = models.ForeignKey(
-        'users.User',
-        related_name='announcements',
-        on_delete=models.CASCADE,
-    )
     situation = models.CharField(max_length=128, choices=SITUATION_CHOICES)
     description = models.TextField()
 
@@ -98,7 +93,7 @@ class Announcement(models.Model):
                 date=self.found_date.strftime("%d/%m/%Y")
             )
             lost_description += text
-        text = f'Me viram por último em {self.last_seen_city.data}, {self.last_seen_detail}\n'
+        text = f'Me viram por último em {self.last_seen_city.data}.\n'
         lost_description += text
         if self.pet.sex == self.pet.SEX_NOT_IDENTIFIED:
             text = 'Ainda não identificaram meu sexo.'

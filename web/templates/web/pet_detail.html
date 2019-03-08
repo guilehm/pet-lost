@@ -17,6 +17,11 @@
         <meta property="og:image" content="{% static 'web/img/placeholder.png' %}" />
     {% endif %}
 {% endblock %}
+{% block headers %}
+    <link rel="stylesheet" href="{% static 'web/css/basic.css' %}">
+    <link rel="stylesheet" href="{% static 'web/css/dropzone.css' %}">
+    <script src="{% static 'web/js/dropzone.js' %}"></script>
+{% endblock %}
 {% block facebook_sdk %}
     <div id="fb-root"></div>
     <script async defer
@@ -27,18 +32,30 @@
 <div class="div d-none d-xl-block" style="height: 80px; background-color: black;"></div>
 <section class="section element-animate">
     <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
         <div class="row justify-content-center mb-5">
             <div class="col-md-4"></div>
             <div class="col-md-8 section-heading">
                 <h2>{{ pet.name|default:'Não Identificado' }}</h2>
-                {% if not pet.announcement.rescued %}
-                    {% if pet.announcement.situation == 'lost' %}
-                        <p class="small-sub-heading">Ainda estou desaparecid{% if pet.sex == 'female' %}a{% else  %}o{% endif %}</p>
+                {% if pet.announcement %}
+                    {% if not pet.announcement.rescued %}
+                        {% if pet.announcement.situation == 'lost' %}
+                            <p class="small-sub-heading">Ainda estou desaparecid{% if pet.sex == 'female' %}a{% else  %}o{% endif %}</p>
+                        {% else %}
+                            <p class="small-sub-heading">Ainda estou procurando minha família</p>
+                        {% endif %}
                     {% else %}
-                        <p class="small-sub-heading">Ainda estou procurando minha família</p>
+                        <p class="small-sub-heading">já encontrei minha família :)</p>
                     {% endif %}
-                {% else %}
-                    <p class="small-sub-heading">já encontrei minha família :)</p>
                 {% endif %}
             </div>
         </div>
@@ -50,18 +67,17 @@
                     <img src="{% static 'web/img/placeholder.png' %}" alt="{{ pet.slug }}" class="img-fluid">
                 {% endif %}
             </div>
-            <div class="col-md-4">
-                <strong>Um pouco sobre mim:</strong> <br>
-                <p>{{ pet.announcement.lost_description|linebreaks }}</p>
-                {% if not pet.announcement.rescued %}
-                <p>
-                    <button class="btn btn-success btn-sm">me encontrou?</button>
-                </p>
-                <p>
-                    <button class="btn btn-info btn-sm">alguma informação sobre mim?</button>
-                </p>
-                {% endif %}
-            </div>
+            {% if pet.announcement %}
+                <div class="col-md-4">
+                    <strong>Um pouco sobre mim:</strong> <br>
+                    <p>{{ pet.announcement.lost_description|linebreaks }}</p>
+                    {% if not pet.announcement.rescued %}
+                    <p>
+                        <button class="btn btn-success btn-sm">alguma informação sobre mim?</button>
+                    </p>
+                    {% endif %}
+                </div>
+            {% endif %}
             <div class="col-md-4">
                 {% if pet.description %}
                     <p><strong>O que minha família disse sobre mim:</strong> <br> {{ pet.description|default:'' }}</p>
@@ -70,17 +86,17 @@
                     <p><strong>Descrição do anúncio:</strong> <br> {{ pet.announcement.description|default:'' }}</p>
                 {% endif %}
                 {% if not pet.announcement.rescued %}
-                <p><a class="font-weight-bold">Compartilhe</a></p>
-                <ul class="list-unstyled">
-                    <li>
-                        <div class="fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }};src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartilhar</a></div>
-                    </li>
-                    <li>
-                        <a class="twitter-share-button"
-                           href="https://twitter.com/intent/tweet?{{ pet.announcement.share_description_encoded }}" target="_blank">
-                            Tweet</a>
-                    </li>
-                </ul>
+                    <p><a class="font-weight-bold">Compartilhe</a></p>
+                    <ul class="list-unstyled">
+                        <li>
+                            <div class="fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }};src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartilhar</a></div>
+                        </li>
+                        <li>
+                            <a class="twitter-share-button"
+                               href="https://twitter.com/intent/tweet?{{ pet.announcement.share_description_encoded }}" target="_blank">
+                                Tweet</a>
+                        </li>
+                    </ul>
                 {% endif %}
             </div>
         </div>
@@ -104,8 +120,41 @@
                         <h3>{{ picture.title|default:'' }}</h3>
                         <img src="{{ picture.image.url }}" alt="{{ picture.title|default:'' }}" class="img-fluid">
                     </a>
+                    <p class="text-center">
+                        <a class="text-black px-3" href="{% url 'web:pet-pictures-remove' pet.slug picture.id %}">
+                            <span class="fa fa-trash"></span>
+                        </a>
+                        <a class="text-black px-3" href="{% url 'web:pet-pictures-profile-change' pet.slug picture.id %}">
+                            <span class="fa fa-paw"></span>
+                        </a>
+                    </p>
                 </div>
             {% endfor %}
+        </div>
+
+    </div>
+</section>
+{% endif %}
+{% if owner and pet.pictures.count < 10%}
+<section class="section border-t bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5 element-animate">
+            <div class="col-md-12 text-center">
+                <h2 class=" heading mb-4">
+                    Adicione fotos
+                    {% if pet.name %}
+                        d{% if pet.sex == 'female' %}a{% else %}o{% endif %} {{ pet.name }}
+                    {% endif %}
+                </h2>
+                <style>
+                    .dropzone {
+                        border: dashed 1px black;
+                    }
+                </style>
+                <form action="{% url 'web:pet-pictures-upload' pet.slug %}" class="dropzone" id="dzone" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                </form>
+            </div>
         </div>
 
     </div>
@@ -128,5 +177,20 @@
         };
 
         return t;
-    }(document, "script", "twitter-wjs"));</script>
+    }(document, "script", "twitter-wjs"));
+    </script>
+
+    <script>
+        Dropzone.options.dzone = {
+            paramName: "image",
+            maxFilesize: 2,
+            maxFiles: 10,
+            autoProcessQueue: true,
+            acceptedFiles: "image/jpeg,image/png,image/jpg",
+            dictDefaultMessage: "Arraste as imagens aqui ou clique para selecionar.",
+            dictInvalidFileType: "Tipo de arquivo não permitido.",
+            dictFileTooBig: "Tamanho do arquivo excede o limite de 2 mb.",
+        };
+    </script>
+
 {% endblock %}

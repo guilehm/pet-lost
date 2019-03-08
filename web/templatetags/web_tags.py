@@ -6,6 +6,9 @@ from web.models import Banner
 register = template.Library()
 
 translation_dict = {
+    'Name': 'Nome',
+    'Sex': 'Sexo',
+    'Breed': 'Raça',
     'Male': 'Macho',
     'Female': 'Fêmea',
     'Not Identified': 'Não Identificado',

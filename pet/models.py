@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.utils.functional import cached_property
+from django.utils.text import slugify
 
 from announcement.models import Announcement
 from web.utils import UploadToFactory
@@ -59,6 +60,11 @@ class Pet(models.Model):
     )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(
+        'users.User',
+        related_name='pets',
+        on_delete=models.CASCADE,
+    )
     name = models.CharField(max_length=128, null=True, blank=True)
     sex = models.CharField(max_length=32, choices=SEX_CHOICES)
     kind = models.CharField(max_length=128, choices=KIND_CHOICES, default=KIND_DOG)
@@ -83,6 +89,21 @@ class Pet(models.Model):
     @cached_property
     def announcement(self):
         return self.announcements.filter(active=True).last()
+
+    @property
+    def public_id(self):
+        text = "{pet_name}-{kind}-{breed}-{id}".format(
+            pet_name=self.name,
+            kind=self.kind,
+            breed=self.breed.name,
+            id=str(self.id)[:5],
+        )
+        return slugify(text)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self.public_id
+        super().save(*args, **kwargs)
 
 
 class Picture(models.Model):

@@ -13,7 +13,6 @@ class PetPictureInline(admin.StackedInline):
 class PetAnnouncementInline(admin.StackedInline):
     model = Announcement
     classes = ('collapse',)
-    raw_id_fields = ('user',)
     extra = 0
 
 
@@ -31,14 +30,14 @@ class PetAdmin(admin.ModelAdmin):
         'name', 'sex', 'kind', 'breed',
     )
     exclude = ('pictures',)
+    readonly_fields = ('slug',)
     list_filter = (
         'sex',
         'kind',
         'breed',
     )
     search_fields = ('name', 'description')
-    raw_id_fields = ('picture', 'breed')
-    prepopulated_fields = {'slug': ('name', 'kind', 'breed')}
+    raw_id_fields = ('picture', 'breed', 'user')
     inlines = (PetPictureInline, PetAnnouncementInline)
 
 

@@ -17,27 +17,19 @@
                     </div>
                 {% endfor %}
             {% endif %}
-            {% if not pets %}
-                <div class="row justify-content-center mb-5 element-animate">
-                    <div class="col-md-8 text-center">
-                        <h2 class="heading mb-5">Vamos lá, primeiro cadastre seu Pet</h2>
-                        <a class="btn btn-success" href="{% url 'web:pet-add' %}">Cadastrar meu Pet</a>
-                    </div>
-                </div>
-            {% else %}
-                <h2 class="heading mb-5">Anuncie agora para receber ajuda da comunidade</h2>
-                <form method="post">
+                <h2 class="heading mb-5">Cadastre seu Pet</h2>
+                <form method="post" novalidate>
                     {% csrf_token %}
-                    {% for hidden_field in announcement_form.hidden_fields %}
+                    {% for hidden_field in pet_form.hidden_fields %}
                         {{ hidden_field }}
                     {% endfor %}
-                    {% for error in announcement_form.non_field_errors %}
+                    {% for error in pet_form.non_field_errors %}
                         <div class="form-control-feedback text-danger">
                             {{ error|translation }}
                         </div>
                     {% endfor %}
 
-                    {% for field in announcement_form.visible_fields %}
+                    {% for field in pet_form.visible_fields %}
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="{{ field.id_for_label }}">{{ field.label|translation }}</label>
                             <div class="col-sm-10">
@@ -84,19 +76,7 @@
                     {% endfor %}
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
-
             </div>
-        {% endif %}
-    </div>
-    <div class="section">
-        <div class="container">
-            <div class="row justify-content-center mb-5 element-animate">
-                <div class="col-md-8 text-center">
-                    <h2 class="heading mb-5">Quer cadastrar um Pet?</h2>
-                    <a class="btn btn-success" href="{% url 'web:pet-add' %}">Cadastrar meu Pet</a>
-                </div>
-            </div>
-        </div>
     </div>
 {% endblock %}
 {% block headers %}

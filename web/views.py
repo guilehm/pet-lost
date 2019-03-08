@@ -3,14 +3,15 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
-from pet.models import Pet
+from pet.models import Pet, Picture
 from petLost.settings import GOOGLE_RECAPTCHA_SITE_KEY
 from users.models import User
 from web.forms import (
-    AddressDataForm, AnnouncementForm, AuthenticationForm, ContactDataForm, PersonalDataForm, SocialDataForm,
-    UserCreationForm,
+    AddressDataForm, AnnouncementForm, AuthenticationForm, ContactDataForm, PersonalDataForm, PetAddForm,
+    PictureChangeForm, SocialDataForm, UserCreationForm,
 )
 from web.utils import check_recaptcha
 
@@ -65,8 +66,12 @@ def pet_detail(request, slug):
         Pet.objects.prefetch_related('pictures'),
         slug=slug,
     )
+    owner = False
+    if pet in Pet.objects.filter(user=request.user):
+        owner = True
     return render(request, 'web/pet_detail.html', {
         'pet': pet,
+        'owner': owner,
     })
 
 
@@ -213,19 +218,85 @@ def profile_change(request):
 
 
 def announcement_add(request):
-    form = AnnouncementForm()
+    pets = Pet.objects.filter(user=request.user)
+    if not pets:
+        return redirect('web:pet-add')
+    announcement_form = AnnouncementForm()
     if request.method == 'POST':
-        form = AnnouncementForm(request.POST)
-        if form.is_valid():
-            print('é válido')
-            announce = form.save(commit=False)
-            announce.user = request.user
-            announce.save()
-            messages.add_message(request, messages.SUCCESS, 'Anúncio criado com sucesso.')
-        else:
+        announcement_form = AnnouncementForm(request.POST)
+        if not announcement_form.is_valid():
             messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro!')
-            print('não é válido')
-            print(form.errors)
+        else:
+            announcement_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Anúncio criado com sucesso.')
     return render(request, 'web/announcement_add.html', {
-        'form': form,
+        'announcement_form': announcement_form,
+        'pets': pets,
     })
+
+
+def pet_add(request):
+    pet_form = PetAddForm()
+    if request.method == 'POST':
+        pet_form = PetAddForm(request.POST)
+        if not pet_form.is_valid():
+            messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro!')
+        else:
+            pet = pet_form.save(commit=False)
+            pet.user = request.user
+            pet.save()
+            messages.add_message(request, messages.SUCCESS, 'Pet cadastrado com sucesso.')
+            return redirect('web:pet-detail', pet.slug)
+
+    return render(request, 'web/pet_add.html', {
+        'pet_form': pet_form,
+    })
+
+
+def pet_pictures_upload(request, slug):
+    pet = get_object_or_404(Pet.objects.filter(
+        user=request.user,
+        slug=slug,
+    ))
+    form = PictureChangeForm(request.POST, request.FILES)
+    if pet and form.is_valid():
+        if pet.pictures.count() >= 10:
+            return HttpResponse('Ops, é permitido salvar até 10 imagens por pet!', status=500)
+        picture = form.save()
+        pet.pictures.add(picture)
+    return HttpResponse()
+
+
+def pet_pictures_remove(request, slug, picture_id):
+    pet = get_object_or_404(Pet.objects.filter(
+        user=request.user,
+        slug=slug,
+    ))
+    try:
+        picture = Picture.objects.get(id=picture_id)
+    except Picture.DoesNotExist:
+        messages.add_message(request, messages.ERROR, 'Ops, imagem não encontrada!')
+    else:
+        messages.add_message(request, messages.SUCCESS, 'Imagem removida com sucesso!')
+        pet.pictures.remove(picture)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+def pet_pictures_profile_change(request, slug, picture_id):
+    pet = get_object_or_404(Pet.objects.filter(
+        user=request.user,
+        slug=slug,
+    ))
+    try:
+        picture = Picture.objects.get(id=picture_id)
+    except Picture.DoesNotExist:
+        messages.add_message(request, messages.ERROR, 'Ops, imagem não encontrada!')
+    else:
+        messages.add_message(request, messages.SUCCESS, 'Imagem de perfil alterada com sucesso! :D')
+        old_picture = pet.picture
+        pet.pictures.remove(picture)
+        if old_picture:
+            pet.pictures.add(old_picture)
+        pet.picture = picture
+        pet.save()
+    return redirect(request.META.get('HTTP_REFERER'))

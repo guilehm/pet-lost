@@ -15,5 +15,5 @@ class AnnouncementAdmin(admin.ModelAdmin):
         'found_date',
         ('last_seen_city', admin.RelatedOnlyFieldListFilter),
     )
-    search_fields = ('description', 'last_seen_district', 'last_seen_detail')
+    search_fields = ('description', 'last_seen_district')
     raw_id_fields = ('last_seen_city',)

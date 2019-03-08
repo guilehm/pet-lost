@@ -8,7 +8,17 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('pets/lost/', views.lost_list, name='pet-lost'),
     path('pets/found/', views.found_list, name='pet-found'),
+    path('pets/add/', views.pet_add, name='pet-add'),
     path('pets/<str:slug>/', views.pet_detail, name='pet-detail'),
+    path('pets/<str:slug>/pictures/upload/', views.pet_pictures_upload, name='pet-pictures-upload'),
+    path(
+        'pets/<str:slug>/pictures/remove/<int:picture_id>/',
+        views.pet_pictures_remove, name='pet-pictures-remove'
+    ),
+    path(
+        'pets/<str:slug>/pictures/profile/change/<int:picture_id>/',
+        views.pet_pictures_profile_change, name='pet-pictures-profile-change'
+    ),
     path('accounts/profile/', views.profile, name='account-profile'),
     path('accounts/profile/change', views.profile_change, name='account-profile-change'),
     path('accounts/login/', views.login_view, name='account-login'),
