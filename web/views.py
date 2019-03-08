@@ -300,3 +300,12 @@ def pet_pictures_profile_change(request, slug, picture_id):
         pet.picture = picture
         pet.save()
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+def pet_list_by_user(request):
+    pets = Pet.objects.filter(
+        user=request.user,
+    )
+    return render(request, 'web/pet_list_by_user.html', {
+        'pets': pets,
+    })

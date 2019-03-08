@@ -9,6 +9,7 @@ urlpatterns = [
     path('pets/lost/', views.lost_list, name='pet-lost'),
     path('pets/found/', views.found_list, name='pet-found'),
     path('pets/add/', views.pet_add, name='pet-add'),
+    path('pets/owned/', views.pet_list_by_user, name='pet-owned-list'),
     path('pets/<str:slug>/', views.pet_detail, name='pet-detail'),
     path('pets/<str:slug>/pictures/upload/', views.pet_pictures_upload, name='pet-pictures-upload'),
     path(

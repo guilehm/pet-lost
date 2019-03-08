@@ -1,0 +1,57 @@
+{% extends 'web/base.html' %}
+{% block banners %}
+{% endblock %}
+{% load static %}
+{% load web_tags %}
+{% block content %}
+    <div class="div d-none d-xl-block" style="height: 80px; background-color: black;"></div>
+
+    <section class="section">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} alert-dismissible fade show"
+                         role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-8 text-center">
+                    <h2 class=" heading mb-4">Meus Pets <span class="fa fa-paw"></span></h2>
+                    <p class="mb-5 lead"></p>
+                </div>
+            </div>
+            <section>
+                {% for pet in pets %}
+                    <div class="half d-md-flex d-block">
+                        <div class="image {% cycle '' 'order-2' %}" style="background-image: url('{% if pet.picture %}{{ pet.picture.image.url }}{% else %}{% static 'web/img/placeholder.png' %}{% endif %}')"></div>
+                        <div class="text text-center">
+                            <span>{{ pet.date_added|date:'d/m/Y' }}</span>
+                            <h3 class="">{{ pet.name|default:'Não Identificado' }}</h3>
+                            <small>{{ pet.breed.name|default:'' }}</small>
+                            <p class="mt-3">{{ pet.description|default:'' }}</p>
+                            <p><a href="{% url 'web:pet-detail' pet.slug %}" class="btn btn-primary btn-sm">Detalhes</a>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="section">
+                    <div class="container">
+                        <div class="row justify-content-center mb-5">
+                            <div class="col-md-8 text-center">
+                                <a class="btn btn-success" href="{% url 'web:pet-add' %}">Cadastrar outro Pet</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock %}
