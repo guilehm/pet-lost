@@ -3,14 +3,15 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
-from pet.models import Pet
+from pet.models import Pet, Picture
 from petLost.settings import GOOGLE_RECAPTCHA_SITE_KEY
 from users.models import User
 from web.forms import (
     AddressDataForm, AnnouncementForm, AuthenticationForm, ContactDataForm, PersonalDataForm, PetAddForm,
-    SocialDataForm, UserCreationForm,
+    PictureChangeForm, SocialDataForm, UserCreationForm,
 )
 from web.utils import check_recaptcha
 
@@ -250,3 +251,32 @@ def pet_add(request):
     return render(request, 'web/pet_add.html', {
         'pet_form': pet_form,
     })
+
+
+def pet_pictures_upload(request, slug):
+    pet = get_object_or_404(Pet.objects.filter(
+        user=request.user,
+        slug=slug,
+    ))
+    form = PictureChangeForm(request.POST, request.FILES)
+    if pet and form.is_valid():
+        if pet.pictures.count() >= 10:
+            return HttpResponse('Ops, é permitido salvar até 10 imagens por pet!', status=500)
+        picture = form.save()
+        pet.pictures.add(picture)
+    return HttpResponse()
+
+
+def pet_pictures_remove(request, slug, picture_id):
+    pet = get_object_or_404(Pet.objects.filter(
+        user=request.user,
+        slug=slug,
+    ))
+    try:
+        picture = Picture.objects.get(id=picture_id)
+    except Picture.DoesNotExist:
+        messages.add_message(request, messages.ERROR, 'Ops, imagem não encontrada!')
+    else:
+        messages.add_message(request, messages.SUCCESS, 'Imagem removida com sucesso!.')
+        pet.pictures.remove(picture)
+    return redirect(request.META.get('HTTP_REFERER'))
