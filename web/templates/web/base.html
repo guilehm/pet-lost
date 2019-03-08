@@ -62,6 +62,7 @@
                                     <img src="{{ request.user.socialaccount_set.all.0.get_avatar_url }}" class="img-fluid d-sm-none d-md-block " alt="">
                                 {% endif %}
                                 <a class="dropdown-item" href="{% url 'web:account-profile' %}">Perfil</a>
+                                <a class="dropdown-item" href="{% url 'web:pet-owned-list' %}">Meus Pets</a>
                                 <a class="dropdown-item" href="{% url 'web:account-logout' %}">Logout</a>
                             </div>
                         </li>
