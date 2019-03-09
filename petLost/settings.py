@@ -221,7 +221,7 @@ GOOGLE_RECAPTCHA_SECRET_KEY = os.getenv('GOOGLE_RECAPTCHA_SECRET_KEY')
 
 EMAIL_HOST = 'smtp.mailgun.org'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'contato@mg.petlost.live'
+EMAIL_HOST_USER = 'postmaster@mg.petlost.live'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 MAILGUN_API_URL = os.environ.get('MAILGUN_API_URL')
