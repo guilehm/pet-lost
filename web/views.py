@@ -254,6 +254,9 @@ def pet_add(request):
             pet.save()
             messages.add_message(request, messages.SUCCESS, 'Pet cadastrado com sucesso.')
             return redirect('web:pet-detail', pet.slug)
+    return render(request, 'web/pet_add.html', {
+        'pet_form': pet_form,
+    })
 
 
 @login_required
@@ -271,8 +274,6 @@ def pet_change(request, slug):
         return redirect(request.META.get('HTTP_REFERER'))
 
     pet_form = PetChangeForm(instance=pet)
-    for field in pet_form.visible_fields():
-        print(field.value())
     if request.method == 'POST':
         pet_form = PetChangeForm(data=request.POST, instance=pet)
         if not pet_form.is_valid():
@@ -281,7 +282,7 @@ def pet_change(request, slug):
             pet = pet_form.save(commit=False)
             pet.user = request.user
             pet.save()
-            messages.add_message(request, messages.SUCCESS, 'Pet cadastrado com sucesso.')
+            messages.add_message(request, messages.SUCCESS, 'Pet editado com sucesso.')
             return redirect('web:pet-detail', pet.slug)
 
     return render(request, 'web/pet_add.html', {
