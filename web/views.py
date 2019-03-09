@@ -220,6 +220,7 @@ def profile_change(request):
 def announcement_add(request):
     pets = Pet.objects.filter(user=request.user)
     if not pets:
+        messages.add_message(request, messages.SUCCESS, 'Para criar seu anúncio, primeiro cadastre seu pet.')
         return redirect('web:pet-add')
     announcement_form = AnnouncementForm()
     if request.method == 'POST':
