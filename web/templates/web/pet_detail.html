@@ -67,6 +67,7 @@
                     <img src="{% static 'web/img/placeholder.png' %}" alt="{{ pet.slug }}" class="img-fluid">
                 {% endif %}
                 {% if owner %}
+                    <br>
                     <a class="text-dark" href="{% url 'web:pet-change' pet.slug %}">editar cadastro</a>
                 {% endif %}
             </div>
@@ -142,7 +143,7 @@
 </section>
 {% endif %}
 {% if owner and pet.pictures.count < 10%}
-<section class="section border-t bg-light">
+<section class="section border-t">
     <div class="container">
         <div class="row justify-content-center mb-5 element-animate">
             <div class="col-md-12 text-center">
@@ -160,6 +161,23 @@
                 <form action="{% url 'web:pet-pictures-upload' pet.slug %}" class="dropzone" id="dzone" enctype="multipart/form-data" method="post">
                     {% csrf_token %}
                 </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endif %}
+{% if owner %}
+
+<section class="section border-t">
+    <div class="container">
+        <div class="row justify-content-center mb-5 element-animate">
+            <div class="col-md-12 text-center">
+                <h2 class=" heading mb-4">
+                    {{ pet.name }} está desaparecid{% if pet.sex == 'female' %}a{% else  %}o{% endif %}?
+                </h2>
+
+                <a class="btn btn-sm btn-success" href="{% url 'web:announcement-add' %}">Anuncie Grátis</a>
             </div>
         </div>
 
