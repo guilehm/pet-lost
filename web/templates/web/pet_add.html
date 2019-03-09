@@ -17,8 +17,12 @@
                     </div>
                 {% endfor %}
             {% endif %}
-                <h2 class="heading mb-5">Cadastre seu Pet</h2>
-                <form method="post" novalidate>
+                {% if not pet %}
+                    <h2 class="heading mb-5">Cadastre seu Pet</h2>
+                {% else %}
+                    <h2 class="heading mb-5">Edite os dados do seu Pet</h2>
+                {% endif %}
+                <form method="post">
                     {% csrf_token %}
                     {% for hidden_field in pet_form.hidden_fields %}
                         {{ hidden_field }}
@@ -36,7 +40,10 @@
                                 {% if field.field.widget.input_type == 'select' %}
                                     <select name="{{ field.html_name }}" id="{{ field.id_for_label }}" class="form-control m-input py-0">
                                         {% for choice in field.field.choices %}
-                                            <option value="{{ choice.0 }}">{{ choice.1|translation }}</option>
+                                            <option value="{{ choice.0 }}"
+                                            {% if choice.0 == field.value %}selected{% endif %}>
+                                                {{ choice.1|translation }}
+                                            </option>
                                         {% endfor %}
                                     </select>
                                 {% elif field.field.widget.input_type == 'number' %}
@@ -53,7 +60,7 @@
                                 {% elif field.name == 'description' %}
                                     <textarea name="description" rows="4"
                                               placeholder=""
-                                              required="" id="id_description" class="form-control"></textarea>
+                                              required="" id="id_description" class="form-control">{{ pet_form.description.value|default:'' }}</textarea>
                                 {% else %}
                                     <input type="{{ field.field.widget.input_type }}" class="form-control"
                                            id="{{ field.id_for_label }}"
