@@ -1,36 +1,48 @@
 {% extends 'web/base.html' %}
 {% load web_tags %}
 {% block content %}
-<section class="section blog">
-    <div class="container">
+    {% if pets_lost %}
+        <section class="section blog">
+            <div class="container">
 
-        <div class="row justify-content-center mb-5 element-animate">
-            <div class="col-md-8 text-center">
-                <h2 class=" heading mb-4">Desaparecidos</h2>
-                <p class="mb-5 lead">Pets que estão sendo procurados por suas famílias.</p>
+                <div class="row justify-content-center mb-5 element-animate">
+                    <div class="col-md-8 text-center">
+                        <h2 class=" heading mb-4">Desaparecidos</h2>
+                        <p class="mb-5 lead">Pets que estão sendo procurados por suas famílias.</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    {% pet_list 'lost' %}
+                </div>
+
             </div>
-        </div>
+        </section>
+    {% endif %}
+    {% if pets_found %}
+        <section class="section blog">
+            <div class="container">
+                <div class="row justify-content-center mb-5 element-animate">
+                    <div class="col-md-8 text-center">
+                        <h2 class=" heading mb-4">Encontrados</h2>
+                        <p class="mb-5 lead">Pets que foram encontrados na rua e estão procurando suas famílias.</p>
+                    </div>
+                </div>
 
-        <div class="row">
-            {% pet_list 'lost' %}
-        </div>
-    </div>
-</section>
-<section class="section blog">
-    <div class="container">
-
-        <div class="row justify-content-center mb-5 element-animate">
-            <div class="col-md-8 text-center">
-                <h2 class=" heading mb-4">Encontrados</h2>
-                <p class="mb-5 lead">Pets que foram encontrados na rua e estão procurando suas famílias.</p>
+                <div class="row">
+                    {% pet_list 'found' %}
+                </div>
             </div>
-        </div>
-
-        <div class="row">
-            {% pet_list 'found' %}
-        </div>
-    </div>
-</section>
+        </section>
+    {% endif %}
+    {% if not pets_lost and not pets_found %}
+        <section class="section blog">
+            <div class="container">
+                <div class="row justify-content-center mb-5 element-animate">
+                    <div class="col-md-8 text-center">
+        <a class="btn btn-success" href="{% url 'web:pet-add' %}">Cadastrar meu Pet</a>
+                    </div></div></div></section>
+    {% endif %}
 {% endblock %}
 {% block js %}
     <script>window.twttr = (function (d, s, id) {
