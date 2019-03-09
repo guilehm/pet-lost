@@ -10,7 +10,7 @@ from pet.models import Pet, Picture
 from petLost.settings import GOOGLE_RECAPTCHA_SITE_KEY
 from users.models import User
 from web.forms import (
-    AddressDataForm, AnnouncementForm, AuthenticationForm, ContactDataForm, PersonalDataForm, PetAddForm,
+    AddressDataForm, AnnouncementForm, AuthenticationForm, ContactDataForm, PersonalDataForm, PetChangeForm,
     PictureChangeForm, SocialDataForm, UserCreationForm,
 )
 from web.utils import check_recaptcha
@@ -243,9 +243,38 @@ def announcement_add(request):
 
 @login_required
 def pet_add(request):
-    pet_form = PetAddForm()
+    pet_form = PetChangeForm()
     if request.method == 'POST':
-        pet_form = PetAddForm(request.POST)
+        pet_form = PetChangeForm(request.POST)
+        if not pet_form.is_valid():
+            messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro!')
+        else:
+            pet = pet_form.save(commit=False)
+            pet.user = request.user
+            pet.save()
+            messages.add_message(request, messages.SUCCESS, 'Pet cadastrado com sucesso.')
+            return redirect('web:pet-detail', pet.slug)
+
+
+@login_required
+def pet_change(request, slug):
+    try:
+        pet = Pet.objects.get(
+            user=request.user,
+            slug=slug,
+        )
+    except Pet.DoesNotExist:
+        messages.add_message(request, messages.ERROR, 'Ops, pet não encontrado!')
+        return redirect(request.META.get('HTTP_REFERER'))
+    except TypeError:
+        messages.add_message(request, messages.ERROR, 'Ops, é necessário estar logado para realizar esta ação!')
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    pet_form = PetChangeForm(instance=pet)
+    for field in pet_form.visible_fields():
+        print(field.value())
+    if request.method == 'POST':
+        pet_form = PetChangeForm(data=request.POST, instance=pet)
         if not pet_form.is_valid():
             messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro!')
         else:
@@ -256,6 +285,7 @@ def pet_add(request):
             return redirect('web:pet-detail', pet.slug)
 
     return render(request, 'web/pet_add.html', {
+        'pet': pet,
         'pet_form': pet_form,
     })
 
