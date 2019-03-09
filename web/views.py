@@ -235,6 +235,7 @@ def announcement_add(request):
     })
 
 
+@login_required
 def pet_add(request):
     pet_form = PetAddForm()
     if request.method == 'POST':
