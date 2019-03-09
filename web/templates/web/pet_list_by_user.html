@@ -31,8 +31,13 @@
             <section>
                 {% for pet in pets %}
                     <div class="half d-md-flex d-block">
-                        <div class="image {% cycle '' 'order-2' %}" style="background-image: url('
-                                {% if pet.picture %}{{ pet.picture.image.url }}{% else %}{% static 'web/img/placeholder.png' %}{% endif %}')"></div>
+                        <div class="image {% cycle '' 'order-2' %}"
+                        {% if pet.picture %}
+                            style="background-image: url('{{ pet.picture.image.url }}');"
+                        {% else %}
+                            style="background-image: url('{% static 'web/img/placeholder.png' %}');"
+                        {% endif %}>
+                        </div>
                         <div class="text text-center">
                             <span>{{ pet.date_added|date:'d/m/Y' }}</span>
                             <h3 class="">{{ pet.name|default:'Não Identificado' }}</h3>
