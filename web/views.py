@@ -67,8 +67,9 @@ def pet_detail(request, slug):
         slug=slug,
     )
     owner = False
-    if pet in Pet.objects.filter(user=request.user):
-        owner = True
+    if request.user.is_authenticated:
+        if pet in Pet.objects.filter(user=request.user):
+            owner = True
     return render(request, 'web/pet_detail.html', {
         'pet': pet,
         'owner': owner,
@@ -97,7 +98,8 @@ def login_view(request):
                     authenticated_user,
                     backend='django.contrib.auth.backends.ModelBackend',
                 )
-                return redirect('web:account-login')
+                messages.add_message(request, messages.SUCCESS, 'Login realizado com sucesso.')
+                return redirect('web:index')
     return render(request, 'accounts/login.html', {
         'login_form': form,
     })
@@ -220,6 +222,7 @@ def profile_change(request):
 def announcement_add(request):
     pets = Pet.objects.filter(user=request.user)
     if not pets:
+        messages.add_message(request, messages.SUCCESS, 'Para criar seu anúncio, primeiro cadastre seu pet.')
         return redirect('web:pet-add')
     announcement_form = AnnouncementForm()
     if request.method == 'POST':
@@ -235,6 +238,7 @@ def announcement_add(request):
     })
 
 
+@login_required
 def pet_add(request):
     pet_form = PetAddForm()
     if request.method == 'POST':
@@ -254,10 +258,17 @@ def pet_add(request):
 
 
 def pet_pictures_upload(request, slug):
-    pet = get_object_or_404(Pet.objects.filter(
-        user=request.user,
-        slug=slug,
-    ))
+    try:
+        pet = Pet.objects.get(
+            user=request.user,
+            slug=slug
+        )
+    except Pet.DoesNotExist:
+        return HttpResponse('Ops, pet não encontrado!', status=404)
+    except TypeError:
+        messages.add_message(request, messages.ERROR, 'Ops, é necessário estar logado para realizar esta ação!')
+        return redirect(request.META.get('HTTP_REFERER'))
+
     form = PictureChangeForm(request.POST, request.FILES)
     if pet and form.is_valid():
         if pet.pictures.count() >= 10:
@@ -268,14 +279,25 @@ def pet_pictures_upload(request, slug):
 
 
 def pet_pictures_remove(request, slug, picture_id):
-    pet = get_object_or_404(Pet.objects.filter(
-        user=request.user,
-        slug=slug,
-    ))
+    try:
+        pet = Pet.objects.get(
+            user=request.user,
+            slug=slug
+        )
+    except Pet.DoesNotExist:
+        return HttpResponse('Ops, pet não encontrado!', status=404)
+    except TypeError:
+        messages.add_message(request, messages.ERROR, 'Ops, é necessário estar logado para realizar esta ação!')
+        return redirect(request.META.get('HTTP_REFERER'))
+
     try:
         picture = Picture.objects.get(id=picture_id)
     except Picture.DoesNotExist:
         messages.add_message(request, messages.ERROR, 'Ops, imagem não encontrada!')
+    except TypeError:
+        messages.add_message(request, messages.ERROR, 'Ops, é necessário estar logado para realizar esta ação!')
+        return redirect(request.META.get('HTTP_REFERER'))
+
     else:
         messages.add_message(request, messages.SUCCESS, 'Imagem removida com sucesso!')
         pet.pictures.remove(picture)
@@ -283,10 +305,18 @@ def pet_pictures_remove(request, slug, picture_id):
 
 
 def pet_pictures_profile_change(request, slug, picture_id):
-    pet = get_object_or_404(Pet.objects.filter(
-        user=request.user,
-        slug=slug,
-    ))
+    try:
+        pet = Pet.objects.get(
+            user=request.user,
+            slug=slug,
+        )
+    except Pet.DoesNotExist:
+        messages.add_message(request, messages.ERROR, 'Ops, pet não encontrado!')
+        return redirect(request.META.get('HTTP_REFERER'))
+    except TypeError:
+        messages.add_message(request, messages.ERROR, 'Ops, é necessário estar logado para realizar esta ação!')
+        return redirect(request.META.get('HTTP_REFERER'))
+
     try:
         picture = Picture.objects.get(id=picture_id)
     except Picture.DoesNotExist:

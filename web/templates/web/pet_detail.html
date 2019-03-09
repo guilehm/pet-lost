@@ -120,14 +120,17 @@
                         <h3>{{ picture.title|default:'' }}</h3>
                         <img src="{{ picture.image.url }}" alt="{{ picture.title|default:'' }}" class="img-fluid">
                     </a>
-                    <p class="text-center">
-                        <a class="text-black px-3" href="{% url 'web:pet-pictures-remove' pet.slug picture.id %}">
-                            <span class="fa fa-trash"></span>
-                        </a>
-                        <a class="text-black px-3" href="{% url 'web:pet-pictures-profile-change' pet.slug picture.id %}">
-                            <span class="fa fa-paw"></span>
-                        </a>
-                    </p>
+                    {% if owner %}
+                        <p class="text-center">
+                            <a class="text-black px-3" href="{% url 'web:pet-pictures-remove' pet.slug picture.id %}">
+                                <span class="fa fa-trash"></span>
+                            </a>
+                            <a class="text-black px-3"
+                               href="{% url 'web:pet-pictures-profile-change' pet.slug picture.id %}">
+                                <span class="fa fa-paw"></span>
+                            </a>
+                        </p>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
