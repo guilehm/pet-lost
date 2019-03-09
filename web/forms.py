@@ -175,7 +175,7 @@ class AnnouncementForm(forms.ModelForm):
         )
 
 
-class PetAddForm(forms.ModelForm):
+class PetChangeForm(forms.ModelForm):
 
     class Meta:
         model = Pet
