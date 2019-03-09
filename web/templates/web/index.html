@@ -36,12 +36,33 @@
         </section>
     {% endif %}
     {% if not pets_lost and not pets_found %}
-        <section class="section blog">
+        <section class="section blog bg-light">
             <div class="container">
                 <div class="row justify-content-center mb-5 element-animate">
+
+                    <div class="col-md-8 text-center mb-5">
+                        <h1 class="heading mb-4">A PetLost quer ajudar você e seu pet</h1>
+                        <p class="lead">Encontrou algum pet perdido na rua? <br>
+                            Se pet está desaparecido?
+                        </p>
+                        <a class="btn btn-success" href="{% url 'web:announcement-add' %}">Crie um anúncio</a>
+                    </div>
+
+                </div>
+                <div class="row justify-content-center mb-5 element-animate">
+
                     <div class="col-md-8 text-center">
-        <a class="btn btn-success" href="{% url 'web:pet-add' %}">Cadastrar meu Pet</a>
-                    </div></div></div></section>
+                        <h1 class="heading mb-4">Guarde dados do seu pet</h1>
+                        <p class="mb-5 lead">Seu Pet não está desaparecido mas quer usar a PetLost para guardar
+                            informações sobre ele?
+                            <br>
+                            <a class="btn btn-success" href="{% url 'web:pet-add' %}">Cadastrar meu pet</a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
     {% endif %}
 {% endblock %}
 {% block js %}

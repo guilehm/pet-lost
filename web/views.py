@@ -220,6 +220,9 @@ def profile_change(request):
 
 
 def announcement_add(request):
+    if not request.user.is_authenticated:
+        messages.add_message(request, messages.INFO, 'Faça login ou cadastre-se para criar seu anúncio.')
+        return redirect('web:account-login')
     pets = Pet.objects.filter(user=request.user)
     if not pets:
         messages.add_message(request, messages.SUCCESS, 'Para criar seu anúncio, primeiro cadastre seu pet.')

@@ -11,11 +11,17 @@
         <div class="row justify-content-center mb-5 element-animate">
             <div class="col-md-8 text-center">
                 {% if lost %}
-                    <h2 class=" heading mb-4">Desaparecidos</h2>
+                    <h2 class="heading mb-4">Desaparecidos</h2>
                     <p class="mb-5 lead">Pets que estão sendo procurados por suas famílias.</p>
+                    {% if not pets %}
+                        <span class="text-warning">Nenhum pet desaparecido cadastrado no momento. Cadastre seu pet ou retorne mais tarde.</span>
+                    {% endif %}
                 {% elif found %}
-                    <h2 class=" heading mb-4">Encontrados</h2>
+                    <h2 class="heading mb-4">Encontrados</h2>
                     <p class="mb-5 lead">Pets que foram encontrados na rua e estão procurando suas famílias.</p>
+                    {% if not pets %}
+                        <span class="text-warning">Nenhum pet encontrado cadastrado no momento. Cadastre um pet ou retorne mais tarde.</span>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

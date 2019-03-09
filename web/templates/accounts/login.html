@@ -11,6 +11,18 @@
                 <div class="row slider-text align-items-center justify-content-center">
                     <div class="col-md-8 text-center col-sm-12 element-animate">
                         <div class="container text-center">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} alert-dismissible fade show"
+                                     role="alert">
+                                    <strong>{{ message }}</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
                             {% if not request.user.is_authenticated %}
                                 <form class="form-signin" method="post">
                                     {% csrf_token %}
@@ -48,7 +60,7 @@
                                         <span class="fa fa-facebook"></span>
                                         Entrar com Facebook
                                     </a>
-                                    <a href="{% url 'web:account-signup' %}" class="">Ou registre-se aqui</a>
+                                    <a href="{% url 'web:account-signup' %}" class="">Ou cadastre-se aqui</a>
                                 </form>
                             {% else %}
                                 <h1 class="display-4 mb-2">Olá, {{ request.user.first_name }}, seja bem-vindo</h1>
