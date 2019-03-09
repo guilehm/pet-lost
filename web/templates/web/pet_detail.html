@@ -66,6 +66,9 @@
                 {% else %}
                     <img src="{% static 'web/img/placeholder.png' %}" alt="{{ pet.slug }}" class="img-fluid">
                 {% endif %}
+                {% if owner %}
+                    <a class="text-dark" href="{% url 'web:pet-change' pet.slug %}">editar cadastro</a>
+                {% endif %}
             </div>
             {% if pet.announcement %}
                 <div class="col-md-4">
