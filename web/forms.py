@@ -147,7 +147,9 @@ class SocialDataForm(forms.ModelForm):
 class AnnouncementForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
+        self.fields['pet'].queryset = Pet.objects.filter(user=self.user)
         self.fields['pet'].help_text = 'Selecione o Pet ao que este anúncio se refere'
         self.fields['active'].help_text = 'Ative este anúncio para divulgá-lo no site'
         self.fields['situation'].help_text = 'Se o pet for seu e está desaparecido, selecione "desaparecido". ' \
