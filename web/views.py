@@ -227,7 +227,7 @@ def announcement_add(request):
     if not pets:
         messages.add_message(request, messages.SUCCESS, 'Para criar seu anúncio, primeiro cadastre seu pet.')
         return redirect('web:pet-add')
-    announcement_form = AnnouncementForm()
+    announcement_form = AnnouncementForm(user=request.user)
     if request.method == 'POST':
         announcement_form = AnnouncementForm(request.POST)
         if not announcement_form.is_valid():
