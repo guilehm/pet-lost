@@ -1,7 +1,11 @@
+import logging
+
 import requests
 from django.template.loader import render_to_string
 
 from petLost.settings import DEFAULT_FROM_EMAIL, MAILGUN_API_KEY, MAILGUN_API_URL
+
+logger = logging.getLogger('')
 
 
 def send_mail(
@@ -15,8 +19,9 @@ def send_mail(
 ):
 
     html_message = render_to_string(f'email/{template}.html', context)
-
-    if MAILGUN_API_KEY:
+    if not MAILGUN_API_KEY:
+        logger.error('Missing Mailgun API Key. Emails will not be sent!')
+    else:
         return requests.post(
             MAILGUN_API_URL + "/messages",
             auth=("api", MAILGUN_API_KEY),

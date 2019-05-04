@@ -123,7 +123,7 @@
         </div>
     </div>
 </section>
-<section class="section border-t bg-white element-animate">
+<section class="section border-t bg-white element-animate pt-0">
 <div class="row bootstrap mx-0">
     <div class="container">
         <div class="col-md-offset-2 col-sm-12">
@@ -131,14 +131,19 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         Comentários
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'web:account-login' %}">(faça login para comentar)</a>
+                        {% endif %}
                     </div>
                     <div class="panel-body">
+                    {% if user.is_authenticated %}
                         <form method="post">
                         {% csrf_token %}
                         <textarea required class="form-control" name="description" placeholder="escreva um comentário..." rows="3"></textarea>
                         <br>
                         <button type="submit" class="btn btn-success pull-right">Comentar</button>
                         </form>
+                    {% endif %}
                         <div class="clearfix"></div>
                         <hr>
                         <ul class="media-list">
@@ -202,8 +207,8 @@
         </div>
 
     </div>
-</section>
 {% endif %}
+</section>
 {% if owner and pet.pictures.count < 10%}
 <section class="section border-t">
     <div class="container">
