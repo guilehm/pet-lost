@@ -109,3 +109,27 @@ class Announcement(models.Model):
                 f'{self.rescued_date.strftime("%d/%m/%Y")} graças à ajuda de pessoas como você.'
         lost_description += text
         return lost_description
+
+
+class Comment(models.Model):
+    announcement = models.ForeignKey(
+        'announcement.Announcement',
+        related_name='comments',
+        on_delete=models.CASCADE,
+    )
+    user = models.ForeignKey(
+        'users.User',
+        related_name='comments',
+        on_delete=models.CASCADE,
+    )
+    deleted = models.BooleanField(default=False)
+    description = models.CharField(max_length=512)
+
+    date_added = models.DateTimeField(auto_now_add=True)
+    date_changed = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '{}{}'.format(
+            self.description[:50],
+            '' if len(self.description) <= 50 else '...',
+        )
