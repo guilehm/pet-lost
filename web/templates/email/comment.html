@@ -27,9 +27,9 @@ Olá, um novo comentário foi postado em seu anúncio!
                                         <tbody>
                                         <tr >
                                             {% if pet.public_id %}
-                                                <td><a href="/pets/{{ pet.public_id }}" target="_blank">ver comentário</a></td>
+                                                <td><a href="{{ absolute_url }}/pets/{{ pet.public_id }}" target="_blank">ver comentário</a></td>
                                             {% else %}
-                                                <td><a href="/" target="_blank">ver comentário</a></td>
+                                                <td><a href="{{ absolute_url }}/" target="_blank">ver comentário</a></td>
                                             {% endif %}
                                         </tr>
                                         </tbody>
