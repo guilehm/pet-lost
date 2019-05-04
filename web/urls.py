@@ -28,4 +28,5 @@ urlpatterns = [
     path('accounts/signup/', views.signup_view, name='account-signup'),
     path('accounts/social/login/cancelled/', views.login_view),
     path('announcements/add/', views.announcement_add, name='announcement-add'),
+    path('emails/preview/<str:template>/', views.preview_email, name='preview-email'),
 ]
