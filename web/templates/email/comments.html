@@ -26,7 +26,11 @@ Olá, um novo comentário foi postado em seu anúncio!
                                            cellspacing="0">
                                         <tbody>
                                         <tr >
-                                            <td><a href="/pets/{{ pet.public_id }}" target="_blank">ver comentário</a></td>
+                                            {% if pet.public_id %}
+                                                <td><a href="/pets/{{ pet.public_id }}" target="_blank">ver comentário</a></td>
+                                            {% else %}
+                                                <td><a href="/" target="_blank">ver comentário</a></td>
+                                            {% endif %}
                                         </tr>
                                         </tbody>
                                     </table>
