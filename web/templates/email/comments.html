@@ -9,10 +9,14 @@ Olá, um novo comentário foi postado em seu anúncio!
             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td>
-                        <p>Olá, {{ to }}</p>
+                        <p>Olá, {{ to|default:'' }}</p>
                         <p>Este e-mail foi enviado pela PetLost.</p>
                         <p>Um novo comentário foi postado em seu anúncio{% if pet.name %} para <a>{{ pet.name }}</a>{% endif %}.
-                        </p>
+                        {% if pet.picture %}
+                            <p>
+                                <img src="{{ pet.picture.image.url }}" alt="{{ pet.name }}" style="max-width: 120px;">
+                            </p>
+                        {% endif %}
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0"
                                class="btn btn-primary">
                             <tbody>
