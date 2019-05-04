@@ -3,7 +3,7 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 from django.utils.translation import gettext_lazy as _
 
-from announcement.models import Announcement
+from announcement.models import Announcement, Comment
 from pet.models import Pet, Picture
 from users.models import User
 
@@ -195,3 +195,10 @@ class PictureChangeForm(forms.ModelForm):
     class Meta:
         model = Picture
         fields = ('image',)
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ('description',)
