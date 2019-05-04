@@ -133,9 +133,12 @@
                         Comentários
                     </div>
                     <div class="panel-body">
-                        <textarea class="form-control" placeholder="escreva um comentário..." rows="3"></textarea>
+                        <form method="post">
+                        {% csrf_token %}
+                        <textarea required class="form-control" name="description" placeholder="escreva um comentário..." rows="3"></textarea>
                         <br>
-                        <button type="button" class="btn btn-success pull-right">Comentar</button>
+                        <button type="submit" class="btn btn-success pull-right">Comentar</button>
+                        </form>
                         <div class="clearfix"></div>
                         <hr>
                         <ul class="media-list">
