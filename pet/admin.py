@@ -27,7 +27,7 @@ class BreedAdmin(admin.ModelAdmin):
 @admin.register(Pet)
 class PetAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'sex', 'kind', 'breed',
+        'name', 'sex', 'kind', 'breed', 'user',
     )
     exclude = ('pictures',)
     readonly_fields = ('slug',)
