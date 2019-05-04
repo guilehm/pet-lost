@@ -92,11 +92,17 @@ def pet_detail(request, slug):
                 comment.save()
                 messages.add_message(request, messages.SUCCESS, 'Comentário postado com sucesso!')
                 if request.user.is_authenticated and request.user != pet.user:
+                    context = dict(
+                        to=pet.user,
+                        pet=pet,
+                        absolute_url=request.META['HTTP_HOST'],
+                    )
                     response = send_mail(
                         to=[pet.user.email],
                         subject='Novo comentário em seu anúncio!',
                         template='comment',
                         bcc=[DEFAULT_FROM_EMAIL],
+                        context=context,
                     )
                     try:
                         response.raise_for_status()
