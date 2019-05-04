@@ -1,8 +1,7 @@
-import urllib
-
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
+from django.utils.http import urlencode
 
 
 class Announcement(models.Model):
@@ -82,7 +81,7 @@ class Announcement(models.Model):
     @property
     def share_description_encoded(self):
         description = self.share_description
-        return urllib.parse.urlencode({'text': description})
+        return urlencode({'text': description})
 
     @property
     def lost_description(self):
