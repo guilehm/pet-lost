@@ -9,7 +9,7 @@ Olá, um novo comentário foi postado em seu anúncio!
             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td>
-                        <p>Olá, {{ to|default:'' }}</p>
+                        <p>Olá, {{ to.first_name|default:'' }}</p>
                         <p>Este e-mail foi enviado pela PetLost.</p>
                         <p>Um novo comentário foi postado em seu anúncio{% if pet.name %} para <a>{{ pet.name }}</a>{% endif %}.
                         {% if pet.picture %}
@@ -27,9 +27,9 @@ Olá, um novo comentário foi postado em seu anúncio!
                                         <tbody>
                                         <tr >
                                             {% if pet.public_id %}
-                                                <td><a href="{{ absolute_url }}/pets/{{ pet.public_id }}" target="_blank">ver comentário</a></td>
+                                                <td><a href="https://{{ absolute_url }}/pets/{{ pet.public_id }}" target="_blank">ver comentário</a></td>
                                             {% else %}
-                                                <td><a href="{{ absolute_url }}/" target="_blank">ver comentário</a></td>
+                                                <td><a href="https://{{ absolute_url }}/" target="_blank">ver comentário</a></td>
                                             {% endif %}
                                         </tr>
                                         </tbody>
