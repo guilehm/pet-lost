@@ -92,6 +92,7 @@ def pet_detail(request, slug):
                 comment.save()
                 messages.add_message(request, messages.SUCCESS, 'Comentário postado com sucesso!')
                 if request.user.is_authenticated and request.user != pet.user:
+                    logger.info('Trying to send email')
                     context = dict(
                         to=pet.user,
                         pet=pet,
@@ -110,6 +111,10 @@ def pet_detail(request, slug):
                         logger.error(response.text)
                     else:
                         logger.info(response.text)
+                else:
+                    logger.warning('Email will not be sent!')
+                    logger.warning(str(request.user.is_authenticated))
+                    logger.warning(str(request.user != pet.user))
 
     return render(request, 'web/pet_detail.html', {
         'pet': pet,
