@@ -229,7 +229,7 @@ def announcement_add(request):
         return redirect('web:pet-add')
     announcement_form = AnnouncementForm(user=request.user)
     if request.method == 'POST':
-        announcement_form = AnnouncementForm(request.POST)
+        announcement_form = AnnouncementForm(request.POST, user=request.user)
         if not announcement_form.is_valid():
             messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro!')
         else:
