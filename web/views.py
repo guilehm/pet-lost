@@ -389,3 +389,7 @@ def pet_list_by_user(request):
     return render(request, 'web/pet_list_by_user.html', {
         'pets': pets,
     })
+
+
+def preview_email(request, template):
+    return render(request, f'email/{template}.html')
