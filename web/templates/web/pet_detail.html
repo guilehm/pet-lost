@@ -29,6 +29,23 @@
 {% endblock %}
 {% block banners %}
 {% endblock %}
+    <style>
+        .comment-wrapper .panel-body {
+            max-height:650px;
+            overflow:auto;
+        }
+
+        .comment-wrapper .media-list .media img {
+            width:64px;
+            height:64px;
+            border:2px solid #e5e7e8;
+        }
+
+        .comment-wrapper .media-list .media {
+            border-bottom:1px dashed #efefef;
+            margin-bottom:25px;
+        }
+    </style>
 <div class="div d-none d-xl-block" style="height: 80px; background-color: black;"></div>
 <section class="section element-animate">
     <div class="container">
@@ -106,7 +123,75 @@
         </div>
     </div>
 </section>
+<section class="section border-t bg-white">
+<div class="row bootstrap snippets">
+    <div class="container">
+        <div class="col-md-offset-2 col-sm-12">
+            <div class="comment-wrapper">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Comentários
+                    </div>
+                    <div class="panel-body">
+                        <textarea class="form-control" placeholder="escreva um comentário..." rows="3"></textarea>
+                        <br>
+                        <button type="button" class="btn btn-success pull-right">Comentar</button>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <ul class="media-list">
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                </a>
+                                <div class="media-body">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted">30 min ago</small>
+                                    </span>
+                                    <strong class="text-success">@MartinoMont</strong>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" class="img-circle">
+                                </a>
+                                <div class="media-body">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted">30 min ago</small>
+                                    </span>
+                                    <strong class="text-success">@LaurenceCorreil</strong>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        Lorem ipsum dolor <a href="#">#ipsumdolor </a>adipiscing elit.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="https://bootdey.com/img/Content/user_3.jpg" alt="" class="img-circle">
+                                </a>
+                                <div class="media-body">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted">30 min ago</small>
+                                    </span>
+                                    <strong class="text-success">@JohnNida</strong>
+                                    <p>
+                                        Lorem ipsum dolor <a href="#">#sitamet</a> sit amet, consectetur adipiscing elit.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+    </div>
+</div>
+</section>
 
 {% if pet.pictures.exists %}
 <section class="section border-t bg-light">
