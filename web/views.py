@@ -13,6 +13,7 @@ from web.forms import (
     AddressDataForm, AnnouncementForm, AuthenticationForm, CommentForm, ContactDataForm, PersonalDataForm,
     PetChangeForm, PictureChangeForm, SocialDataForm, UserCreationForm,
 )
+from announcement.models import Announcement
 from web.utils import check_recaptcha
 
 
@@ -392,4 +393,19 @@ def pet_list_by_user(request):
 
 
 def preview_email(request, template):
-    return render(request, f'email/{template}.html')
+    pet = request.GET.get('pet')
+    announcement = request.GET.get('announcement')
+    if pet:
+        try:
+            pet = Pet.objects.get(slug=pet)
+        except Pet.DoesNotExist:
+            pet = None
+    if announcement:
+        try:
+            announcement = Announcement.objects.get(id=announcement)
+        except Announcement.DoesNotExist:
+            announcement = None
+    return render(request, f'email/{template}.html', {
+        'pet': pet,
+        'announcement': announcement,
+    })
