@@ -167,8 +167,7 @@
     </div>
 </section>
 {% endif %}
-{% if owner %}
-
+{% if owner and not pet.announcement %}
 <section class="section border-t">
     <div class="container">
         <div class="row justify-content-center mb-5 element-animate">
@@ -180,7 +179,6 @@
                 <a class="btn btn-sm btn-success" href="{% url 'web:announcement-add' %}">Anuncie Grátis</a>
             </div>
         </div>
-
     </div>
 </section>
 {% endif %}
