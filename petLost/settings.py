@@ -227,3 +227,4 @@ EMAIL_USE_TLS = True
 MAILGUN_API_URL = os.environ.get('MAILGUN_API_URL')
 MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY')
 DEFAULT_FROM_EMAIL = 'contato@mg.petlost.live'
+DEFAULT_EMAIL = 'petlost.live@gmail.com'

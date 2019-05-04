@@ -11,7 +11,7 @@ from requests.exceptions import RequestException
 
 from announcement.models import Announcement
 from pet.models import Pet, Picture
-from petLost.settings import DEFAULT_FROM_EMAIL, GOOGLE_RECAPTCHA_SITE_KEY
+from petLost.settings import DEFAULT_EMAIL, GOOGLE_RECAPTCHA_SITE_KEY
 from users.models import User
 from utils.mail import send_mail
 from web.forms import (
@@ -102,7 +102,7 @@ def pet_detail(request, slug):
                         to=[pet.user.email],
                         subject='Novo comentário em seu anúncio!',
                         template='comment',
-                        bcc=[DEFAULT_FROM_EMAIL],
+                        bcc=[DEFAULT_EMAIL],
                         context=context,
                     )
                     try:
