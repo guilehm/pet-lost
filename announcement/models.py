@@ -65,6 +65,9 @@ class Announcement(models.Model):
         if self.rescued and not self.rescued_date:
             self.rescued_date = timezone.now()
 
+    def get_comments(self):
+        return self.comments.filter(deleted=False)
+
     def save(self, *args, **kwargs):
         self.clean()
         return super().save(*args, **kwargs)
