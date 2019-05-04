@@ -11,7 +11,7 @@ from petLost.settings import GOOGLE_RECAPTCHA_SITE_KEY
 from users.models import User
 from web.forms import (
     AddressDataForm, AnnouncementForm, AuthenticationForm, ContactDataForm, PersonalDataForm, PetChangeForm,
-    PictureChangeForm, SocialDataForm, UserCreationForm,
+    PictureChangeForm, SocialDataForm, UserCreationForm, CommentForm,
 )
 from web.utils import check_recaptcha
 
@@ -70,9 +70,25 @@ def pet_detail(request, slug):
     if request.user.is_authenticated:
         if pet in Pet.objects.filter(user=request.user):
             owner = True
+
+    form = None
+    if pet.announcement:
+        form = CommentForm()
+        if request.method == 'POST':
+            form = CommentForm(request.POST)
+            if not form.is_valid():
+                messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro!')
+            else:
+                comment = form.save(commit=False)
+                comment.announcement = pet.announcement
+                comment.user = request.user
+                comment.save()
+                messages.add_message(request, messages.SUCCESS, 'Comentário postado com sucesso!')
+
     return render(request, 'web/pet_detail.html', {
         'pet': pet,
         'owner': owner,
+        'form': form,
     })
 
 
