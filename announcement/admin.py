@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from announcement.models import Announcement
+from announcement.models import Announcement, Comment
 
 
 @admin.register(Announcement)
@@ -17,3 +17,16 @@ class AnnouncementAdmin(admin.ModelAdmin):
     )
     search_fields = ('description', 'last_seen_district')
     raw_id_fields = ('last_seen_city',)
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'announcement', 'user', 'deleted')
+    list_filter = (
+        'announcement',
+        'user',
+        'deleted',
+        'date_added',
+        'date_changed',
+    )
+    search_fields = ('description',)
