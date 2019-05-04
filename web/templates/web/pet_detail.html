@@ -124,7 +124,7 @@
     </div>
 </section>
 <section class="section border-t bg-white">
-<div class="row bootstrap snippets">
+<div class="row bootstrap mx-0">
     <div class="container">
         <div class="col-md-offset-2 col-sm-12">
             <div class="comment-wrapper">
@@ -139,50 +139,24 @@
                         <div class="clearfix"></div>
                         <hr>
                         <ul class="media-list">
-                            <li class="media">
-                                <a href="#" class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
-                                </a>
-                                <div class="media-body">
-                                    <span class="text-muted pull-right">
-                                        <small class="text-muted">30 min ago</small>
-                                    </span>
-                                    <strong class="text-success">@MartinoMont</strong>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <a href="#" class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" class="img-circle">
-                                </a>
-                                <div class="media-body">
-                                    <span class="text-muted pull-right">
-                                        <small class="text-muted">30 min ago</small>
-                                    </span>
-                                    <strong class="text-success">@LaurenceCorreil</strong>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Lorem ipsum dolor <a href="#">#ipsumdolor </a>adipiscing elit.
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <a href="#" class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/user_3.jpg" alt="" class="img-circle">
-                                </a>
-                                <div class="media-body">
-                                    <span class="text-muted pull-right">
-                                        <small class="text-muted">30 min ago</small>
-                                    </span>
-                                    <strong class="text-success">@JohnNida</strong>
-                                    <p>
-                                        Lorem ipsum dolor <a href="#">#sitamet</a> sit amet, consectetur adipiscing elit.
-                                    </p>
-                                </div>
-                            </li>
+                            {% for comment in pet.announcement.get_comments %}
+                                <li class="media">
+                                    <a class="pull-left">
+                                        {% if comment.user.socialaccount_set.exists %}
+                                            <img src="{{ comment.user.socialaccount_set.all.0.get_avatar_url }}" alt="profile">
+                                        {% else %}
+                                            <img src="{% static 'web/img/avatar.png' %}" alt="profile" class="">
+                                        {% endif %}
+                                    </a>
+                                    <div class="media-body">
+                                        <span class="text-muted pull-right">
+                                            <small class="text-muted">{{ comment.date_added }}</small>
+                                        </span>
+                                        <strong class="text-success">{{ comment.user.first_name|default:'Não Identificado' }}</strong>
+                                        <p>{{ comment.description }}</p>
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
