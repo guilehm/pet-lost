@@ -10,8 +10,8 @@ from pet.models import Pet, Picture
 from petLost.settings import GOOGLE_RECAPTCHA_SITE_KEY
 from users.models import User
 from web.forms import (
-    AddressDataForm, AnnouncementForm, AuthenticationForm, ContactDataForm, PersonalDataForm, PetChangeForm,
-    PictureChangeForm, SocialDataForm, UserCreationForm, CommentForm,
+    AddressDataForm, AnnouncementForm, AuthenticationForm, CommentForm, ContactDataForm, PersonalDataForm,
+    PetChangeForm, PictureChangeForm, SocialDataForm, UserCreationForm,
 )
 from web.utils import check_recaptcha
 
