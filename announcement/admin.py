@@ -21,7 +21,13 @@ class AnnouncementAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'announcement', 'user', 'deleted')
+    list_display = (
+        'id',
+        '__str__',
+        'announcement',
+        'user',
+        'deleted',
+    )
     list_filter = (
         'announcement',
         'user',
