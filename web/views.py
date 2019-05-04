@@ -1,3 +1,5 @@
+import logging
+
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -5,15 +7,20 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from requests.exceptions import RequestException
 
+from announcement.models import Announcement
 from pet.models import Pet, Picture
-from petLost.settings import GOOGLE_RECAPTCHA_SITE_KEY
+from petLost.settings import DEFAULT_FROM_EMAIL, GOOGLE_RECAPTCHA_SITE_KEY
 from users.models import User
+from utils.mail import send_mail
 from web.forms import (
     AddressDataForm, AnnouncementForm, AuthenticationForm, CommentForm, ContactDataForm, PersonalDataForm,
     PetChangeForm, PictureChangeForm, SocialDataForm, UserCreationForm,
 )
 from web.utils import check_recaptcha
+
+logger = logging.getLogger('')
 
 
 def index(request):
@@ -84,6 +91,19 @@ def pet_detail(request, slug):
                 comment.user = request.user
                 comment.save()
                 messages.add_message(request, messages.SUCCESS, 'Comentário postado com sucesso!')
+                if request.user != pet.user:
+                    response = send_mail(
+                        to=[pet.user.email],
+                        subject='Novo comentário em seu anúncio!',
+                        template='comment',
+                        bcc=[DEFAULT_FROM_EMAIL],
+                    )
+                    try:
+                        response.raise_for_status()
+                    except RequestException:
+                        logger.error(response.text)
+                    else:
+                        logger.info(response.text)
 
     return render(request, 'web/pet_detail.html', {
         'pet': pet,
@@ -392,4 +412,19 @@ def pet_list_by_user(request):
 
 
 def preview_email(request, template):
-    return render(request, f'email/{template}.html')
+    pet = request.GET.get('pet')
+    announcement = request.GET.get('announcement')
+    if pet:
+        try:
+            pet = Pet.objects.get(slug=pet)
+        except Pet.DoesNotExist:
+            pet = None
+    if announcement:
+        try:
+            announcement = Announcement.objects.get(id=announcement)
+        except Announcement.DoesNotExist:
+            announcement = None
+    return render(request, f'email/{template}.html', {
+        'pet': pet,
+        'announcement': announcement,
+    })
