@@ -29,6 +29,23 @@
 {% endblock %}
 {% block banners %}
 {% endblock %}
+    <style>
+        .comment-wrapper .panel-body {
+            max-height:650px;
+            overflow:auto;
+        }
+
+        .comment-wrapper .media-list .media img {
+            width:64px;
+            height:64px;
+            border:2px solid #e5e7e8;
+        }
+
+        .comment-wrapper .media-list .media {
+            border-bottom:1px dashed #efefef;
+            margin-bottom:25px;
+        }
+    </style>
 <div class="div d-none d-xl-block" style="height: 80px; background-color: black;"></div>
 <section class="section element-animate">
     <div class="container">
@@ -106,7 +123,52 @@
         </div>
     </div>
 </section>
+<section class="section border-t bg-white">
+<div class="row bootstrap mx-0">
+    <div class="container">
+        <div class="col-md-offset-2 col-sm-12">
+            <div class="comment-wrapper">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Comentários
+                    </div>
+                    <div class="panel-body">
+                        <form method="post">
+                        {% csrf_token %}
+                        <textarea required class="form-control" name="description" placeholder="escreva um comentário..." rows="3"></textarea>
+                        <br>
+                        <button type="submit" class="btn btn-success pull-right">Comentar</button>
+                        </form>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <ul class="media-list">
+                            {% for comment in pet.announcement.get_comments %}
+                                <li class="media">
+                                    <a class="pull-left">
+                                        {% if comment.user.socialaccount_set.exists %}
+                                            <img src="{{ comment.user.socialaccount_set.all.0.get_avatar_url }}" alt="profile">
+                                        {% else %}
+                                            <img src="{% static 'web/img/avatar.png' %}" alt="profile" class="">
+                                        {% endif %}
+                                    </a>
+                                    <div class="media-body">
+                                        <span class="text-muted pull-right">
+                                            <small class="text-muted">{{ comment.date_added }}</small>
+                                        </span>
+                                        <strong class="text-success">{{ comment.user.first_name|default:'Não Identificado' }}</strong>
+                                        <p>{{ comment.description }}</p>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+    </div>
+</div>
+</section>
 
 {% if pet.pictures.exists %}
 <section class="section border-t bg-light">
@@ -167,8 +229,7 @@
     </div>
 </section>
 {% endif %}
-{% if owner %}
-
+{% if owner and not pet.announcement %}
 <section class="section border-t">
     <div class="container">
         <div class="row justify-content-center mb-5 element-animate">
@@ -180,7 +241,6 @@
                 <a class="btn btn-sm btn-success" href="{% url 'web:announcement-add' %}">Anuncie Grátis</a>
             </div>
         </div>
-
     </div>
 </section>
 {% endif %}
