@@ -1,0 +1,38 @@
+{%  extends 'email/base.html' %}
+{%  block preheader %}
+Olá, um novo comentário foi postado em seu anúncio!
+{% endblock %}
+{% block main_content %}
+    <!-- START MAIN CONTENT AREA -->
+    <tr>
+        <td class="wrapper">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <p>Olá, {{ to }}</p>
+                        <p>Este e-mail foi enviado pela PetLost.</p>
+                        <p>Um novo comentário foi postado em seu anúncio{% if pet.name %} para <a>{{ pet.name }}</a>{% endif %}.
+                        </p>
+                        <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+                               class="btn btn-primary">
+                            <tbody>
+                            <tr>
+                                <td align="left">
+                                    <table role="presentation" border="0" cellpadding="0"
+                                           cellspacing="0">
+                                        <tbody>
+                                        <tr >
+                                            <td><a href="/pets/{{ pet.public_id }}" target="_blank">ver comentário</a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    {% endblock %}
