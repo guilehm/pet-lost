@@ -25,6 +25,7 @@
                         {% endif %}
                         Local: <strong>{{ pet.announcement.last_seen_city.data }}</strong><br>
                         Sexo: <strong>{{ pet.get_sex_display|translation }}</strong><br>
+                        Raça: <strong>{{ pet.breed }}</strong><br>
                         Status: <strong>{% if pet.announcement.rescued %}Resgatado{% else %}Não resgatado{% endif %}</strong><br>
                         {% if pet.announcement.description %}
                             <br>
