@@ -91,7 +91,7 @@ def pet_detail(request, slug):
                 comment.user = request.user
                 comment.save()
                 messages.add_message(request, messages.SUCCESS, 'Comentário postado com sucesso!')
-                if request.user != pet.user:
+                if request.user.is_authenticated and request.user != pet.user:
                     response = send_mail(
                         to=[pet.user.email],
                         subject='Novo comentário em seu anúncio!',
