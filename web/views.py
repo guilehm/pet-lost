@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from requests.exceptions import RequestException
 
-from announcement.models import Announcement
+from announcement.models import Announcement, Comment
 from pet.models import Pet, Picture
 from petLost.settings import DEFAULT_FROM_EMAIL, GOOGLE_RECAPTCHA_SITE_KEY
 from users.models import User
@@ -428,3 +428,18 @@ def preview_email(request, template):
         'pet': pet,
         'announcement': announcement,
     })
+
+
+def comment_delete(request, comment_id):
+    try:
+        comment = Comment.objects.get(
+            id=comment_id,
+            user=request.user,
+        )
+    except (Comment.DoesNotExist, TypeError):
+        messages.add_message(request, messages.ERROR, 'Ops, comentário não encontrado!')
+    else:
+        comment.deleted = True
+        comment.save()
+        messages.add_message(request, messages.SUCCESS, 'Comentário excluído com sucesso!')
+    return redirect(request.META.get('HTTP_REFERER', 'web:index'))
