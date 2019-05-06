@@ -158,7 +158,10 @@
                                     </a>
                                     <div class="media-body">
                                         <span class="text-muted pull-right">
-                                            <small class="text-muted">{{ comment.date_added }}</small>
+                                            <small class="text-muted">{{ comment.date_added }}</small><br>
+                                            {% if comment.user == request.user %}
+                                                <small class="text-muted float-right"><a href="{% url 'web:comment-delete' comment.id %}">deletar</a></small><br>
+                                            {% endif %}
                                         </span>
                                         <strong class="text-success">{{ comment.user.first_name|default:'Não Identificado' }}</strong>
                                         <p>{{ comment.description }}</p>

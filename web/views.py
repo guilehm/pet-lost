@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from requests.exceptions import RequestException
 
-from announcement.models import Announcement
+from announcement.models import Announcement, Comment
 from pet.models import Pet, Picture
 from petLost.settings import DEFAULT_EMAIL, GOOGLE_RECAPTCHA_SITE_KEY
 from users.models import User
@@ -315,10 +315,10 @@ def pet_change(request, slug):
         )
     except Pet.DoesNotExist:
         messages.add_message(request, messages.ERROR, 'Ops, pet não encontrado!')
-        return redirect(request.META.get('HTTP_REFERER'))
+        return redirect(request.META.get('HTTP_REFERER', 'web:index'))
     except TypeError:
         messages.add_message(request, messages.ERROR, 'Ops, é necessário estar logado para realizar esta ação!')
-        return redirect(request.META.get('HTTP_REFERER'))
+        return redirect(request.META.get('HTTP_REFERER', 'web:index'))
 
     pet_form = PetChangeForm(instance=pet)
     if request.method == 'POST':
@@ -348,7 +348,7 @@ def pet_pictures_upload(request, slug):
         return HttpResponse('Ops, pet não encontrado!', status=404)
     except TypeError:
         messages.add_message(request, messages.ERROR, 'Ops, é necessário estar logado para realizar esta ação!')
-        return redirect(request.META.get('HTTP_REFERER'))
+        return redirect(request.META.get('HTTP_REFERER', 'web:index'))
 
     form = PictureChangeForm(request.POST, request.FILES)
     if pet and form.is_valid():
@@ -369,7 +369,7 @@ def pet_pictures_remove(request, slug, picture_id):
         return HttpResponse('Ops, pet não encontrado!', status=404)
     except TypeError:
         messages.add_message(request, messages.ERROR, 'Ops, é necessário estar logado para realizar esta ação!')
-        return redirect(request.META.get('HTTP_REFERER'))
+        return redirect(request.META.get('HTTP_REFERER', 'web:index'))
 
     try:
         picture = Picture.objects.get(id=picture_id)
@@ -377,12 +377,12 @@ def pet_pictures_remove(request, slug, picture_id):
         messages.add_message(request, messages.ERROR, 'Ops, imagem não encontrada!')
     except TypeError:
         messages.add_message(request, messages.ERROR, 'Ops, é necessário estar logado para realizar esta ação!')
-        return redirect(request.META.get('HTTP_REFERER'))
+        return redirect(request.META.get('HTTP_REFERER', 'web:index'))
 
     else:
         messages.add_message(request, messages.SUCCESS, 'Imagem removida com sucesso!')
         pet.pictures.remove(picture)
-    return redirect(request.META.get('HTTP_REFERER'))
+    return redirect(request.META.get('HTTP_REFERER', 'web:index'))
 
 
 def pet_pictures_profile_change(request, slug, picture_id):
@@ -393,10 +393,10 @@ def pet_pictures_profile_change(request, slug, picture_id):
         )
     except Pet.DoesNotExist:
         messages.add_message(request, messages.ERROR, 'Ops, pet não encontrado!')
-        return redirect(request.META.get('HTTP_REFERER'))
+        return redirect(request.META.get('HTTP_REFERER', 'web:index'))
     except TypeError:
         messages.add_message(request, messages.ERROR, 'Ops, é necessário estar logado para realizar esta ação!')
-        return redirect(request.META.get('HTTP_REFERER'))
+        return redirect(request.META.get('HTTP_REFERER', 'web:index'))
 
     try:
         picture = Picture.objects.get(id=picture_id)
@@ -410,7 +410,7 @@ def pet_pictures_profile_change(request, slug, picture_id):
             pet.pictures.add(old_picture)
         pet.picture = picture
         pet.save()
-    return redirect(request.META.get('HTTP_REFERER'))
+    return redirect(request.META.get('HTTP_REFERER', 'web:index'))
 
 
 def pet_list_by_user(request):
@@ -439,3 +439,18 @@ def preview_email(request, template):
         'pet': pet,
         'announcement': announcement,
     })
+
+
+def comment_delete(request, comment_id):
+    try:
+        comment = Comment.objects.get(
+            id=comment_id,
+            user=request.user,
+        )
+    except (Comment.DoesNotExist, TypeError):
+        messages.add_message(request, messages.ERROR, 'Ops, comentário não encontrado!')
+    else:
+        comment.deleted = True
+        comment.save()
+        messages.add_message(request, messages.SUCCESS, 'Comentário excluído com sucesso!')
+    return redirect(request.META.get('HTTP_REFERER', 'web:index'))
