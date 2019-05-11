@@ -123,6 +123,7 @@
         </div>
     </div>
 </section>
+{% if pet.announcement %}
 <section class="section border-t bg-white element-animate pt-0">
 <div class="row bootstrap mx-0">
     <div class="container">
@@ -177,6 +178,7 @@
     </div>
 </div>
 </section>
+{% endif %}
 
 {% if pet.pictures.exists %}
 <section class="section border-t bg-light">
