@@ -280,8 +280,9 @@ def announcement_add(request):
         if not announcement_form.is_valid():
             messages.add_message(request, messages.ERROR, 'Ops, ocorreu um erro!')
         else:
-            announcement_form.save()
+            announcement = announcement_form.save()
             messages.add_message(request, messages.SUCCESS, 'Anúncio criado com sucesso.')
+            return redirect('web:pet-detail', announcement.pet.slug)
     return render(request, 'web/announcement_add.html', {
         'announcement_form': announcement_form,
         'pets': pets,
