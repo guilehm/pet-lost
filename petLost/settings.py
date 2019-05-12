@@ -23,6 +23,7 @@ SECRET_KEY = '94y1dbpkud3um&hyr*$w=m9nt$x$%2)k80q-rn7!5d+s93f*9g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Application definition
 
@@ -58,11 +59,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'petLost.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(os.path.dirname(BASE_DIR), 'web/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -190,7 +190,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
