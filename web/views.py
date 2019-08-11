@@ -33,7 +33,7 @@ def index(request):
 
 
 def lost_list(request):
-    lost_qs = Pet.objects.lost().select_related('picture')
+    lost_qs = Pet.objects.lost().select_related('picture').order_by('-date_changed')
 
     page = request.GET.get('page')
     paginator = Paginator(lost_qs, 8)
@@ -51,7 +51,7 @@ def lost_list(request):
 
 
 def found_list(request):
-    found_qs = Pet.objects.found().select_related('picture')
+    found_qs = Pet.objects.found().select_related('picture').order_by('-date_changed')
 
     page = request.GET.get('page')
     paginator = Paginator(found_qs, 8)
