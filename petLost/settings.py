@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'users',
     'pet',
     'web',
+    'api',
     # Social login
     'django.contrib.sites',
     'allauth',
