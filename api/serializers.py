@@ -1,9 +1,24 @@
 from rest_framework import serializers
 
-from pet.models import Pet, Breed
+from pet.models import Pet, Breed, Picture
+
+
+class PictureSerializer(serializers.ModelSerializer):
+    alt = serializers.CharField(source='title')
+    url = serializers.ImageField(source='image')
+
+    class Meta:
+        model = Picture
+        fields = (
+            'id',
+            'alt',
+            'url',
+        )
 
 
 class PetSerializer(serializers.ModelSerializer):
+    mainPicture = PictureSerializer(source='picture')
+    pictures = PictureSerializer(many=True)
     dateAdded = serializers.CharField(source='date_added')
     dateChanged = serializers.CharField(source='date_changed')
 
@@ -16,7 +31,8 @@ class PetSerializer(serializers.ModelSerializer):
             'sex',
             'kind',
             'breed',
-            'picture',
+            'mainPicture',
+            'pictures',
             'description',
             'dateAdded',
             'dateChanged',
@@ -24,6 +40,7 @@ class PetSerializer(serializers.ModelSerializer):
 
 
 class BreedSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Breed
         fields = (
