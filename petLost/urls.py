@@ -19,10 +19,11 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
-from api.views import PetViewSet
+from api.views import PetViewSet, BreedViewSet
 
 router = routers.DefaultRouter()
 router.register(r'pets', PetViewSet)
+router.register(r'breeds', BreedViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
