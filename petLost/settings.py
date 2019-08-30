@@ -40,12 +40,15 @@ INSTALLED_APPS = [
     'users',
     'pet',
     'web',
+    'api',
     # Social login
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    # Third party apps
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -227,3 +230,15 @@ MAILGUN_API_URL = os.environ.get('MAILGUN_API_URL')
 MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY')
 DEFAULT_FROM_EMAIL = 'contato@mg.petlost.live'
 DEFAULT_EMAIL = 'petlost.live@gmail.com'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 20,
+    'COERCE_DECIMAL_TO_STRING': False,
+}
