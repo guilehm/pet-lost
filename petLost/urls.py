@@ -22,6 +22,20 @@ from rest_framework import routers
 from api.views import (
     PetViewSet, BreedViewSet, AnnouncementViewSet, CityViewSet, UserViewSet, BannerViewSet,
 )
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework.permissions import AllowAny
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Pet Lost",
+      default_version='v1',
+      description="Making Pets Happier",
+      contact=openapi.Contact(email="guile.hm@hotmail.com"),
+   ),
+   public=True,
+   permission_classes=(AllowAny,),
+)
 
 router = routers.DefaultRouter()
 router.register(r'pets', PetViewSet)
@@ -37,6 +51,8 @@ urlpatterns = [
     path('', include('web.urls', namespace='web')),
     path('accounts/', include('allauth.urls')),
     path('api/', include(router.urls)),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
 
 if settings.DEBUG:

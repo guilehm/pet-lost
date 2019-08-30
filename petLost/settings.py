@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     # Third party apps
     'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

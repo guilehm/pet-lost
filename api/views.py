@@ -1,5 +1,5 @@
 from rest_framework.permissions import AllowAny
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from api.serializers import (
     PetSerializer, BreedSerializer, AnnouncementSerializer, CitySerializer, UserSerializer,
@@ -35,7 +35,7 @@ class CityViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
 
 
-class UserViewSet(ModelViewSet):
+class UserViewSet(ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)

@@ -23,6 +23,8 @@ boto3 = "*"
 psycopg2-binary = "*"
 django-allauth = "*"
 djangorestframework = "*"
+drf-yasg = "*"
+packaging = "*"
 
 [requires]
 python_version = "3.7"
