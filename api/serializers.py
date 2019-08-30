@@ -17,6 +17,7 @@ class PictureSerializer(serializers.ModelSerializer):
 
 
 class PetSerializer(serializers.ModelSerializer):
+    breed = serializers.CharField()
     mainPicture = PictureSerializer(source='picture')
     pictures = PictureSerializer(many=True)
     dateAdded = serializers.CharField(source='date_added')
@@ -29,11 +30,11 @@ class PetSerializer(serializers.ModelSerializer):
             'slug',
             'name',
             'sex',
-            'kind',
+            'description',
             'breed',
+            'kind',
             'mainPicture',
             'pictures',
-            'description',
             'dateAdded',
             'dateChanged',
         )
