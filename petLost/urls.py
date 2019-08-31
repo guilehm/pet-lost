@@ -25,6 +25,7 @@ router = routers.DefaultRouter()
 router.register(r'pets', PetViewSet)
 router.register(r'breeds', BreedViewSet)
 router.register(r'announcements', AnnouncementViewSet)
+router.register(r'cities', CityViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
