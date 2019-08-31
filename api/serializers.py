@@ -1,6 +1,10 @@
 from rest_framework import serializers
 
 from pet.models import Pet, Breed, Picture
+from announcement.models import Announcement
+from location.models import City
+from users.models import User
+from web.models import Banner
 
 
 class PictureSerializer(serializers.ModelSerializer):
