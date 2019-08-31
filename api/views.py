@@ -5,8 +5,8 @@ from api.serializers import (
     PetSerializer, BreedSerializer, AnnouncementSerializer, CitySerializer, UserSerializer,
     BannerSerializer
 )
-from pet.models import Pet, Breed, Announcement
 from location.models import City
+from pet.models import Pet, Breed, Announcement
 from users.models import User
 from web.models import Banner
 
