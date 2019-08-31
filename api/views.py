@@ -34,3 +34,10 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
 
+
+class BannerViewSet(ModelViewSet):
+    queryset = Banner.objects.all()
+    serializer_class = BannerSerializer
+    permission_classes = (AllowAny,)
+
+
