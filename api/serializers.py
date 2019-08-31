@@ -75,7 +75,6 @@ class PetSerializer(serializers.ModelSerializer):
 
 
 class BreedSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Breed
         fields = (
@@ -88,7 +87,6 @@ class BreedSerializer(serializers.ModelSerializer):
 
 
 class CitySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = City
         fields = ('id', 'name', 'state')

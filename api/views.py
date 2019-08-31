@@ -45,5 +45,3 @@ class BannerViewSet(ModelViewSet):
     queryset = Banner.objects.all()
     serializer_class = BannerSerializer
     permission_classes = (AllowAny,)
-
-
