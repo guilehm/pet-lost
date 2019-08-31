@@ -15,3 +15,10 @@ class BreedViewSet(ModelViewSet):
     queryset = Breed.objects.all()
     serializer_class = BreedSerializer
     permission_classes = (AllowAny,)
+
+
+class AnnouncementViewSet(ModelViewSet):
+    queryset = Announcement.objects.all()
+    serializer_class = AnnouncementSerializer
+    permission_classes = (AllowAny,)
+
