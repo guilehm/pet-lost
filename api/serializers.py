@@ -87,3 +87,24 @@ class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
         fields = ('id', 'name', 'state')
+
+
+class BannerSerializer(serializers.ModelSerializer):
+    buttonOne = serializers.CharField(source='button_one')
+    buttonTwo = serializers.CharField(source='button_two')
+    buttonOneLink = serializers.CharField(source='button_one_link')
+    buttonTwoLink = serializers.CharField(source='button_two_link')
+
+    class Meta:
+        model = Banner
+        fields = (
+            'title',
+            'subtitle',
+            'slug',
+            'active',
+            'picture',
+            'buttonOne',
+            'buttonOneLink',
+            'buttonTwo',
+            'buttonTwoLink',
+        )
