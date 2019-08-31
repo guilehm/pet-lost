@@ -16,7 +16,36 @@ class PictureSerializer(serializers.ModelSerializer):
         )
 
 
+class AnnouncementSerializer(serializers.ModelSerializer):
+    rescuedDate = serializers.CharField(source='rescued_date')
+    lastSeenDistrict = serializers.CharField(source='last_seen_district')
+    lastSeenCity = serializers.CharField(source='last_seen_city')
+    lostDate = serializers.DateField(source='lost_date')
+    foundDate = serializers.DateField(source='found_date')
+    dateAdded = serializers.CharField(source='date_added')
+    dateChanged = serializers.CharField(source='date_changed')
+
+    class Meta:
+        model = Announcement
+        fields = (
+            'id',
+            'active',
+            'pet',
+            'situation',
+            'description',
+            'rescued',
+            'rescuedDate',
+            'lastSeenCity',
+            'lastSeenDistrict',
+            'lostDate',
+            'foundDate',
+            'dateAdded',
+            'dateChanged',
+        )
+
+
 class PetSerializer(serializers.ModelSerializer):
+    announcements = AnnouncementSerializer(many=True)
     breed = serializers.CharField()
     mainPicture = PictureSerializer(source='picture')
     pictures = PictureSerializer(many=True)
