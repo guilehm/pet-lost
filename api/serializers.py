@@ -68,6 +68,7 @@ class PetSerializer(serializers.ModelSerializer):
             'kind',
             'mainPicture',
             'pictures',
+            'announcements',
             'dateAdded',
             'dateChanged',
         )
