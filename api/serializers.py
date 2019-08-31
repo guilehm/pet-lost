@@ -80,3 +80,10 @@ class BreedSerializer(serializers.ModelSerializer):
             'slug',
             'description',
         )
+
+
+class CitySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = City
+        fields = ('id', 'name', 'state')
