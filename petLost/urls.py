@@ -22,6 +22,21 @@ from rest_framework import routers
 from api.views import (
     PetViewSet, BreedViewSet, AnnouncementViewSet, CityViewSet, UserViewSet, BannerViewSet,
 )
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework.permissions import AllowAny
+from rest_framework.documentation import include_docs_urls
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Pet Lost",
+      default_version='v1',
+      description="Making Pets Happier",
+      contact=openapi.Contact(email="guile.hm@hotmail.com"),
+   ),
+   public=True,
+   permission_classes=(AllowAny,),
+)
 
 router = routers.DefaultRouter()
 router.register(r'pets', PetViewSet)
