@@ -22,3 +22,9 @@ class AnnouncementViewSet(ModelViewSet):
     serializer_class = AnnouncementSerializer
     permission_classes = (AllowAny,)
 
+
+class CityViewSet(ModelViewSet):
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
+    permission_classes = (AllowAny,)
+
