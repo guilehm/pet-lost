@@ -24,6 +24,7 @@ from api.views import PetViewSet, BreedViewSet
 router = routers.DefaultRouter()
 router.register(r'pets', PetViewSet)
 router.register(r'breeds', BreedViewSet)
+router.register(r'announcements', AnnouncementViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
