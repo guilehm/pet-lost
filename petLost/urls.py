@@ -25,7 +25,6 @@ from api.views import (
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework.permissions import AllowAny
-from rest_framework.documentation import include_docs_urls
 
 schema_view = get_schema_view(
    openapi.Info(
