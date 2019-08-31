@@ -114,30 +114,26 @@ class BannerSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    pets = PetSerializer(many=True)
+    city = CitySerializer()
     firstName = serializers.CharField(source='first_name')
     lastName = serializers.CharField(source='last_name')
     fullName = serializers.CharField(source='get_full_name')
-    dateJoined = serializers.CharField(source='date_joined')
-    lastLogin = serializers.CharField(source='last_login')
-    city = CitySerializer()
     postalCode = serializers.CharField(source='postal_code')
     profilePicture = serializers.ImageField(source='profile_picture')
     orgName = serializers.CharField(source='org_name')
     addressData = serializers.CharField(source='get_address_data')
-
-    superUser = serializers.BooleanField(source='is_superuser')
     shareEmail = serializers.BooleanField(source='share_email')
     sharePhone = serializers.BooleanField(source='share_phone')
-
     phoneNumber = serializers.CharField(source='phone_number')
     mobilePhoneNumber = serializers.CharField(source='mobile_phone_number')
-
     urlFacebookProfile = serializers.URLField(source='url_facebook_profile')
     urlFacebookPage = serializers.URLField(source='url_facebook_page')
     urlTwitter = serializers.URLField(source='url_twitter')
     urlInstagram = serializers.URLField(source='url_instagram')
-
-    pets = PetSerializer(many=True)
+    superUser = serializers.BooleanField(source='is_superuser')
+    dateJoined = serializers.CharField(source='date_joined')
+    lastLogin = serializers.CharField(source='last_login')
 
     class Meta:
         model = User
