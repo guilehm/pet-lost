@@ -28,3 +28,9 @@ class CityViewSet(ModelViewSet):
     serializer_class = CitySerializer
     permission_classes = (AllowAny,)
 
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (AllowAny,)
+
