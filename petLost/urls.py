@@ -19,7 +19,9 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
-from api.views import PetViewSet, BreedViewSet
+from api.views import (
+    PetViewSet, BreedViewSet, AnnouncementViewSet, CityViewSet, UserViewSet, BannerViewSet,
+)
 
 router = routers.DefaultRouter()
 router.register(r'pets', PetViewSet)
