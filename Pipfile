@@ -25,6 +25,7 @@ django-allauth = "*"
 djangorestframework = "*"
 drf-yasg = "*"
 packaging = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.7"
