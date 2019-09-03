@@ -15,6 +15,12 @@ class PetViewSet(ModelViewSet):
     queryset = Pet.objects.all()
     serializer_class = PetSerializer
     permission_classes = (AllowAny,)
+    filterset_fields = [
+        'name',
+        'sex',
+        'breed',
+        'kind',
+    ]
 
 
 class BreedViewSet(ModelViewSet):
@@ -27,6 +33,16 @@ class AnnouncementViewSet(ModelViewSet):
     queryset = Announcement.objects.all()
     serializer_class = AnnouncementSerializer
     permission_classes = (AllowAny,)
+    filterset_fields = [
+        'active',
+        'pet',
+        'situation',
+        'rescued',
+        'rescued_date',
+        'last_seen_city',
+        'lost_date',
+        'found_date',
+    ]
 
 
 class CityViewSet(ModelViewSet):
