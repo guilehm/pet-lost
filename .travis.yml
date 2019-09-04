@@ -7,12 +7,11 @@ services: postgresql
 
 env:
   - DJANGO=2.2.5
+  - DJANGO_SETTINGS_MODULE=petLost.settings
+  - PYTHONPATH=$HOME/builds/guilehm/petLost
+  - PIP_USE_MIRRORS=true
+  - DATABASE_URL=postgres://postgres@127.0.0.1:5432/mydb
 
-before_install:
-  - export DJANGO_SETTINGS_MODULE=petLost.settings
-  - export PYTHONPATH=$HOME/builds/guilehm/petLost
-  - export PIP_USE_MIRRORS=true
-  - export DATABASE_URL=postgres://postgres@127.0.0.1:5432/mydb
 
 install:
   - pip install pipenv
