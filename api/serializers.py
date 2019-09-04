@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from announcement.models import Announcement
 from location.models import City
-from pet.models import Pet, Breed, Picture
+from pet.models import Breed, Pet, Picture
 from users.models import User
 from web.models import Banner
 
