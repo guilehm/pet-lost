@@ -26,6 +26,8 @@ djangorestframework = "*"
 drf-yasg = "*"
 packaging = "*"
 django-filter = "*"
+pytest = "*"
+model-mommy = "*"
 
 [requires]
 python_version = "3.7"
