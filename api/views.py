@@ -1,8 +1,8 @@
-from rest_framework.filters import SearchFilter
+from django.contrib.postgres.search import SearchVector
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
-from api.filters import AnnouncementFilterSet
+from api.filters import AnnouncementFilterSet, PetFilterSet
 from api.serializers import (
     PetSerializer, BreedSerializer, AnnouncementSerializer, CitySerializer, UserSerializer,
     BannerSerializer
@@ -17,12 +17,21 @@ class PetViewSet(ModelViewSet):
     queryset = Pet.objects.all()
     serializer_class = PetSerializer
     permission_classes = (AllowAny,)
-    filterset_fields = [
-        'name',
-        'sex',
-        'breed',
-        'kind',
-    ]
+    filterset_class = PetFilterSet
+
+    def get_queryset(self):
+        if self.action_map.get('get') == 'list':
+            pets = Pet.objects.all()
+            search_query = self.request.GET.get('search')
+            if search_query:
+                pets = pets.annotate(
+                    search=SearchVector(
+                        'name',
+                        'description',
+                    )
+                ).filter(search=search_query)
+            return pets
+        return Pet.objects.all()
 
 
 class BreedViewSet(ModelViewSet):
@@ -35,8 +44,6 @@ class AnnouncementViewSet(ModelViewSet):
     queryset = Announcement.objects.all()
     serializer_class = AnnouncementSerializer
     permission_classes = (AllowAny,)
-    search_fields = ['description']
-    filter_backends = [SearchFilter]
     filterset_class = AnnouncementFilterSet
     filterset_fields = [
         'active',
