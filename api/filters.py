@@ -1,4 +1,4 @@
-from django_filters import FilterSet, ModelChoiceFilter, DateFilter, CharFilter, BooleanFilter
+from django_filters import BooleanFilter, CharFilter, DateFilter, FilterSet, ModelChoiceFilter
 
 from location.models import City
 from pet.models import Breed, Pet
