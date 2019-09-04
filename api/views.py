@@ -45,12 +45,19 @@ class AnnouncementViewSet(ModelViewSet):
     serializer_class = AnnouncementSerializer
     permission_classes = (AllowAny,)
     filterset_class = AnnouncementFilterSet
-    filterset_fields = [
-        'active',
-        'pet',
-        'situation',
-        'rescued',
-    ]
+
+    def get_queryset(self):
+        if self.action_map.get('get') == 'list':
+            announcements = Announcement.objects.all()
+            search_query = self.request.GET.get('search')
+            if search_query:
+                announcements = announcements.annotate(
+                    search=SearchVector(
+                        'description',
+                    )
+                ).filter(search=search_query)
+            return announcements
+        return Announcement.objects.all()
 
 
 class CityViewSet(ModelViewSet):

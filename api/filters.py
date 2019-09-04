@@ -1,10 +1,20 @@
-from django_filters import FilterSet, ModelChoiceFilter, DateFilter, CharFilter
+from django_filters import FilterSet, ModelChoiceFilter, DateFilter, CharFilter, BooleanFilter
 
 from location.models import City
-from pet.models import Breed
+from pet.models import Breed, Pet
 
 
 class AnnouncementFilterSet(FilterSet):
+    pet = ModelChoiceFilter(
+        queryset=Pet.objects.all(),
+        field_name='pet',
+        to_field_name='id',
+        label='Pet',
+    )
+    active = BooleanFilter()
+    situation = CharFilter()
+    rescued = BooleanFilter()
+    description = CharFilter()
     lastSeenCity = ModelChoiceFilter(
         queryset=City.objects.all(),
         field_name='last_seen_city',
