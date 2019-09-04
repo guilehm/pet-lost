@@ -26,7 +26,7 @@ class Announcement(models.Model):
 
     last_seen_district = models.CharField(max_length=512)
     last_seen_city = models.ForeignKey(
-        'location.City', related_name='pets', db_index=True, on_delete=models.CASCADE
+        'location.City', related_name='announcements', db_index=True, on_delete=models.CASCADE
     )
 
     lost_date = models.DateField(db_index=True, null=True, blank=True)
