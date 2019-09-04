@@ -1,6 +1,7 @@
-from django_filters import FilterSet, ModelChoiceFilter, DateFilter
+from django_filters import FilterSet, ModelChoiceFilter, DateFilter, CharFilter
 
 from location.models import City
+from pet.models import Breed
 
 
 class AnnouncementFilterSet(FilterSet):
@@ -22,3 +23,17 @@ class AnnouncementFilterSet(FilterSet):
         field_name='found_date',
         label='Found Date',
     )
+
+
+class PetFilterSet(FilterSet):
+    breed = ModelChoiceFilter(
+        queryset=Breed.objects.all(),
+        field_name='breed',
+        to_field_name='name',
+        label='Breed',
+    )
+    name = CharFilter()
+    sex = CharFilter()
+    kind = CharFilter()
+    slug = CharFilter()
+    description = CharFilter()
