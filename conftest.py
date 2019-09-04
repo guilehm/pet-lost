@@ -13,6 +13,7 @@ def public_client():
 def pet():
     return mommy.make(
         'pet.Pet',
+        name='moacir',
     )
 
 
@@ -33,10 +34,47 @@ def pet_female():
 
 
 @pytest.fixture
+def breed():
+    return mommy.make(
+        'pet.Breed',
+    )
+
+
+@pytest.fixture
 def breed_pug():
     return mommy.make(
         'pet.Breed',
         kind='dog',
         name='Pug',
         slug='pug',
+    )
+
+
+@pytest.fixture
+def announcement(pet):
+    return mommy.make(
+        'announcement.Announcement',
+        pet=pet,
+        lost_date='2019-09-03',
+    )
+
+
+@pytest.fixture
+def city():
+    return mommy.make(
+        'location.City',
+    )
+
+
+@pytest.fixture
+def user():
+    return mommy.make(
+        'users.User',
+    )
+
+
+@pytest.fixture
+def banner():
+    return mommy.make(
+        'web.Banner',
     )
