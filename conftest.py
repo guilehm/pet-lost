@@ -10,26 +10,45 @@ def public_client():
 
 
 @pytest.fixture
-def pet():
+def pet(breed):
     return mommy.make(
         'pet.Pet',
         name='moacir',
+        breed=breed,
     )
 
 
 @pytest.fixture
-def pet_male():
+def pet_male(breed):
     return mommy.make(
         'pet.Pet',
         sex='male',
+        breed=breed,
     )
 
 
 @pytest.fixture
-def pet_female():
+def pet_female(breed):
     return mommy.make(
         'pet.Pet',
         sex='female',
+        breed=breed,
+    )
+
+
+@pytest.fixture
+def pet_pug(breed_pug):
+    return mommy.make(
+        'pet.Pet',
+        breed=breed_pug,
+    )
+
+
+@pytest.fixture
+def pet_boxer(breed_boxer):
+    return mommy.make(
+        'pet.Pet',
+        breed=breed_boxer,
     )
 
 
@@ -47,6 +66,16 @@ def breed_pug():
         kind='dog',
         name='Pug',
         slug='pug',
+    )
+
+
+@pytest.fixture
+def breed_boxer():
+    return mommy.make(
+        'pet.Breed',
+        kind='dog',
+        name='Boxer',
+        slug='boxer',
     )
 
 
