@@ -4,11 +4,10 @@ from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from api.filters import AnnouncementFilterSet, PetFilterSet
 from api.serializers import (
-    PetSerializer, BreedSerializer, AnnouncementSerializer, CitySerializer, UserSerializer,
-    BannerSerializer
+    AnnouncementSerializer, BannerSerializer, BreedSerializer, CitySerializer, PetSerializer, UserSerializer,
 )
 from location.models import City
-from pet.models import Pet, Breed, Announcement
+from pet.models import Announcement, Breed, Pet
 from users.models import User
 from web.models import Banner
 
