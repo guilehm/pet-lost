@@ -1,6 +1,7 @@
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
+from api.filters import AnnouncementFilterSet
 from api.serializers import (
     PetSerializer, BreedSerializer, AnnouncementSerializer, CitySerializer, UserSerializer,
     BannerSerializer
@@ -33,15 +34,12 @@ class AnnouncementViewSet(ModelViewSet):
     queryset = Announcement.objects.all()
     serializer_class = AnnouncementSerializer
     permission_classes = (AllowAny,)
+    filterset_class = AnnouncementFilterSet
     filterset_fields = [
         'active',
         'pet',
         'situation',
         'rescued',
-        'rescued_date',
-        'last_seen_city',
-        'lost_date',
-        'found_date',
     ]
 
 
