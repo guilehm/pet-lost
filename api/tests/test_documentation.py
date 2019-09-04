@@ -10,9 +10,9 @@ class TestDocumentation:
         return client
 
     def test_redoc_response(self, client):
-        response = client.get('/redoc/')
+        response = client.get('/redoc/', secure=True)
         assert response.status_code == 200
 
     def test_swagger_response(self, client):
-        response = client.get('/swagger/')
+        response = client.get('/swagger/', secure=True)
         assert response.status_code == 200
