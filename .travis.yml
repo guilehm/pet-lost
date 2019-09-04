@@ -24,7 +24,6 @@ before_script:
   - psql -c "CREATE DATABASE mydb;" -U postgres
 
 script:
-  - python manage.py test
   - isort --check-only
   - flake8
   - pytest -v
