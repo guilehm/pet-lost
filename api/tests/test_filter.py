@@ -54,7 +54,7 @@ class TestPetFilterSetBySex:
         assert pet_female.sex == 'female'
 
         url = f'{reverse("pet-list")}?sex=male'
-        response = client.get(url)
+        response = client.get(url, secure=True)
         assert response.json() == pet_filter_male_response
 
     def test_pet_filter_by_female_sex(self, client, pet_male, pet_female, pet_filter_female_response):
@@ -62,7 +62,7 @@ class TestPetFilterSetBySex:
         assert pet_female.sex == 'female'
 
         url = f'{reverse("pet-list")}?sex=female'
-        response = client.get(url)
+        response = client.get(url, secure=True)
         assert response.json() == pet_filter_female_response
 
     def test_pet_filter_by_wrong_sex(self, client, pet_male, pet_female, pet_filter_wrong_sex_response):
@@ -70,5 +70,5 @@ class TestPetFilterSetBySex:
         assert pet_female.sex == 'female'
 
         url = f'{reverse("pet-list")}?sex=wrong'
-        response = client.get(url)
+        response = client.get(url, secure=True)
         assert response.json() == pet_filter_wrong_sex_response
