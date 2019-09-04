@@ -1,3 +1,4 @@
+from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
@@ -34,6 +35,8 @@ class AnnouncementViewSet(ModelViewSet):
     queryset = Announcement.objects.all()
     serializer_class = AnnouncementSerializer
     permission_classes = (AllowAny,)
+    search_fields = ['description']
+    filter_backends = [SearchFilter]
     filterset_class = AnnouncementFilterSet
     filterset_fields = [
         'active',
