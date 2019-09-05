@@ -21,8 +21,8 @@ class PictureSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    dateAdded = serializers.CharField(source='date_added')
-    dateChanged = serializers.CharField(source='date_changed')
+    dateAdded = serializers.CharField(source='date_added', read_only=True)
+    dateChanged = serializers.CharField(source='date_changed', read_only=True)
 
     class Meta:
         model = Comment
@@ -43,8 +43,8 @@ class AnnouncementSerializer(serializers.ModelSerializer):
     lastSeenCity = serializers.CharField(source='last_seen_city')
     lostDate = serializers.DateField(source='lost_date')
     foundDate = serializers.DateField(source='found_date')
-    dateAdded = serializers.CharField(source='date_added')
-    dateChanged = serializers.CharField(source='date_changed')
+    dateAdded = serializers.CharField(source='date_added', read_only=True)
+    dateChanged = serializers.CharField(source='date_changed', read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
@@ -72,8 +72,8 @@ class PetSerializer(serializers.ModelSerializer):
     breed = serializers.CharField()
     mainPicture = PictureSerializer(source='picture')
     pictures = PictureSerializer(many=True)
-    dateAdded = serializers.CharField(source='date_added')
-    dateChanged = serializers.CharField(source='date_changed')
+    dateAdded = serializers.CharField(source='date_added', read_only=True)
+    dateChanged = serializers.CharField(source='date_changed', read_only=True)
 
     class Meta:
         model = Pet
