@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from announcement.models import Announcement
+from announcement.models import Announcement, Comment
 from location.models import City
 from pet.models import Breed, Pet, Picture
 from users.models import User
@@ -90,6 +90,22 @@ class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
         fields = ('id', 'name', 'state')
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    dateAdded = serializers.CharField(source='date_added')
+    dateChanged = serializers.CharField(source='date_changed')
+
+    class Meta:
+        model = Comment
+        fields = (
+            'announcement',
+            'user',
+            'deleted',
+            'description',
+            'dateAdded',
+            'dateChanged',
+        )
 
 
 class BannerSerializer(serializers.ModelSerializer):
