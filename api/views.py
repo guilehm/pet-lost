@@ -8,8 +8,8 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelV
 from announcement.models import Announcement, Comment
 from api.filters import AnnouncementFilterSet, PetFilterSet
 from api.serializers import (
-    AnnouncementSerializer, BannerSerializer, BreedSerializer, CitySerializer, PetSerializer, UserSerializer,
-    CommentSerializer
+    AnnouncementSerializer, BannerSerializer, BreedSerializer, CitySerializer, CommentSerializer, PetSerializer,
+    UserSerializer,
 )
 from location.models import City
 from pet.models import Breed, Pet

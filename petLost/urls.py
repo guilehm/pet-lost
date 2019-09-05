@@ -22,7 +22,9 @@ from drf_yasg.views import get_schema_view
 from rest_framework import routers
 from rest_framework.permissions import AllowAny
 
-from api.views import AnnouncementViewSet, BannerViewSet, BreedViewSet, CityViewSet, PetViewSet, UserViewSet, CommentViewSet
+from api.views import (
+    AnnouncementViewSet, BannerViewSet, BreedViewSet, CityViewSet, CommentViewSet, PetViewSet, UserViewSet,
+)
 
 schema_view = get_schema_view(
    openapi.Info(
