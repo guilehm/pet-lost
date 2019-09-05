@@ -4,6 +4,11 @@ from django.utils import timezone
 from django.utils.http import urlencode
 
 
+class CommentQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(deleted=False)
+
+
 class Announcement(models.Model):
     SITUATION_LOST = 'lost'
     SITUATION_FOUND = 'found'
@@ -129,6 +134,8 @@ class Comment(models.Model):
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True)
+
+    objects = CommentQuerySet.as_manager()
 
     def __str__(self):
         return '{}{}'.format(
