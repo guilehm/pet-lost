@@ -1,7 +1,7 @@
 from django.contrib.postgres.search import SearchVector
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
-from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
+from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelViewSet
 
@@ -82,10 +82,14 @@ class BannerViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
 
 
-class CommentViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet):
+class CommentViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet, DestroyModelMixin):
     queryset = Comment.objects.active()
     serializer_class = CommentSerializer
     permission_classes = (AllowAny,)
     filter_backends = [SearchFilter, DjangoFilterBackend]
     filter_fields = ['announcement', 'user', 'deleted', 'description']
     search_fields = ['description', 'announcement__description']
+
+    def perform_destroy(self, instance):
+        instance.deleted = True
+        instance.save()
