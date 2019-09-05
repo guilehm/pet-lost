@@ -20,6 +20,23 @@ class PictureSerializer(serializers.ModelSerializer):
         )
 
 
+class CommentSerializer(serializers.ModelSerializer):
+    dateAdded = serializers.CharField(source='date_added')
+    dateChanged = serializers.CharField(source='date_changed')
+
+    class Meta:
+        model = Comment
+        fields = (
+            'id',
+            'announcement',
+            'user',
+            'deleted',
+            'description',
+            'dateAdded',
+            'dateChanged',
+        )
+
+
 class AnnouncementSerializer(serializers.ModelSerializer):
     rescuedDate = serializers.CharField(source='rescued_date')
     lastSeenDistrict = serializers.CharField(source='last_seen_district')
@@ -28,6 +45,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
     foundDate = serializers.DateField(source='found_date')
     dateAdded = serializers.CharField(source='date_added')
     dateChanged = serializers.CharField(source='date_changed')
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Announcement
@@ -43,13 +61,14 @@ class AnnouncementSerializer(serializers.ModelSerializer):
             'lastSeenDistrict',
             'lostDate',
             'foundDate',
+            'comments',
             'dateAdded',
             'dateChanged',
         )
 
 
 class PetSerializer(serializers.ModelSerializer):
-    announcements = AnnouncementSerializer(many=True)
+    announcements = AnnouncementSerializer(many=True, read_only=True)
     breed = serializers.CharField()
     mainPicture = PictureSerializer(source='picture')
     pictures = PictureSerializer(many=True)
@@ -92,23 +111,6 @@ class CitySerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'state')
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    dateAdded = serializers.CharField(source='date_added')
-    dateChanged = serializers.CharField(source='date_changed')
-
-    class Meta:
-        model = Comment
-        fields = (
-            'id',
-            'announcement',
-            'user',
-            'deleted',
-            'description',
-            'dateAdded',
-            'dateChanged',
-        )
-
-
 class BannerSerializer(serializers.ModelSerializer):
     buttonOne = serializers.CharField(source='button_one')
     buttonTwo = serializers.CharField(source='button_two')
@@ -131,8 +133,8 @@ class BannerSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    pets = PetSerializer(many=True)
-    city = CitySerializer()
+    pets = PetSerializer(many=True, read_only=True)
+    city = CitySerializer(read_only=True)
     firstName = serializers.CharField(source='first_name')
     lastName = serializers.CharField(source='last_name')
     fullName = serializers.CharField(source='get_full_name')
