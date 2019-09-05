@@ -19,6 +19,16 @@ def pet(breed):
 
 
 @pytest.fixture
+def pet_moacir(breed_pug):
+    return mommy.make(
+        'pet.Pet',
+        name='Moacir',
+        slug='moacir',
+        breed=breed_pug,
+    )
+
+
+@pytest.fixture
 def pet_male(breed):
     return mommy.make(
         'pet.Pet',

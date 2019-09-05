@@ -1,6 +1,8 @@
 import pytest
 from django.urls import reverse
 
+from rest_framework import status
+
 
 @pytest.mark.django_db
 class TestPetFilterSetBySex:
@@ -97,6 +99,55 @@ class TestPetFilterSetByBreed:
         url = f'{reverse("pet-list")}?breed=Wrong'
         response = client.get(url, secure=True)
         assert response.json() == pet_filter_breed_wrong_name_response
+
+
+@pytest.mark.django_db
+class TestPetFilterSetBySlug:
+
+    @pytest.fixture
+    def pet_filter_slug_moacir_response(self, pet_moacir, pet_pug, pet_boxer):
+        return {
+            'count': 1,
+            'next': None,
+            'previous': None,
+            'results': [make_result_for_pet(pet_moacir)]
+        }
+
+    @pytest.fixture
+    def pet_filter_slug_wrong_response(self, pet_pug, pet_boxer, pet, pet_male, pet_female):
+        return {
+            'count': 0,
+            'next': None,
+            'previous': None,
+            'results': []
+        }
+
+    def test_pet_filter_by_slug_moacir(
+            self, client, pet_moacir, pet_pug, pet_boxer, pet_filter_slug_moacir_response,
+    ):
+        assert pet_moacir.slug == 'moacir'
+        assert pet_boxer.slug != 'moacir'
+        assert pet_pug.slug != 'moacir'
+
+        url = f'{reverse("pet-list")}?slug=moacir'
+        response = client.get(url, secure=True)
+        response = response.json()
+
+        assert response == pet_filter_slug_moacir_response
+        assert response['results'][0]['slug'] == 'moacir'
+        assert len(response['results']) == 1
+
+    def test_pet_filter_by_slug_wrong(self, client, pet_moacir, pet_pug, pet_boxer, pet_filter_slug_wrong_response):
+        assert pet_moacir.slug == 'moacir'
+        assert pet_boxer.slug != 'moacir'
+        assert pet_pug.slug != 'moacir'
+
+        url = f'{reverse("pet-list")}?slug=wrong'
+        response = client.get(url, secure=True)
+
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json() == pet_filter_slug_wrong_response
+        assert len(response.json()['results']) == 0
 
 
 def make_result_for_pet(pet):
