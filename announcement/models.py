@@ -51,7 +51,11 @@ class Announcement(models.Model):
             raise ValidationError('Please, choose a pet')
 
         if self.active:
-            if self.pet.announcements.filter(active=True).exists():
+            if self.pet.announcements.filter(
+                    active=True,
+            ).exclude(
+                id=self.id
+            ).exists():
                 raise ValidationError('A pet may not have more than one active announcement')
 
         if not any([self.lost_date, self.found_date]):
