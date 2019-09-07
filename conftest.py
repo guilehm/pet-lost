@@ -24,7 +24,9 @@ def pet_moacir(breed_pug):
         'pet.Pet',
         name='Moacir',
         slug='moacir',
+        sex='female',
         breed=breed_pug,
+        description='Moacir is a funny pug!'
     )
 
 
