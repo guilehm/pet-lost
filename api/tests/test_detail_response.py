@@ -45,6 +45,7 @@ class TestAnnouncementDetail:
             "lastSeenDistrict": "Center",
             "lostDate": "2019-09-03",
             "foundDate": None,
+            "comments": [],
             "dateAdded": str(announcement.date_added),
             "dateChanged": str(announcement.date_changed)
         }
