@@ -87,7 +87,7 @@ class CommentViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, Gener
     serializer_class = CommentSerializer
     permission_classes = (AllowAny,)
     filter_backends = [SearchFilter, DjangoFilterBackend]
-    filter_fields = ['announcement', 'user', 'deleted', 'description']
+    filterset_fields = ['announcement', 'user', 'deleted', 'description']
     search_fields = ['description', 'announcement__description']
 
     def perform_destroy(self, instance):
