@@ -85,3 +85,17 @@ class TestBannerView:
         url = reverse(f'banner-detail', kwargs={'pk': banner.pk})
         response = client.get(url, secure=True)
         assert response.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
+class TestCommentView:
+
+    def test_comment_list_response(self, client):
+        url = reverse('comment-list')
+        response = client.get(url, secure=True)
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_comment_detail_response(self, client, comment):
+        url = reverse(f'comment-detail', kwargs={'pk': comment.pk})
+        response = client.get(url, secure=True)
+        assert response.status_code == status.HTTP_200_OK
