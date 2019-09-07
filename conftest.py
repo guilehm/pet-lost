@@ -13,7 +13,8 @@ def public_client():
 def pet(breed):
     return mommy.make(
         'pet.Pet',
-        name='moacir',
+        name='Gilberto',
+        sex='not_identified',
         breed=breed,
     )
 
@@ -22,11 +23,12 @@ def pet(breed):
 def pet_moacir(breed_pug):
     return mommy.make(
         'pet.Pet',
+        id="0d91d3b3-0543-46bc-a053-4f457385c803",
         name='Moacir',
         slug='moacir',
         sex='female',
         breed=breed_pug,
-        description='Moacir is a funny pug!'
+        description='Moacir is a funny pug!',
     )
 
 
@@ -92,11 +94,17 @@ def breed_boxer():
 
 
 @pytest.fixture
-def announcement(pet):
+def announcement(pet_moacir, city):
     return mommy.make(
         'announcement.Announcement',
-        pet=pet,
+        pet=pet_moacir,
         lost_date='2019-09-03',
+        description='She got lost somewhere',
+        rescued=False,
+        last_seen_city=city,
+        last_seen_district='Center',
+        situation='lost',
+        active=True,
     )
 
 
@@ -104,6 +112,7 @@ def announcement(pet):
 def city():
     return mommy.make(
         'location.City',
+        name='São Paulo',
     )
 
 
