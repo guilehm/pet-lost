@@ -218,8 +218,9 @@ ALLOWED_HOSTS = [
     'gui-pets.herokuapp.com',
     'www.petlost.live',
     'petlost.live',
-    '*', # for testing purposes
+    '*',  # for testing purposes
 ]
+CORS_ORIGIN_ALLOW_ALL = True  # for testing purposes
 
 GOOGLE_RECAPTCHA_SITE_KEY = os.getenv('GOOGLE_RECAPTCHA_SITE_KEY')
 GOOGLE_RECAPTCHA_SECRET_KEY = os.getenv('GOOGLE_RECAPTCHA_SECRET_KEY')
