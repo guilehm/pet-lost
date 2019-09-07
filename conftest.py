@@ -117,3 +117,11 @@ def banner():
     return mommy.make(
         'web.Banner',
     )
+
+
+@pytest.fixture
+def comment(announcement):
+    return mommy.make(
+        'announcement.Comment',
+        announcement=announcement,
+    )
