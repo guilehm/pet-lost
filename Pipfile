@@ -28,6 +28,7 @@ packaging = "*"
 django-filter = "*"
 model-mommy = "*"
 pytest-django = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.7"
