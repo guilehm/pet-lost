@@ -8,6 +8,13 @@ from announcement.models import Announcement
 from web.utils import UploadToFactory
 
 
+class BreedQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(
+            pets__isnull=False,
+        )
+
+
 class PetQuerySet(models.QuerySet):
     def lost(self):
         return self.filter(
@@ -39,6 +46,8 @@ class Breed(models.Model):
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_changed = models.DateTimeField(auto_now=True)
+
+    objects = BreedQuerySet.as_manager()
 
     def __str__(self):
         return f'{self.name}'
