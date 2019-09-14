@@ -47,3 +47,16 @@ class PetFilterSet(FilterSet):
     kind = CharFilter()
     slug = CharFilter()
     description = CharFilter()
+
+
+class BreedFilterSet(FilterSet):
+
+    active = BooleanFilter(
+        method='filter_active',
+        label='active breeds',
+    )
+
+    def filter_active(self, queryset, name, value):
+        if value:
+            return queryset.active()
+        return queryset
