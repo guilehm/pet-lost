@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ReadOnlyModelViewSet
 
 from announcement.models import Announcement, Comment
-from api.filters import AnnouncementFilterSet, PetFilterSet
+from api.filters import AnnouncementFilterSet, BreedFilterSet, PetFilterSet
 from api.serializers import (
     AnnouncementSerializer, BannerSerializer, BreedSerializer, CitySerializer, CommentSerializer, PetSerializer,
     UserSerializer,
@@ -42,6 +42,7 @@ class BreedViewSet(ModelViewSet):
     queryset = Breed.objects.all()
     serializer_class = BreedSerializer
     permission_classes = (AllowAny,)
+    filterset_class = BreedFilterSet
 
 
 class AnnouncementViewSet(ModelViewSet):
