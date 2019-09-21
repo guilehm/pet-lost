@@ -32,6 +32,12 @@ class TestPetCreation:
             "description": "Doggo ipsum wow such tempt borkdrive pats fat boi",
         }
 
+    @pytest.fixture
+    def pet_creation_payload_with_slug(self, pet_creation_payload):
+        payload = deepcopy(pet_creation_payload)
+        payload['slug'] = 'fake-slug'
+        return payload
+
     def test_create_pet_minimal_data(
             self,
             pets_endpoint,
