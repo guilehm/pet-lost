@@ -76,6 +76,11 @@ class PetSerializer(serializers.ModelSerializer):
     dateChanged = serializers.CharField(source='date_changed', read_only=True)
     user = serializers.CharField(write_only=True)
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['breed'] = instance.breed.name
+        return representation
+
     class Meta:
         model = Pet
         fields = (
