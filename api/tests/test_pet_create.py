@@ -43,13 +43,13 @@ class TestPetCreation:
     def test_create_pet_minimal_data(
             self,
             pets_endpoint,
-            public_client,
+            client,
             minimal_pet_creation_payload,
             user,
             breed_pug,
     ):
-        response = public_client.post(
-            pets_endpoint, data=minimal_pet_creation_payload, format='json'
+        response = client.post(
+            pets_endpoint, data=minimal_pet_creation_payload, format='json', secure=True,
         )
         assert response.status_code == status.HTTP_201_CREATED
         pet = Pet.objects.get(id=response.data['id'])
@@ -59,13 +59,13 @@ class TestPetCreation:
     def test_create_pet(
             self,
             pets_endpoint,
-            public_client,
+            client,
             pet_creation_payload,
             user,
             breed_boxer,
     ):
-        response = public_client.post(
-            pets_endpoint, data=pet_creation_payload, format='json'
+        response = client.post(
+            pets_endpoint, data=pet_creation_payload, format='json', secure=True,
         )
         assert response.status_code == status.HTTP_201_CREATED
         pet = Pet.objects.get(id=response.data['id'])
@@ -76,11 +76,11 @@ class TestPetCreation:
     def test_should_not_create_pet_with_wrong_slug(
             self,
             pets_endpoint,
-            public_client,
+            client,
             pet_creation_payload_with_slug,
     ):
-        response = public_client.post(
-            pets_endpoint, data=pet_creation_payload_with_slug, format='json'
+        response = client.post(
+            pets_endpoint, data=pet_creation_payload_with_slug, format='json', secure=True,
         )
         assert response.status_code == status.HTTP_201_CREATED
         pet = Pet.objects.get(id=response.data['id'])
