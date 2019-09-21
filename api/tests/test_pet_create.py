@@ -20,6 +20,17 @@ class TestPetCreation:
             "user": user.id,
         }
 
+    @pytest.fixture
+    def pet_creation_payload(self, user, breed_boxer):
+        return {
+            "user": user.id,
+            "name": "Joacir",
+            "sex": "female",
+            "kind": "dog",
+            "breed": "boxer",
+            "description": "Doggo ipsum wow such tempt borkdrive pats fat boi",
+        }
+
     def test_create_pet_minimal_data(
             self,
             pets_endpoint,
