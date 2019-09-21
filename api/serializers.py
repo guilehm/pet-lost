@@ -72,6 +72,8 @@ class PetSerializer(serializers.ModelSerializer):
     slug = serializers.SlugField(read_only=True)
     breed = serializers.SlugRelatedField(
         slug_field='slug',
+        queryset=Breed.objects.all(),
+    )
     mainPicture = PictureSerializer(source='picture', required=False)
     pictures = PictureSerializer(many=True, required=False)
     dateAdded = serializers.CharField(source='date_added', read_only=True)
