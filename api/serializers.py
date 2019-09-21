@@ -74,6 +74,7 @@ class PetSerializer(serializers.ModelSerializer):
     pictures = PictureSerializer(many=True)
     dateAdded = serializers.CharField(source='date_added', read_only=True)
     dateChanged = serializers.CharField(source='date_changed', read_only=True)
+    user = serializers.CharField(write_only=True)
 
     class Meta:
         model = Pet
@@ -88,6 +89,7 @@ class PetSerializer(serializers.ModelSerializer):
             'mainPicture',
             'pictures',
             'announcements',
+            'user',
             'dateAdded',
             'dateChanged',
         )
