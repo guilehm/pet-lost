@@ -1,7 +1,8 @@
 import pytest
 from django.urls import reverse
-from pet.models import Pet
 from rest_framework import status
+
+from pet.models import Pet
 
 
 @pytest.mark.django_db
