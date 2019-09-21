@@ -85,7 +85,7 @@ class PetSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['breed'] = instance.breed.name
+        representation['breed'] = instance.breed.name if instance.breed else representation['breed']
         return representation
 
     class Meta:
