@@ -69,11 +69,24 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 
 class PetSerializer(serializers.ModelSerializer):
     announcements = AnnouncementSerializer(many=True, read_only=True)
-    breed = serializers.CharField()
-    mainPicture = PictureSerializer(source='picture')
-    pictures = PictureSerializer(many=True)
+    slug = serializers.SlugField(read_only=True)
+    breed = serializers.SlugRelatedField(
+        slug_field='slug',
+        queryset=Breed.objects.all(),
+    )
+    mainPicture = PictureSerializer(source='picture', required=False)
+    pictures = PictureSerializer(many=True, required=False)
     dateAdded = serializers.CharField(source='date_added', read_only=True)
     dateChanged = serializers.CharField(source='date_changed', read_only=True)
+    user = serializers.PrimaryKeyRelatedField(
+        write_only=True,
+        queryset=User.objects.all(),
+    )
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['breed'] = instance.breed.name if instance.breed else representation['breed']
+        return representation
 
     class Meta:
         model = Pet
@@ -88,6 +101,7 @@ class PetSerializer(serializers.ModelSerializer):
             'mainPicture',
             'pictures',
             'announcements',
+            'user',
             'dateAdded',
             'dateChanged',
         )
