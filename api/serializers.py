@@ -69,7 +69,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
 
 class PetSerializer(serializers.ModelSerializer):
     announcements = AnnouncementSerializer(many=True, read_only=True)
-    breed = serializers.CharField()
+    slug = serializers.SlugField(read_only=True)
     mainPicture = PictureSerializer(source='picture')
     pictures = PictureSerializer(many=True)
     dateAdded = serializers.CharField(source='date_added', read_only=True)
