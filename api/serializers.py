@@ -78,7 +78,10 @@ class PetSerializer(serializers.ModelSerializer):
     pictures = PictureSerializer(many=True, required=False)
     dateAdded = serializers.CharField(source='date_added', read_only=True)
     dateChanged = serializers.CharField(source='date_changed', read_only=True)
-    user = serializers.CharField(write_only=True)
+    user = serializers.PrimaryKeyRelatedField(
+        write_only=True,
+        queryset=User.objects.all(),
+    )
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
