@@ -47,3 +47,19 @@ class TestPetCreation:
         assert pet.user == user
         assert pet.breed == breed_pug
 
+    def test_create_pet(
+            self,
+            pets_endpoint,
+            public_client,
+            pet_creation_payload,
+            user,
+            breed_boxer,
+    ):
+        response = public_client.post(
+            pets_endpoint, data=pet_creation_payload, format='json'
+        )
+        assert response.status_code == status.HTTP_201_CREATED
+        pet = Pet.objects.get(id=response.data['id'])
+        assert pet.user == user
+        assert pet.breed == breed_boxer
+        assert pet.slug == f'joacir-dog-boxer-{str(response.data["id"])[:5]}'
