@@ -47,6 +47,15 @@ class PetFilterSet(FilterSet):
     kind = CharFilter()
     slug = CharFilter()
     description = CharFilter()
+    situation = CharFilter(
+        method='filter_situation',
+        label='situation',
+    )
+
+    def filter_situation(self, queryset, name, value):
+        if value and value.lower() in ['lost', 'found']:
+            return getattr(queryset, value.lower())()
+        return queryset
 
 
 class BreedFilterSet(FilterSet):
