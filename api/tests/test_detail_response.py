@@ -23,7 +23,7 @@ class TestPetDetail:
         }
 
     def test_pet_response(self, client, pet_moacir, pet_detail_response):
-        url = reverse(f'pet-detail', kwargs={'pk': pet_moacir.pk})
+        url = reverse(f'pet-detail', kwargs={'slug': pet_moacir.slug})
         response = client.get(url, secure=True)
         assert response.json() == pet_detail_response
 

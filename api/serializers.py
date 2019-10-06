@@ -90,6 +90,7 @@ class PetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pet
+        lookup_field = 'slug'
         fields = (
             'id',
             'slug',

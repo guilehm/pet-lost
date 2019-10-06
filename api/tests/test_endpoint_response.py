@@ -12,7 +12,7 @@ class TestPetView:
         assert response.status_code == status.HTTP_200_OK
 
     def test_pet_detail_response(self, client, pet):
-        url = reverse(f'pet-detail', kwargs={'pk': pet.pk})
+        url = reverse(f'pet-detail', kwargs={'slug': pet.slug})
         response = client.get(url, secure=True)
         assert response.status_code == status.HTTP_200_OK
 
