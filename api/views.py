@@ -22,6 +22,7 @@ class PetViewSet(ModelViewSet):
     serializer_class = PetSerializer
     permission_classes = (AllowAny,)
     filterset_class = PetFilterSet
+    lookup_field = 'slug'
 
     def get_queryset(self):
         if self.action_map.get('get') == 'list':
