@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'petLost.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.parse(
-        os.environ.get('DATABASE_URL'),
+        os.getenv('DATABASE_URL'),
         conn_max_age=600,
     )
 }
@@ -176,8 +176,8 @@ SOCIALACCOUNT_PROVIDERS = {
         }
 }
 ACCOUNT_ADAPTER = 'users.allauth.AccountAdapter'
-SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')  # App key
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY')  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('SOCIAL_AUTH_FACEBOOK_SECRET')  # App key
 
 # LOGIN_REDIRECT_URL = "/"
 SITE_ID = 1
@@ -202,9 +202,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
@@ -229,10 +229,10 @@ GOOGLE_RECAPTCHA_SECRET_KEY = os.getenv('GOOGLE_RECAPTCHA_SECRET_KEY')
 EMAIL_HOST = 'smtp.mailgun.org'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'postmaster@mg.petlost.live'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-MAILGUN_API_URL = os.environ.get('MAILGUN_API_URL')
-MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY')
+MAILGUN_API_URL = os.getenv('MAILGUN_API_URL')
+MAILGUN_API_KEY = os.getenv('MAILGUN_API_KEY')
 DEFAULT_FROM_EMAIL = 'contato@mg.petlost.live'
 DEFAULT_EMAIL = 'petlost.live@gmail.com'
 
