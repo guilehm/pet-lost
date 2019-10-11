@@ -3,6 +3,16 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+    {% block google_analytics %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-147225311-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      
+      gtag('config', 'UA-147225311-1');
+    </script>
+    {% endblock %}
     {% block title %}
     <title>PetLost - Ajude um pet a encontrar sua família</title>
     {% endblock %}
@@ -23,6 +33,7 @@
     {% block headers %}
     {% endblock %}
 </head>
+
 <body>
 {% block facebook_sdk %}
 {% endblock %}
