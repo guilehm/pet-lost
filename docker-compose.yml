@@ -5,17 +5,17 @@ networks:
 services:
   web:
     build: .
-    image: "pet-lost"
+    image: pet-lost
     command: python manage.py runserver 0.0.0.0:8000
     ports:
-      - "8000:8000"
+      - 8000:8000
     env_file:
        - .env
     depends_on:
       - db
 
   migrate:
-    image: "pet-lost"
+    image: pet-lost
     command: python manage.py migrate
     env_file:
       - .env
@@ -25,10 +25,10 @@ services:
       - db
 
   db:
-    image: "postgres"
+    image: postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-petlost}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     ports:
-      - "15432:5432"
+      - 15432:5432
