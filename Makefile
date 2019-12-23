@@ -7,5 +7,11 @@ test:
 	isort
 	py.test -v
 
-testdocker:
+test-docker:
 	docker-compose run web make test
+
+superuser:
+	./manage.py shell -c "from users.models import User; User.objects.create_superuser('admin@admin.com', 'admin')"
+
+superuser-docker:
+	docker-compose run web ./manage.py shell -c "from users.models import User; User.objects.create_superuser('admin@admin.com', 'admin')"
