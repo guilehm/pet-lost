@@ -31,7 +31,9 @@ class PetQuerySet(models.QuerySet):
         ).distinct()
 
     def rescued(self):
-        return self.filter(rescued=True)
+        return self.filter(
+            announcements__rescued=True,
+        ).distinct()
 
 
 class Breed(models.Model):
