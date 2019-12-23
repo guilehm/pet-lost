@@ -14,7 +14,7 @@ services:
     depends_on:
       - db
 
-  migrate:
+  migration:
     image: pet-lost
     command: python manage.py migrate
     env_file:
