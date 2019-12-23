@@ -1,7 +1,11 @@
+import os
+
 from django import template
 
 from announcement.models import Announcement
 from web.models import Banner
+
+GOOGLE_ANALYTICS_ID = os.getenv('GOOGLE_ANALYTICS_ID')
 
 register = template.Library()
 
@@ -57,3 +61,8 @@ def pet_list(context, situation=None):
         'lost': lost,
         'found': found,
     }
+
+
+@register.inclusion_tag('web/tags/google_analytics.html')
+def google_analytics():
+    return {'google_analytics_id': GOOGLE_ANALYTICS_ID}
