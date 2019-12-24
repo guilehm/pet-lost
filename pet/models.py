@@ -35,6 +35,11 @@ class PetQuerySet(models.QuerySet):
             announcements__rescued=True,
         ).distinct()
 
+    def active(self):
+        return self.filter(
+            announcements__active=True,
+        ).distinct()
+
 
 class Breed(models.Model):
     TYPE_DOG = 'dog'
