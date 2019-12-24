@@ -55,15 +55,24 @@ class PetFilterSet(FilterSet):
         method='filter_rescued',
         label='rescued pets',
     )
+    active = BooleanFilter(
+        method='filter_active',
+        label='active pets',
+    )
+
+    def filter_situation(self, queryset, name, value):
+        if value and value.lower() in ['lost', 'found']:
+            return getattr(queryset, value.lower())()
+        return queryset
 
     def filter_rescued(self, queryset, name, value):
         if value:
             return queryset.rescued()
         return queryset
 
-    def filter_situation(self, queryset, name, value):
-        if value and value.lower() in ['lost', 'found']:
-            return getattr(queryset, value.lower())()
+    def filter_active(self, queryset, name, value):
+        if value:
+            return queryset.active()
         return queryset
 
 
