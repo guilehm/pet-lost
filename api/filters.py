@@ -73,7 +73,7 @@ class PetFilterSet(FilterSet):
     def filter_active(self, queryset, name, value):
         if value:
             return queryset.active()
-        return queryset
+        return queryset.not_active()
 
 
 class BreedFilterSet(FilterSet):

@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.db.models import Q
 from django.utils.functional import cached_property
 from django.utils.text import slugify
 
@@ -38,6 +39,12 @@ class PetQuerySet(models.QuerySet):
     def active(self):
         return self.filter(
             announcements__active=True,
+        ).distinct()
+
+    def not_active(self):
+        return self.filter(
+            Q(announcements__isnull=True) |
+            Q(announcements__active__isnull=True)
         ).distinct()
 
 
