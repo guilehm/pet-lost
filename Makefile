@@ -1,17 +1,22 @@
+DOCKER_COMPOSE=docker-compose
+DOCKER_COMPOSE_RUN=docker-compose run web
+
 lint:
-	@flake8
-	@isort --check
+	-$(DOCKER_COMPOSE_RUN) bash -c "flake8 && isort --check"
+
+migrate:
+	-$(DOCKER_COMPOSE_RUN) ./manage.py migrate
 
 test:
-	flake8
-	isort
-	py.test -v
-
-test-docker:
-	docker-compose run web make test
+	-$(DOCKER_COMPOSE_RUN) pytest -vv
 
 superuser:
-	docker-compose run web ./manage.py shell -c "from users.models import User; User.objects.create_superuser('admin@admin.com', 'admin')"
+	-$(DOCKER_COMPOSE_RUN) ./manage.py shell -c "from users.models import User; User.objects.create_superuser('admin@admin.com', 'admin')"
 
 loaddata:
-	docker-compose run web ./manage.py loaddata ./staging-fixtures/breed.json ./staging-fixtures/cities.json ./staging-fixtures/sites.json ./staging-fixtures/socialapp.json
+	-$(DOCKER_COMPOSE_RUN) ./manage.py loaddata ./staging-fixtures/breed.json ./staging-fixtures/cities.json ./staging-fixtures/sites.json ./staging-fixtures/socialapp.json
+
+setup:  migrate superuser loaddata
+
+run:
+	-$(DOCKER_COMPOSE) up
