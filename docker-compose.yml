@@ -6,21 +6,11 @@ services:
   web:
     build: .
     image: pet-lost
-    command: python manage.py runserver 0.0.0.0:8000
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
     env_file:
        - .env
-    depends_on:
-      - db
-
-  migration:
-    image: pet-lost
-    command: python manage.py migrate
-    env_file:
-      - .env
-    links:
-      - db
     depends_on:
       - db
 
@@ -32,3 +22,4 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     ports:
       - 15432:5432
+
