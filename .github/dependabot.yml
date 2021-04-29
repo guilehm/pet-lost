@@ -1,0 +1,28 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: monthly
+    time: "08:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: flake8
+    versions:
+    - 3.8.4
+  - dependency-name: isort
+    versions:
+    - 5.7.0
+  - dependency-name: django
+    versions:
+    - 3.1.4
+    - 3.1.5
+  - dependency-name: packaging
+    versions:
+    - "20.8"
+  - dependency-name: django-extensions
+    versions:
+    - 3.1.0
+  - dependency-name: ipython
+    versions:
+    - 7.19.0
